@@ -25,6 +25,25 @@ abstract class AppColors {
   static const Color gradientDeep = Color(0xFF17548B);
   static const Color gradientEnd = Color(0xFF0C3E6E);
 
+  /// Primary Brand Blue `#1668D6` for buttons, active tabs, links
+  static const Color primaryBlue = Color(0xFF1668D6);
+
+  /// Secondary/subtle text and hint color `#5F6C7A`
+  static const Color textGrey = Color(0xFF5F6C7A);
+
+  /// Divider color `#D8DFE7`
+  static const Color dividerColor = Color(0xFFD8DFE7);
+
+  /// Google brand blue `#4285F4`
+  static const Color googleBlue = Color(0xFF4285F4);
+
+  /// Elevation shadow `0px 2px 8px 0px #102A500F`
+  static const Color cardShadow = Color(0x0F102A50);
+
+  /// Bottom wave decoration colors
+  static const Color waveLight = Color(0xFFD3E7F8);
+  static const Color waveMedium = Color(0xFF7CB8EC);
+
   static const List<Color> onboardingBackgroundGradient = [
     gradientStart,
     gradientMiddle,

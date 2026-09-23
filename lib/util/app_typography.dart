@@ -11,7 +11,7 @@ abstract class AppTypography {
   /// Skip button text style: 14sp, weight 600 (SemiBold), color #0F2A3F
   static TextStyle get skipButton => TextStyle(
         fontFamily: poppinsFont,
-        fontSize: 16.sp,
+        fontSize: 14.sp,
         fontWeight: FontWeight.w600,
         color: AppColors.darkNavy,
       );
@@ -40,5 +40,141 @@ abstract class AppTypography {
         fontSize: 16.sp,
         fontWeight: FontWeight.w700,
         color: AppColors.darkNavy,
+      );
+
+  /// Welcome Back! text size 28, weight 700, color #0F2A3F
+  static TextStyle get welcomeBackTitle => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 28.sp,
+        fontWeight: FontWeight.w700,
+        color: AppColors.darkNavy,
+      );
+
+  /// "Sign in to continue to your account" text size 13, weight 400, color #5F6C7A
+  static TextStyle get welcomeSubtitle => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 13.sp,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textGrey,
+      );
+
+  /// Tab text selected: size 15, weight 600, color #FFFFFF
+  static TextStyle get tabTextSelected => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 15.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.white,
+      );
+
+  /// Tab text unselected: size 15, weight 600, color #0F2A3F
+  static TextStyle get tabTextUnselected => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 15.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.darkNavy,
+      );
+
+  /// Input label text size 13, weight 600, color #0F2A3F
+  static TextStyle get inputLabel => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 13.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.darkNavy,
+      );
+
+  /// Input text field text size 15, weight 400, color #0F2A3F
+  static TextStyle get inputText => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 15.sp,
+        fontWeight: FontWeight.w400,
+        color: AppColors.darkNavy,
+      );
+
+  /// Input text field hint size 15, weight 400, color #5F6C7A
+  static TextStyle get inputHint => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 15.sp,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textGrey,
+      );
+
+  /// Checkbox terms base text size 13, weight 400, color #5F6C7A
+  static TextStyle get termsNormal => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 13.sp,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textGrey,
+      );
+
+  /// Terms highlighted text (Privacy Policy / Terms of Service) size 13, weight 700, color #1668D6
+  static TextStyle get termsHighlight => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 13.sp,
+        fontWeight: FontWeight.w700,
+        color: AppColors.primaryBlue,
+      );
+
+  /// Sign In button text size 16, weight 700, color #FFFFFF
+  static TextStyle get signInButton => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w700,
+        color: AppColors.white,
+      );
+
+  /// Divider text "or continue with" size 11, weight 500, color #5F6C7A
+  static TextStyle get dividerText => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 11.sp,
+        fontWeight: FontWeight.w500,
+        color: AppColors.textGrey,
+      );
+
+  /// Google 'G' icon text size 19, weight 800, color #4285F4
+  static TextStyle get googleIconText => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 19.sp,
+        fontWeight: FontWeight.w800,
+        color: AppColors.googleBlue,
+      );
+
+  /// Continue with Google text size 16, weight 700, color #0F2A3F
+  static TextStyle get googleButtonText => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w700,
+        color: AppColors.darkNavy,
+      );
+
+  /// Forgot password? text size 14, weight 600, color #1668D6
+  static TextStyle get forgotPassword => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.primaryBlue,
+      );
+
+  /// Bottom text normal "Don't have an account?" size 13, weight 400, color #5F6C7A
+  static TextStyle get bottomTextNormal => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 13.sp,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textGrey,
+      );
+
+  /// Bottom text highlight "Create an Account" size 13, weight 700, color #1668D6
+  static TextStyle get bottomTextHighlight => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 13.sp,
+        fontWeight: FontWeight.w700,
+        color: AppColors.primaryBlue,
+      );
+
+  /// Technician notice text size 12, weight 400, color #5F6C7A
+  static TextStyle get technicianNotice => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 12.sp,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textGrey,
       );
 }

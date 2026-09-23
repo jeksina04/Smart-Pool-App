@@ -23,7 +23,7 @@ Route? onGenerateRoute(RouteSettings settings) {
       page = const OnboardingPage();
       break;
     case Routes.login:
-      page = LoginPage();
+      page = const LoginPage();
       break;
     case Routes.register:
       var name = (settings.arguments as RegisterArgs).name;

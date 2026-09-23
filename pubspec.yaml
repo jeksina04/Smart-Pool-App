@@ -23,6 +23,7 @@ dependencies:
   hive_flutter: ^1.1.0
   intl: ^0.20.2
   ez_localization: ^1.1.1
+  flutter_svg: ^2.0.10+1
 
   # util
   flutter_screenutil: ^5.9.3
