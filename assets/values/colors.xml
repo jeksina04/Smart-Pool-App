@@ -1,0 +1,7 @@
+<resources>
+    <color name="cinnamon">#F5CB84</color>
+    <color name="cinnamon_material" type="material">#955E1C</color>
+    <color name="dark_navy">#0F2A3F</color>
+    <color name="shadow_base">#102A50</color>
+    <color name="white">#FFFFFF</color>
+</resources>
