@@ -46,23 +46,29 @@ class BottomWaveWidget extends StatelessWidget {
   }
 
   Widget _buildTechnicianFooter(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          Icons.verified_user_outlined,
-          size: 14.w,
-          color: AppColors.textGrey,
+    return Center(
+      child: Text.rich(
+        TextSpan(
+          children: [
+            WidgetSpan(
+              alignment: PlaceholderAlignment.middle,
+              child: Padding(
+                padding: EdgeInsets.only(right: 4.w),
+                child: Icon(
+                  Icons.verified_user_outlined,
+                  size: 14.w,
+                  color: AppColors.textGrey,
+                ),
+              ),
+            ),
+            TextSpan(
+              text: context.getString('technician_dispatch_notice'),
+              style: AppTypography.technicianNotice,
+            ),
+          ],
         ),
-        6.horizontalSpace,
-        Flexible(
-          child: Text(
-            context.getString('technician_dispatch_notice'),
-            style: AppTypography.technicianNotice,
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ],
+        textAlign: TextAlign.center,
+      ),
     );
   }
 }
