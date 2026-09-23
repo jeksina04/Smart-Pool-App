@@ -7,21 +7,24 @@ import '../../../../util/app_typography.dart';
 class PrimaryShadowButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
+  final double? height;
 
   const PrimaryShadowButton({
     super.key,
     required this.text,
     required this.onTap,
+    this.height,
   });
 
   @override
   Widget build(BuildContext context) {
+    final buttonHeight = height ?? 44.h;
     return Container(
       width: double.infinity,
-      height: 56.h,
+      height: buttonHeight,
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(28.r),
+        borderRadius: BorderRadius.circular(buttonHeight / 2),
         boxShadow: const [
           BoxShadow(
             color: AppColors.nextButtonShadow,
@@ -35,7 +38,7 @@ class PrimaryShadowButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(28.r),
+          borderRadius: BorderRadius.circular(buttonHeight / 2),
           child: Center(
             child: Text(
               text,
