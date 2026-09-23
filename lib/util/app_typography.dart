@@ -177,4 +177,38 @@ abstract class AppTypography {
         fontWeight: FontWeight.w400,
         color: AppColors.textGrey,
       );
+
+  /// Top bar title "Create account" in center size 16, weight 600, color #0F2A3F
+  static TextStyle get topBarTitle => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.darkNavy,
+      );
+
+  /// Info banner normal text: size 12, weight 600, color #0D5BC4
+  static TextStyle get bannerNormalText => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 12.sp,
+        fontWeight: FontWeight.w600,
+        height: 1.4,
+        color: AppColors.infoBannerText,
+      );
+
+  /// Info banner highlighted text: size 12, weight 900, color #0D5BC4
+  static TextStyle get bannerBoldText => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 12.sp,
+        fontWeight: FontWeight.w900,
+        height: 1.4,
+        color: AppColors.infoBannerText,
+      );
+
+  /// "We'll text a 4-digit code to verify your number." size 12, weight 400, color #5F6C7A
+  static TextStyle get verifyNoticeText => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 12.sp,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textGrey,
+      );
 }

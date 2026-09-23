@@ -27,5 +27,20 @@
   "forgot_password": "هل نسيت كلمة المرور؟",
   "dont_have_account": "ليس لديك حساب؟ ",
   "create_an_account": "إنشاء حساب",
-  "technician_dispatch_notice": "يتم إنشاء حسابات الفنيين بواسطة مكتب الإرسال الخاص بك"
+  "technician_dispatch_notice": "يتم إنشاء حسابات الفنيين بواسطة مكتب الإرسال الخاص بك",
+  "create_account_title": "إنشاء حساب",
+  "homeowners_notice_start": "لأصحاب المنازل. ",
+  "homeowners_notice_bold": "يتم إنشاء حسابات الفنيين بواسطة مكتب الإرسال الخاص بك",
+  "homeowners_notice_end": " — يقوم الفنيون بتسجيل الدخول بالتفاصيل الصادرة عن الإرسال.",
+  "full_name_label": "الاسم الكامل",
+  "full_name_hint": "أدخل اسمك",
+  "email_label": "البريد الإلكتروني",
+  "email_hint": "أدخل البريد الإلكتروني",
+  "phone_label": "الهاتف",
+  "phone_hint": "أدخل رقم الهاتف",
+  "password_char_hint": "8 أحرف على الأقل",
+  "register_terms_start": "أوافق على ",
+  "register_terms_end": "، وأدرك أن توصيات جرعات الذكاء الاصطناعي استشارية.",
+  "verify_number_notice": "سنرسل رمزاً مكوناً من 4 أرقام للتحقق من رقمك.",
+  "create_account_button": "إنشاء حساب ←"
 }

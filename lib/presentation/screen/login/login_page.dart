@@ -140,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                                     },
                                   ),
                                 ),
-                                20.verticalSpace,
+                                18.verticalSpace,
 
                                 // ── 3. User ID Input ─────────────────────────────
                                 Padding(
@@ -153,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                                     keyboardType: TextInputType.text,
                                   ),
                                 ),
-                                16.verticalSpace,
+                                12.verticalSpace,
 
                                 // ── 4. Password Input ────────────────────────────
                                 Padding(
@@ -205,10 +205,10 @@ class _LoginPageState extends State<LoginPage> {
                                   padding: EdgeInsets.symmetric(horizontal: 24.w),
                                   child: Container(
                                     width: double.infinity,
-                                    height: 48.h,
+                                    height: 42.h,
                                     decoration: BoxDecoration(
                                       color: AppColors.primaryBlue,
-                                      borderRadius: BorderRadius.circular(24.r),
+                                      borderRadius: BorderRadius.circular(28.r),
                                       boxShadow: const [
                                         BoxShadow(
                                           color: AppColors.cardShadow,
@@ -305,7 +305,6 @@ class _LoginPageState extends State<LoginPage> {
                                     );
                                   },
                                 ),
-                                24.verticalSpace,
                               ],
                             ),
                           ),

@@ -37,7 +37,7 @@ class CustomShadowTextField extends StatelessWidget {
         8.verticalSpace,
         Container(
           width: double.infinity,
-          height: 52.h,
+          height: 48.h,
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(26.r),

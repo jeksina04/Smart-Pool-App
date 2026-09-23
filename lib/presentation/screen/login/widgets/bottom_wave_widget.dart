@@ -18,8 +18,13 @@ class BottomWaveWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bottomSafeInset = MediaQuery.of(context).padding.bottom;
     return Padding(
-      padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 24.h),
+      padding: EdgeInsets.only(
+        left: 16.w,
+        right: 16.w,
+        bottom: 18.h + bottomSafeInset,
+      ),
       child: role == UserRole.customer
           ? _buildCustomerFooter(context)
           : _buildTechnicianFooter(context),

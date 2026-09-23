@@ -44,6 +44,10 @@ abstract class AppColors {
   static const Color waveLight = Color(0xFFD3E7F8);
   static const Color waveMedium = Color(0xFF7CB8EC);
 
+  /// Info banner colors for registration screen
+  static const Color infoBannerText = Color(0xFF0D5BC4);
+  static const Color infoBannerBg = Color(0xFFE9EEFC);
+
   static const List<Color> onboardingBackgroundGradient = [
     gradientStart,
     gradientMiddle,
