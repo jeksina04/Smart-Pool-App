@@ -57,5 +57,11 @@
   "send_otp_button": "إرسال الرمز",
   "code_sent_resend_in": "تم إرسال الرمز · إعادة الإرسال خلال {time}",
   "enter_the_4_digit_code": "أدخل الرمز المكون من 4 أرقام",
-  "verify_button": "تحقق ←"
+  "verify_button": "تحقق ←",
+  "new_password_title": "كلمة مرور جديدة",
+  "new_password_subtitle": "تم التحقق من رقمك. اختر كلمة مرور جديدة لحسابك.",
+  "new_password_label": "كلمة المرور الجديدة",
+  "confirm_new_password_label": "تأكيد كلمة المرور الجديدة",
+  "type_it_again_hint": "أعد كتابتها مرة أخرى",
+  "save_password_button": "حفظ كلمة المرور"
 }

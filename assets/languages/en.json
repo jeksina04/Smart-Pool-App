@@ -57,5 +57,11 @@
   "send_otp_button": "Send OTP",
   "code_sent_resend_in": "Code sent · resend in {time}",
   "enter_the_4_digit_code": "Enter the 4-digit code",
-  "verify_button": "Verify →"
+  "verify_button": "Verify →",
+  "new_password_title": "New password",
+  "new_password_subtitle": "Your number is verified. Choose a new password for your account.",
+  "new_password_label": "New password",
+  "confirm_new_password_label": "Confirm new password",
+  "type_it_again_hint": "Type it again",
+  "save_password_button": "Save password"
 }

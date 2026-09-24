@@ -78,8 +78,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       return;
     }
 
-    _toast.successToast(context, 'Code verified successfully!');
-    _navigation.pushReplacement(Routes.login);
+    _navigation.push(Routes.newPassword);
   }
 
   @override
