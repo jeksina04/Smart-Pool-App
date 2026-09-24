@@ -12,4 +12,5 @@ abstract class AppAssets {
   static const String icBack = 'assets/drawables/ic_back.svg';
   static const String icEmail = 'assets/drawables/ic_email.svg';
   static const String icPhone = 'assets/drawables/ic_phone.svg';
+  static const String icVerifyNumber = 'assets/drawables/ic_verify_number.svg';
 }

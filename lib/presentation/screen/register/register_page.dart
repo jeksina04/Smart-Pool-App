@@ -9,6 +9,7 @@ import '../../../../util/app_assets.dart';
 import '../../../../util/app_colors.dart';
 import '../../../../util/app_typography.dart';
 import '../login/widgets/custom_shadow_text_field.dart';
+import '../verify/verify_number_args.dart';
 import 'widgets/homeowner_info_banner.dart';
 import 'widgets/register_terms_checkbox.dart';
 
@@ -80,7 +81,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
       return;
     }
 
-    _toast.successToast(context, 'Verification code sent to $phone');
+    _navigation.push(
+      Routes.verifyNumber,
+      arguments: VerifyNumberArgs(
+        phoneNumber: phone,
+        fullName: name,
+        email: email,
+      ),
+    );
   }
 
   @override

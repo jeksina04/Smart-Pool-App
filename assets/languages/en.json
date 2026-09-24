@@ -42,5 +42,13 @@
   "register_terms_start": "I accept the ",
   "register_terms_end": ", and understand AI dosage recommendations are advisory.",
   "verify_number_notice": "We'll text a 4-digit code to verify your number.",
-  "create_account_button": "Create Account →"
+  "create_account_button": "Create Account →",
+  "verify_your_number": "Verify Your Number",
+  "code_sent_to": "Enter the 4-digit code sent to",
+  "edit": "Edit",
+  "autofill_messages_notice": "Enter the 4 digits — the code fills in automatically from Messages on most phones.",
+  "verify_and_create_account_button": "Verify & Create Account →",
+  "dont_receive_code": "Don't receive the code? ",
+  "resend_in": "Resend in {time}",
+  "resend_code": "Resend"
 }

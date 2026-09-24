@@ -211,4 +211,68 @@ abstract class AppTypography {
         fontWeight: FontWeight.w400,
         color: AppColors.textGrey,
       );
+
+  /// "Verify Your Number" title: size 28, weight 800, color #0F2A3F
+  static TextStyle get verifyTitle => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 28.sp,
+        fontWeight: FontWeight.w800,
+        color: AppColors.darkNavy,
+      );
+
+  /// "Enter the 4-digit code sent to" subtitle: size 13, weight 400, color #5F6C7A
+  static TextStyle get verifySubtitle => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 13.sp,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textGrey,
+      );
+
+  /// Phone number display: size 15, weight 600, color #0F2A3F
+  static TextStyle get phoneDisplay => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 15.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.darkNavy,
+      );
+
+  /// "Edit" link next to phone: size 15, weight 600, color #1668D6
+  static TextStyle get phoneEdit => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 15.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.primaryBlue,
+      );
+
+  /// OTP input digit text: size 24, weight 700, color #0F2A3F
+  static TextStyle get otpDigitText => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 24.sp,
+        fontWeight: FontWeight.w700,
+        color: AppColors.darkNavy,
+      );
+
+  /// "Enter the 4 digits — the code fills in automatically from Messages on most phones." size 11, weight 500, color #5F6C7A
+  static TextStyle get autoFillNotice => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 11.sp,
+        fontWeight: FontWeight.w500,
+        color: AppColors.textGrey,
+      );
+
+  /// "Don't receive the code? " size 11, weight 500, color #5F6C7A
+  static TextStyle get resendNormal => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 11.sp,
+        fontWeight: FontWeight.w500,
+        color: AppColors.textGrey,
+      );
+
+  /// "Resend in 00:30" / "Resend" size 11, weight 700, color #1668D6
+  static TextStyle get resendHighlight => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 11.sp,
+        fontWeight: FontWeight.w700,
+        color: AppColors.primaryBlue,
+      );
 }
