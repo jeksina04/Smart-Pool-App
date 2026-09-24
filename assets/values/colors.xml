@@ -10,4 +10,6 @@
     <color name="google_blue">#4285F4</color>
     <color name="info_banner_text">#0D5BC4</color>
     <color name="info_banner_bg">#E9EEFC</color>
+    <color name="timer_button_bg">#D8DFE7</color>
+    <color name="timer_button_text">#A9B4BF</color>
 </resources>

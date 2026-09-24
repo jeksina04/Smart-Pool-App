@@ -48,6 +48,10 @@ abstract class AppColors {
   static const Color infoBannerText = Color(0xFF0D5BC4);
   static const Color infoBannerBg = Color(0xFFE9EEFC);
 
+  /// Timer disabled button colors
+  static const Color timerButtonBg = Color(0xFFD8DFE7);
+  static const Color timerButtonText = Color(0xFFA9B4BF);
+
   static const List<Color> onboardingBackgroundGradient = [
     gradientStart,
     gradientMiddle,

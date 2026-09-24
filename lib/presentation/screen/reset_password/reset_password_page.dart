@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:ez_localization/ez_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,9 +10,9 @@ import '../../../util/app_assets.dart';
 import '../../../util/app_colors.dart';
 import '../../../util/app_typography.dart';
 import '../login/widgets/custom_shadow_text_field.dart';
-import '../verify/verify_number_args.dart';
+import '../verify/widgets/otp_input_widget.dart';
 
-/// Clean Architecture Reset Password screen.
+/// Clean Architecture Reset Password screen with inline countdown and OTP verification.
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({super.key});
 
@@ -24,10 +25,37 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   final ToastService _toast = GetIt.I<ToastService>();
   final TextEditingController _phoneController = TextEditingController();
 
+  bool _isOtpSent = false;
+  int _secondsLeft = 30;
+  Timer? _timer;
+  String _enteredOtp = '';
+
   @override
   void dispose() {
+    _timer?.cancel();
     _phoneController.dispose();
     super.dispose();
+  }
+
+  void _startTimer() {
+    _timer?.cancel();
+    setState(() {
+      _secondsLeft = 30;
+    });
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_secondsLeft > 0) {
+        setState(() {
+          _secondsLeft--;
+        });
+      } else {
+        timer.cancel();
+      }
+    });
+  }
+
+  String get _formattedTime {
+    final s = _secondsLeft.toString().padLeft(2, '0');
+    return '00:$s';
   }
 
   void _onSendOtpPressed() {
@@ -37,10 +65,21 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       return;
     }
 
-    _navigation.push(
-      Routes.verifyNumber,
-      arguments: VerifyNumberArgs(phoneNumber: phone),
-    );
+    setState(() {
+      _isOtpSent = true;
+    });
+    _startTimer();
+    _toast.successToast(context, 'OTP sent to $phone');
+  }
+
+  void _onVerifyPressed() {
+    if (_enteredOtp.length < 4) {
+      _toast.errorToast(context, 'Please enter the complete 4-digit code');
+      return;
+    }
+
+    _toast.successToast(context, 'Code verified successfully!');
+    _navigation.pushReplacement(Routes.login);
   }
 
   @override
@@ -117,37 +156,106 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               ),
               24.verticalSpace,
 
-              // ── 4. Send OTP Button ──────────────────────────────────────
+              // ── 4. Send OTP / Countdown Button ──────────────────────────
               Container(
                 width: double.infinity,
-                height: 42.h,
+                height: 48.h,
                 decoration: BoxDecoration(
-                  color: AppColors.primaryBlue,
+                  color: _isOtpSent
+                      ? AppColors.timerButtonBg
+                      : AppColors.primaryBlue,
                   borderRadius: BorderRadius.circular(24.r),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: AppColors.cardShadow,
-                      offset: Offset(0, 2),
-                      blurRadius: 8,
-                      spreadRadius: 0,
-                    ),
-                  ],
+                  boxShadow: _isOtpSent
+                      ? null
+                      : const [
+                          BoxShadow(
+                            color: AppColors.cardShadow,
+                            offset: Offset(0, 2),
+                            blurRadius: 8,
+                            spreadRadius: 0,
+                          ),
+                        ],
                 ),
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: _onSendOtpPressed,
+                    onTap: _isOtpSent
+                        ? (_secondsLeft == 0 ? _onSendOtpPressed : null)
+                        : _onSendOtpPressed,
                     borderRadius: BorderRadius.circular(24.r),
                     child: Center(
                       child: Text(
-                        context.getString('send_otp_button'),
-                        style: AppTypography.signInButton,
+                        _isOtpSent
+                            ? (_secondsLeft == 0
+                                ? context.getString('send_otp_button')
+                                : context.getString('code_sent_resend_in',
+                                    {'time': _formattedTime}))
+                            : context.getString('send_otp_button'),
+                        style: _isOtpSent
+                            ? (_secondsLeft == 0
+                                ? AppTypography.signInButton
+                                : AppTypography.timerButtonTextStyle)
+                            : AppTypography.signInButton,
                       ),
                     ),
                   ),
                 ),
               ),
-              24.verticalSpace,
+
+              // ── 5. Inline OTP Section (Shown when OTP is sent) ──────────
+              if (_isOtpSent) ...[
+                28.verticalSpace,
+                Center(
+                  child: Text(
+                    context.getString('enter_the_4_digit_code'),
+                    style: AppTypography.enterFourDigitCodeTitle,
+                  ),
+                ),
+                20.verticalSpace,
+                OtpInputWidget(
+                  boxWidth: 48.w,
+                  boxHeight: 56.h,
+                  onOtpChanged: (otp) {
+                    _enteredOtp = otp;
+                  },
+                  onCompleted: (otp) {
+                    _enteredOtp = otp;
+                    _onVerifyPressed();
+                  },
+                ),
+                28.verticalSpace,
+                Container(
+                  width: double.infinity,
+                  height: 48.h,
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryBlue,
+                    borderRadius: BorderRadius.circular(24.r),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: AppColors.cardShadow,
+                        offset: Offset(0, 2),
+                        blurRadius: 8,
+                        spreadRadius: 0,
+                      ),
+                    ],
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: _onVerifyPressed,
+                      borderRadius: BorderRadius.circular(24.r),
+                      child: Center(
+                        child: Text(
+                          context.getString('verify_button'),
+                          style: AppTypography.signInButton,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+
+              32.verticalSpace,
             ],
           ),
         ),

@@ -275,4 +275,20 @@ abstract class AppTypography {
         fontWeight: FontWeight.w700,
         color: AppColors.primaryBlue,
       );
+
+  /// "Enter the 4-digit code" heading: size 18, weight 800, color #0F2A3F
+  static TextStyle get enterFourDigitCodeTitle => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 18.sp,
+        fontWeight: FontWeight.w800,
+        color: AppColors.darkNavy,
+      );
+
+  /// Timer disabled button text: size 16, weight 700, color #A9B4BF
+  static TextStyle get timerButtonTextStyle => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w700,
+        color: AppColors.timerButtonText,
+      );
 }

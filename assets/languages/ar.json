@@ -54,5 +54,8 @@
   "reset_password_title": "إعادة تعيين كلمة المرور",
   "reset_password_subtitle": "أدخل رقم هاتفك المحمول المسجل وسنرسل لك رمزاً لمرة واحدة.",
   "mobile_number_label": "رقم الهاتف المحمول",
-  "send_otp_button": "إرسال الرمز"
+  "send_otp_button": "إرسال الرمز",
+  "code_sent_resend_in": "تم إرسال الرمز · إعادة الإرسال خلال {time}",
+  "enter_the_4_digit_code": "أدخل الرمز المكون من 4 أرقام",
+  "verify_button": "تحقق ←"
 }

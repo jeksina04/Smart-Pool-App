@@ -54,5 +54,8 @@
   "reset_password_title": "Reset password",
   "reset_password_subtitle": "Enter the mobile number on your account and we'll text you a one-time code.",
   "mobile_number_label": "Mobile number",
-  "send_otp_button": "Send OTP"
+  "send_otp_button": "Send OTP",
+  "code_sent_resend_in": "Code sent · resend in {time}",
+  "enter_the_4_digit_code": "Enter the 4-digit code",
+  "verify_button": "Verify →"
 }

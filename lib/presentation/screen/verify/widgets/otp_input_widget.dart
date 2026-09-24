@@ -8,11 +8,15 @@ import '../../../../util/app_typography.dart';
 class OtpInputWidget extends StatefulWidget {
   final ValueChanged<String> onOtpChanged;
   final ValueChanged<String>? onCompleted;
+  final double? boxWidth;
+  final double? boxHeight;
 
   const OtpInputWidget({
     super.key,
     required this.onOtpChanged,
     this.onCompleted,
+    this.boxWidth,
+    this.boxHeight,
   });
 
   @override
@@ -93,8 +97,8 @@ class _OtpInputWidgetState extends State<OtpInputWidget> {
         final hasValue = _controllers[index].text.isNotEmpty;
 
         return Container(
-          width: 58.w,
-          height: 64.h,
+          width: widget.boxWidth ?? 58.w,
+          height: widget.boxHeight ?? 64.h,
           margin: EdgeInsets.symmetric(horizontal: 6.w),
           decoration: BoxDecoration(
             color: AppColors.white,
