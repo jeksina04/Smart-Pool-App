@@ -282,8 +282,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Center(
                                   child: GestureDetector(
                                     onTap: () {
-                                      _toast.successToast(
-                                          context, 'Forgot password tapped');
+                                      _navigation.push(Routes.resetPassword);
                                     },
                                     child: Text(
                                       context.getString('forgot_password'),

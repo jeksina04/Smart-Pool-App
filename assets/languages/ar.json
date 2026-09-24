@@ -50,5 +50,9 @@
   "verify_and_create_account_button": "التحقق وإنشاء الحساب ←",
   "dont_receive_code": "لم تستلم الرمز؟ ",
   "resend_in": "إعادة الإرسال خلال {time}",
-  "resend_code": "إعادة الإرسال"
+  "resend_code": "إعادة الإرسال",
+  "reset_password_title": "إعادة تعيين كلمة المرور",
+  "reset_password_subtitle": "أدخل رقم هاتفك المحمول المسجل وسنرسل لك رمزاً لمرة واحدة.",
+  "mobile_number_label": "رقم الهاتف المحمول",
+  "send_otp_button": "إرسال الرمز"
 }

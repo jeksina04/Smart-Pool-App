@@ -5,6 +5,7 @@ import 'package:flutter_skeleton/presentation/screen/register/register_page.dart
 import '../screen/init_page.dart';
 import '../screen/onboarding/onboarding_page.dart';
 import '../screen/register/register_args.dart';
+import '../screen/reset_password/reset_password_page.dart';
 import '../screen/verify/verify_number_args.dart';
 import '../screen/verify/verify_number_page.dart';
 
@@ -14,6 +15,7 @@ class Routes {
   static const String login = 'login';
   static const String register = 'register';
   static const String verifyNumber = 'verify_number';
+  static const String resetPassword = 'reset_password';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -35,6 +37,9 @@ Route? onGenerateRoute(RouteSettings settings) {
     case Routes.verifyNumber:
       var args = settings.arguments as VerifyNumberArgs;
       page = VerifyNumberPage(args: args);
+      break;
+    case Routes.resetPassword:
+      page = const ResetPasswordPage();
       break;
   }
 

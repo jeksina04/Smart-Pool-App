@@ -50,5 +50,9 @@
   "verify_and_create_account_button": "Verify & Create Account →",
   "dont_receive_code": "Don't receive the code? ",
   "resend_in": "Resend in {time}",
-  "resend_code": "Resend"
+  "resend_code": "Resend",
+  "reset_password_title": "Reset password",
+  "reset_password_subtitle": "Enter the mobile number on your account and we'll text you a one-time code.",
+  "mobile_number_label": "Mobile number",
+  "send_otp_button": "Send OTP"
 }
