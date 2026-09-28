@@ -1,4 +1,5 @@
-enum UserRole { customer, technician }
+import 'package:flutter_skeleton/domain/model/login_model.dart';
+export 'package:flutter_skeleton/domain/model/login_model.dart' show UserRole;
 
 abstract class LoginEvent {}
 
@@ -13,9 +14,11 @@ class ToggleTermsEvent extends LoginEvent {
 }
 
 class UserLoginEvent extends LoginEvent {
-  final String userId;
+  final String email;
   final String password;
   final UserRole role;
 
-  UserLoginEvent(this.userId, this.password, {this.role = UserRole.customer});
+  String get userId => email;
+
+  UserLoginEvent(this.email, this.password, {this.role = UserRole.customer});
 }

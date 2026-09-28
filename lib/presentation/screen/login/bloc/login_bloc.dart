@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import '../../../../data/storage/storage.dart';
 import '../../../../domain/interactor/interactor.dart';
+import '../../../../domain/model/login_model.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 
@@ -30,14 +33,30 @@ class LoginBloc extends Bloc<LoginEvent, UiState> {
       ));
 
       try {
-        var data = await _interactor.login.invoke(event.userId, event.password);
-        emit(SuccessState(
+        var data = await _interactor.login.invoke(
+          role: event.role,
+          email: event.email,
+          password: event.password,
+        );
+
+        if (data.data?.accessToken != null &&
+            data.data!.accessToken!.isNotEmpty) {
+          final storage = GetIt.I.get<StorageService>();
+          storage.authToken = data.data!.accessToken!;
+          if (data.data?.refreshToken != null) {
+            storage.refreshToken = data.data!.refreshToken!;
+          }
+          storage.userInfo = data;
+        }
+
+        emit(SuccessState<LoginResModel>(
           data,
           role: event.role,
           isTermsAccepted: state.isTermsAccepted,
         ));
       } catch (e) {
-        String errorMsg = e is HttpException ? e.message : 'Login failed. Please try again.';
+        String errorMsg =
+            e is HttpException ? e.message : 'Login failed. Please try again.';
         emit(ErrorState(
           errorMsg,
           role: event.role,

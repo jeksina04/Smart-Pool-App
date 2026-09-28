@@ -21,6 +21,14 @@ class StorageService {
     GetIt.I.get<ApiService>().setAuthToken(token);
   }
 
+  String get refreshToken {
+    return _box.get(refreshTokenKey) ?? "";
+  }
+
+  set refreshToken(String token) {
+    _box.put(refreshTokenKey, token);
+  }
+
   Locale get appLocale {
     return Locale(_box.get(appLocaleKey) ?? "en");
   }
@@ -29,12 +37,22 @@ class StorageService {
     _box.put(appLocaleKey, locale.languageCode);
   }
 
-  LoginResModel get userInfo {
-    return LoginResModel.fromJson(json.decode(_box.get(userInfoKey)));
+  LoginResModel? get userInfo {
+    final raw = _box.get(userInfoKey);
+    if (raw == null) return null;
+    try {
+      return LoginResModel.fromJson(json.decode(raw));
+    } catch (_) {
+      return null;
+    }
   }
 
-  set userInfo(LoginResModel loginModel) {
-    _box.put(userInfo, json.encode(loginModel.toJson()));
+  set userInfo(LoginResModel? loginModel) {
+    if (loginModel == null) {
+      _box.delete(userInfoKey);
+    } else {
+      _box.put(userInfoKey, json.encode(loginModel.toJson()));
+    }
   }
 
   clear() async => await _box.clear();

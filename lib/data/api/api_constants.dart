@@ -1,7 +1,8 @@
-const String baseUrl = "https://jsonplaceholder.typicode.com/";
+const String baseUrl = "http://176.57.189.222";
 
-//end url
-const String loginApi = "posts/1";
+// Endpoints
+const String login = "/api/mob/login";
+const String loginApi = login;
 
-//req code
+// Request codes
 const int loginApiReq = 1;

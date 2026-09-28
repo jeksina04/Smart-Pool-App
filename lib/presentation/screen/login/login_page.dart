@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import '../../../../util/app_assets.dart';
 import '../../../../util/app_colors.dart';
 import '../../../../util/app_typography.dart';
+import '../../../domain/model/login_model.dart';
 import '../../custom/custom_bloc_consumer.dart';
 import '../register/register_args.dart';
 import 'bloc/login_bloc.dart';
@@ -50,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
     final password = _passwordController.text.trim();
 
     if (userId.isEmpty) {
-      _toast.errorToast(context, 'Please enter your User ID');
+      _toast.errorToast(context, 'Please enter your Email or User ID');
       return;
     }
     if (password.isEmpty) {
@@ -79,10 +80,14 @@ class _LoginPageState extends State<LoginPage> {
       child: CustomBlocConsumer<LoginBloc, UiState>(
         listener: (context, state) {
           if (state is SuccessState) {
-            _navigation.push(
-              Routes.register,
-              arguments: RegisterArgs(_userIdController.text.trim()),
-            );
+            final res = state.loginResponse;
+            String? msg;
+            if (res is LoginResModel) {
+              msg = res.data?.message ?? res.message;
+            }
+            if (msg != null && msg.isNotEmpty) {
+              _toast.successToast(context, msg);
+            }
           }
         },
         builder: (context, state) {
@@ -150,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                                     hintText: context.getString('enter_user_id_hint'),
                                     iconAsset: AppAssets.icUserId,
                                     controller: _userIdController,
-                                    keyboardType: TextInputType.text,
+                                    keyboardType: TextInputType.emailAddress,
                                   ),
                                 ),
                                 12.verticalSpace,
