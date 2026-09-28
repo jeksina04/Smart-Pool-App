@@ -14,7 +14,13 @@ import 'package:hive_flutter/adapters.dart';
 
 import 'data/storage/storage_constants.dart';
 import 'domain/interactor/login_interactor.dart';
+import 'domain/interactor/otp_interactor.dart';
+import 'domain/interactor/register_interactor.dart';
 import 'domain/repo/login_repo.dart';
+import 'domain/repo/otp_repo.dart';
+import 'domain/repo/register_repo.dart';
+import 'presentation/screen/register/data_source/register_data_source_impl.dart';
+import 'presentation/screen/verify/data_source/otp_data_source_impl.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,6 +67,21 @@ void registerDi() {
   getIt.registerLazySingleton<MiscService>(() => MiscService());
 
   //interactors
-  getIt.registerSingleton<Login>(Login(LoginRepo(LoginDataSourceImpl())));
-  getIt.registerLazySingleton<Interactor>(() => Interactor(getIt.get()));
+  final login = Login(LoginRepo(LoginDataSourceImpl()));
+  final otpRepo = OtpRepo(OtpDataSourceImpl());
+  final sendOtp = SendOtp(otpRepo);
+  final verifyOtp = VerifyOtp(otpRepo);
+  final registerUser = RegisterUser(RegisterRepo(RegisterDataSourceImpl()));
+
+  getIt.registerSingleton<Login>(login);
+  getIt.registerSingleton<SendOtp>(sendOtp);
+  getIt.registerSingleton<VerifyOtp>(verifyOtp);
+  getIt.registerSingleton<RegisterUser>(registerUser);
+
+  getIt.registerLazySingleton<Interactor>(() => Interactor(
+        login,
+        sendOtp: sendOtp,
+        verifyOtp: verifyOtp,
+        register: registerUser,
+      ));
 }

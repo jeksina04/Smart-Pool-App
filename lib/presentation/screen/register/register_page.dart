@@ -1,15 +1,23 @@
 import 'package:ez_localization/ez_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_skeleton/domain/interactor/interactor.dart';
+import 'package:flutter_skeleton/domain/model/otp_model.dart';
 import 'package:flutter_skeleton/presentation/service/navigation.dart';
 import 'package:flutter_skeleton/presentation/service/toast.dart';
 import 'package:get_it/get_it.dart';
 import '../../../../util/app_assets.dart';
 import '../../../../util/app_colors.dart';
 import '../../../../util/app_typography.dart';
+import '../../custom/custom_bloc_consumer.dart';
+import '../login/bloc/login_state.dart';
 import '../login/widgets/custom_shadow_text_field.dart';
 import '../verify/verify_number_args.dart';
+import 'bloc/register_bloc.dart';
+import 'bloc/register_event.dart';
+import 'bloc/register_state.dart';
 import 'widgets/homeowner_info_banner.dart';
 import 'widgets/register_terms_checkbox.dart';
 
@@ -54,7 +62,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     super.dispose();
   }
 
-  void _onCreateAccountPressed() {
+  void _onCreateAccountPressed(BuildContext context) {
     final name = _nameController.text.trim();
     final email = _emailController.text.trim();
     final phone = _phoneController.text.trim();
@@ -81,40 +89,193 @@ class _RegistrationPageState extends State<RegistrationPage> {
       return;
     }
 
-    _navigation.push(
-      Routes.verifyNumber,
-      arguments: VerifyNumberArgs(
-        phoneNumber: phone,
-        fullName: name,
-        email: email,
-      ),
-    );
+    context.read<RegisterBloc>().add(
+          RegisterSendOtpEvent(
+            fullName: name,
+            email: email,
+            phone: phone,
+            password: password,
+          ),
+        );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF9FBFE),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              16.verticalSpace,
+    return BlocProvider(
+      create: (_) => RegisterBloc(GetIt.I.get<Interactor>()),
+      child: CustomBlocConsumer<RegisterBloc, UiState>(
+        listener: (context, state) {
+          if (state is RegisterOtpSentSuccessState) {
+            final msg = state.loginResponse.data?.message ??
+                state.loginResponse.message;
+            if (msg != null && msg.isNotEmpty) {
+              _toast.successToast(context, msg);
+            }
+            _navigation.push(
+              Routes.verifyNumber,
+              arguments: VerifyNumberArgs(
+                phoneNumber: state.phone,
+                fullName: state.fullName,
+                email: state.email,
+                password: state.password,
+                maskedPhone: state.loginResponse.data?.maskedPhone,
+                resendInSeconds: state.loginResponse.data?.resendInSeconds,
+                purpose: OtpPurpose.register,
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          final bool isLoading = state is LoadingState;
 
-              // ── 1. Top Bar Header (Back button + Centered Title) ────────
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () => _navigation.pop(),
-                    child: Container(
-                      width: 36.w,
-                      height: 36.w,
-                      decoration: const BoxDecoration(
-                        color: AppColors.white,
-                        shape: BoxShape.circle,
-                        boxShadow: [
+          return Scaffold(
+            backgroundColor: const Color(0xFFF9FBFE),
+            body: SafeArea(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    16.verticalSpace,
+
+                    // ── 1. Top Bar Header (Back button + Centered Title) ────────
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () => _navigation.pop(),
+                          child: Container(
+                            width: 36.w,
+                            height: 36.w,
+                            decoration: const BoxDecoration(
+                              color: AppColors.white,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.cardShadow,
+                                  offset: Offset(0, 2),
+                                  blurRadius: 8,
+                                  spreadRadius: 0,
+                                ),
+                              ],
+                            ),
+                            alignment: Alignment.center,
+                            child: SvgPicture.asset(
+                              AppAssets.icBack,
+                              width: 16.w,
+                              height: 16.w,
+                              colorFilter: const ColorFilter.mode(
+                                AppColors.darkNavy,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Center(
+                            child: Text(
+                              context.getString('create_account_title'),
+                              style: AppTypography.topBarTitle,
+                            ),
+                          ),
+                        ),
+                        36.horizontalSpace, // Balancing spacing to keep title center-aligned
+                      ],
+                    ),
+                    20.verticalSpace,
+
+                    // ── 2. Top Info Banner ─────────────────────────────────────
+                    const HomeownerInfoBanner(),
+                    20.verticalSpace,
+
+                    // ── 3. Full Name Input ─────────────────────────────────────
+                    CustomShadowTextField(
+                      label: context.getString('full_name_label'),
+                      hintText: context.getString('full_name_hint'),
+                      iconAsset: AppAssets.icUserId,
+                      controller: _nameController,
+                      keyboardType: TextInputType.name,
+                    ),
+                    14.verticalSpace,
+
+                    // ── 4. Email Input ─────────────────────────────────────────
+                    CustomShadowTextField(
+                      label: context.getString('email_label'),
+                      hintText: context.getString('email_hint'),
+                      iconAsset: AppAssets.icEmail,
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    14.verticalSpace,
+
+                    // ── 5. Phone Input ─────────────────────────────────────────
+                    CustomShadowTextField(
+                      label: context.getString('phone_label'),
+                      hintText: context.getString('phone_hint'),
+                      iconAsset: AppAssets.icPhone,
+                      controller: _phoneController,
+                      keyboardType: TextInputType.phone,
+                    ),
+                    14.verticalSpace,
+
+                    // ── 6. Password Input ──────────────────────────────────────
+                    CustomShadowTextField(
+                      label: context.getString('password_label'),
+                      hintText: context.getString('password_char_hint'),
+                      iconAsset: AppAssets.icPassword,
+                      controller: _passwordController,
+                      obscureText: !_isPasswordVisible,
+                      trailing: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                        child: Icon(
+                          _isPasswordVisible
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                          size: 20.w,
+                          color: AppColors.textGrey,
+                        ),
+                      ),
+                    ),
+                    18.verticalSpace,
+
+                    // ── 7. Terms & AI Advisory Checkbox ────────────────────────
+                    RegisterTermsCheckbox(
+                      isAccepted: _isTermsAccepted,
+                      onChanged: (accepted) {
+                        setState(() {
+                          _isTermsAccepted = accepted;
+                        });
+                      },
+                      onPrivacyPolicyTap: () {
+                        _toast.successToast(context, 'Privacy Policy');
+                      },
+                      onTermsOfServiceTap: () {
+                        _toast.successToast(context, 'Terms of Service');
+                      },
+                    ),
+                    24.verticalSpace,
+
+                    // ── 8. Verification Notice Text ────────────────────────────
+                    Center(
+                      child: Text(
+                        context.getString('verify_number_notice'),
+                        style: AppTypography.verifyNoticeText,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    16.verticalSpace,
+
+                    // ── 9. Create Account Button ───────────────────────────────
+                    Container(
+                      width: double.infinity,
+                      height: 42.h,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryBlue,
+                        borderRadius: BorderRadius.circular(28.r),
+                        boxShadow: const [
                           BoxShadow(
                             color: AppColors.cardShadow,
                             offset: Offset(0, 2),
@@ -123,150 +284,36 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                         ],
                       ),
-                      alignment: Alignment.center,
-                      child: SvgPicture.asset(
-                        AppAssets.icBack,
-                        width: 16.w,
-                        height: 16.w,
-                        colorFilter: const ColorFilter.mode(
-                          AppColors.darkNavy,
-                          BlendMode.srcIn,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: isLoading ? null : () => _onCreateAccountPressed(context),
+                          borderRadius: BorderRadius.circular(24.r),
+                          child: Center(
+                            child: isLoading
+                                ? SizedBox(
+                                    width: 22.w,
+                                    height: 22.w,
+                                    child: const CircularProgressIndicator(
+                                      strokeWidth: 2.5,
+                                      color: AppColors.white,
+                                    ),
+                                  )
+                                : Text(
+                                    context.getString('create_account_button'),
+                                    style: AppTypography.signInButton,
+                                  ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                        context.getString('create_account_title'),
-                        style: AppTypography.topBarTitle,
-                      ),
-                    ),
-                  ),
-                  36.horizontalSpace, // Balancing spacing to keep title center-aligned
-                ],
-              ),
-              20.verticalSpace,
-
-              // ── 2. Homeowners Info Banner ──────────────────────────────
-              const HomeownerInfoBanner(),
-              20.verticalSpace,
-
-              // ── 3. Full Name Input ─────────────────────────────────────
-              CustomShadowTextField(
-                label: context.getString('full_name_label'),
-                hintText: context.getString('full_name_hint'),
-                iconAsset: AppAssets.icCustomer,
-                controller: _nameController,
-                keyboardType: TextInputType.name,
-              ),
-              12.verticalSpace,
-
-              // ── 4. Email Input ─────────────────────────────────────────
-              CustomShadowTextField(
-                label: context.getString('email_label'),
-                hintText: context.getString('email_hint'),
-                iconAsset: AppAssets.icEmail,
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              12.verticalSpace,
-
-              // ── 5. Phone Input ─────────────────────────────────────────
-              CustomShadowTextField(
-                label: context.getString('phone_label'),
-                hintText: context.getString('phone_hint'),
-                iconAsset: AppAssets.icPhone,
-                controller: _phoneController,
-                keyboardType: TextInputType.phone,
-              ),
-              12.verticalSpace,
-
-              // ── 6. Password Input ──────────────────────────────────────
-              CustomShadowTextField(
-                label: context.getString('password_label'),
-                hintText: context.getString('password_char_hint'),
-                iconAsset: AppAssets.icPassword,
-                controller: _passwordController,
-                obscureText: !_isPasswordVisible,
-                trailing: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _isPasswordVisible = !_isPasswordVisible;
-                    });
-                  },
-                  child: Icon(
-                    _isPasswordVisible
-                        ? Icons.visibility_outlined
-                        : Icons.visibility_off_outlined,
-                    size: 20.w,
-                    color: AppColors.textGrey,
-                  ),
-                ),
-              ),
-              18.verticalSpace,
-
-              // ── 7. Terms & AI Advisory Checkbox ────────────────────────
-              RegisterTermsCheckbox(
-                isAccepted: _isTermsAccepted,
-                onChanged: (accepted) {
-                  setState(() {
-                    _isTermsAccepted = accepted;
-                  });
-                },
-                onPrivacyPolicyTap: () {
-                  _toast.successToast(context, 'Privacy Policy');
-                },
-                onTermsOfServiceTap: () {
-                  _toast.successToast(context, 'Terms of Service');
-                },
-              ),
-              24.verticalSpace,
-
-              // ── 8. Verification Notice Text ────────────────────────────
-              Center(
-                child: Text(
-                  context.getString('verify_number_notice'),
-                  style: AppTypography.verifyNoticeText,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              16.verticalSpace,
-
-              // ── 9. Create Account Button ───────────────────────────────
-              Container(
-                width: double.infinity,
-                height: 42.h,
-                decoration: BoxDecoration(
-                  color: AppColors.primaryBlue,
-                  borderRadius: BorderRadius.circular(28.r),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: AppColors.cardShadow,
-                      offset: Offset(0, 2),
-                      blurRadius: 8,
-                      spreadRadius: 0,
-                    ),
+                    32.verticalSpace,
                   ],
                 ),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: _onCreateAccountPressed,
-                    borderRadius: BorderRadius.circular(24.r),
-                    child: Center(
-                      child: Text(
-                        context.getString('create_account_button'),
-                        style: AppTypography.signInButton,
-                      ),
-                    ),
-                  ),
-                ),
               ),
-              32.verticalSpace,
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

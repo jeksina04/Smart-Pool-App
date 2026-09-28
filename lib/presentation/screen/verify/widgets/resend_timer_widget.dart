@@ -6,10 +6,12 @@ import '../../../../util/app_typography.dart';
 /// Resend OTP code row with active countdown timer.
 class ResendTimerWidget extends StatefulWidget {
   final VoidCallback onResend;
+  final int initialSeconds;
 
   const ResendTimerWidget({
     super.key,
     required this.onResend,
+    this.initialSeconds = 30,
   });
 
   @override
@@ -17,20 +19,20 @@ class ResendTimerWidget extends StatefulWidget {
 }
 
 class _ResendTimerWidgetState extends State<ResendTimerWidget> {
-  static const int _initialSeconds = 30;
-  int _secondsLeft = _initialSeconds;
+  late int _secondsLeft;
   Timer? _timer;
 
   @override
   void initState() {
     super.initState();
+    _secondsLeft = widget.initialSeconds;
     _startTimer();
   }
 
   void _startTimer() {
     _timer?.cancel();
     setState(() {
-      _secondsLeft = _initialSeconds;
+      _secondsLeft = widget.initialSeconds;
     });
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_secondsLeft > 0) {
