@@ -291,4 +291,86 @@ abstract class AppTypography {
         fontWeight: FontWeight.w700,
         color: AppColors.timerButtonText,
       );
+
+
+  /// Notification count text: 10 sp, weight 700, color #FFFFFF
+  static TextStyle get notificationCountText => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 10.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.white,
+  );
+
+  /// Greeting title, Quick Actions text: 28sp, weight 700, color #0F2A3F
+  static TextStyle get dashboardHeading => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 28.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.darkNavy,
+  );
+
+  /// Temperature, Services header text: 16sp, weight 600, color #0F2A3F
+  static TextStyle get sectionHeader => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.darkNavy,
+  );
+
+  /// Large value text for quality card: 28sp, weight 700, color #FFFFFF
+  static TextStyle get cardValueLarge => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 28.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.white,
+  );
+
+  /// Label text for small metric cards: 13sp, weight 600, color #5F6C7A
+  static TextStyle get cardLabel => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textGrey,
+  );
+
+  /// Metric values (pH/Chlorine): 22sp, weight 700, color #0F2A3F
+  static TextStyle get metricValue => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 22.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.darkNavy,
+  );
+
+  /// Small badge/status text: 11sp, weight 600, color #4CAF50
+  static TextStyle get badgeText => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.statusGreen,
+  );
+
+  /// "Here's your pool overview", Water matrics label text: 13sp, weight 400, color #5F6C7A
+  static TextStyle get infoLabel => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.textGrey,
+  );
+
+  /// Weather, Last checked today text: 11sp, weight 500, color #FFFFFF
+  static TextStyle get infoText => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.white,
+  );
+
+  /// Services price text: 13sp, weight 700, color #5F6C7A
+  static TextStyle get priceText => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.textGrey,
+  );
+
 }

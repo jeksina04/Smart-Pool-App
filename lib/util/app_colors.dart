@@ -52,10 +52,37 @@ abstract class AppColors {
   static const Color timerButtonBg = Color(0xFFD8DFE7);
   static const Color timerButtonText = Color(0xFFA9B4BF);
 
+  /// Quick Action label color #3A4750
+  static const Color quickActionLabel = Color(0xFF3A4750);
+
   static const List<Color> onboardingBackgroundGradient = [
     gradientStart,
     gradientMiddle,
     gradientDeep,
     gradientEnd,
+  ];
+
+  /// Dashboard background light grey color `#F9FBFE`
+  static const Color dashboardBg = Color(0xFFF9FBFE);
+
+  /// Notification badge red color `#F44336`
+  static const Color notificationRed = Color(0xFFF44336);
+
+  /// Unread or Pending notification text color #A12525
+  static const Color notificationAlertText = Color(0xFFA12525);
+
+  /// Status "Normal" indicator green color `#4CAF50`
+  static const Color statusGreen = Color(0xFF4CAF50);
+
+  /// Status "Normal" pill background green color `#E8F5E9`
+  static const Color statusGreenBg = Color(0xFFE8F5E9);
+
+  /// Border color for cards and dividers `#E0E6ED`
+  static const Color cardBorder = Color(0xFFE0E6ED);
+
+  /// Linear gradient colors for the Water Quality card
+  static const List<Color> waterQualityGradient = [
+    Color(0xFF1668D6), // Primary Blue
+    Color(0xFF62A1F4), // Light Blue
   ];
 }

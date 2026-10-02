@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_skeleton/presentation/screen/login/login_page.dart';
 import 'package:flutter_skeleton/presentation/screen/register/register_page.dart';
 
+import '../screen/customer/dashboard/dashboard_page.dart';
+import '../screen/customer/history/history_page.dart';
+import '../screen/customer/profile/profile_page.dart';
+import '../screen/customer/services/services_page.dart';
 import '../screen/init_page.dart';
 import '../screen/onboarding/onboarding_page.dart';
 import '../screen/register/register_args.dart';
@@ -18,6 +22,10 @@ class Routes {
   static const String verifyNumber = 'verify_number';
   static const String resetPassword = 'reset_password';
   static const String newPassword = 'new_password';
+  static const String dashboard = 'dashboard';
+  static const String services = 'services';
+  static const String history = 'history';
+  static const String profile = 'profile';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -45,6 +53,18 @@ Route? onGenerateRoute(RouteSettings settings) {
       break;
     case Routes.newPassword:
       page = const NewPasswordPage();
+      break;
+    case Routes.dashboard:
+      page = const DashboardPage();
+      break;
+    case Routes.services:
+      page = const ServicesPage();
+      break;
+    case Routes.history:
+      page = const HistoryPage();
+      break;
+    case Routes.profile:
+      page = const ProfilePage();
       break;
   }
 
