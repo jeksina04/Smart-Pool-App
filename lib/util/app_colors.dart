@@ -74,11 +74,20 @@ abstract class AppColors {
   /// Status "Normal" indicator green color `#4CAF50`
   static const Color statusGreen = Color(0xFF4CAF50);
 
+  /// In range status text green color '#157A4C'
+  static const Color inRangeGreen = Color(0xFF157A4C);
+
   /// Status "Normal" pill background green color `#E8F5E9`
   static const Color statusGreenBg = Color(0xFFE8F5E9);
 
   /// Border color for cards and dividers `#E0E6ED`
   static const Color cardBorder = Color(0xFFE0E6ED);
+
+  /// Status "High" indicator background color `#FDF3E0`
+  static const Color statusHighBg = Color(0xFFFFF3E0);
+
+  /// Status "High" indicator text color `#8A5A00`
+  static const Color statusHighText = Color(0xFF8A5A00);
 
   /// Linear gradient colors for the Water Quality card
   static const List<Color> waterQualityGradient = [

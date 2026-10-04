@@ -27,6 +27,10 @@ class _DashboardPageState extends State<DashboardPage> {
   /// Current index for bottom navigation
   int _currentIndex = 0;
 
+  // --> Replace with actual data for pHData & ChlorineData
+  final List<double> _phData = [7.0, 7.3, 7.15, 7.5, 7.35, 7.0, 6.9, 7.1,];
+  final List<double> _chlorineData = [1.2, 1.0, 1.5, 1.8, 1.4, 1.3, 1.6, 1.4,];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +61,7 @@ class _DashboardPageState extends State<DashboardPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                16.verticalSpace,
+                10.verticalSpace,
 
                 /// User Greeting and Weather header
                 const GreetingAndWeatherSection(),
@@ -65,7 +69,10 @@ class _DashboardPageState extends State<DashboardPage> {
                 16.verticalSpace,
 
                 /// Water quality and pH/Chlorine metrics
-                const WaterMetricsSection(),
+                WaterMetricsSection(
+                  phData: _phData,
+                  chlorineData: _chlorineData,
+                ),
 
                 16.verticalSpace,
 
@@ -79,12 +86,24 @@ class _DashboardPageState extends State<DashboardPage> {
                 16.verticalSpace,
 
                 /// Grid of actionable buttons
-                const QuickActionsGrid(),
+                QuickActionsGrid(
+                  onHistoryTap: () {
+                    setState(() {
+                      _currentIndex = 2;
+                    });
+                  },
+                ),
 
                 16.verticalSpace,
 
                 /// Upcoming maintenance/service card
-                const UpcomingServiceCard(),
+                GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _currentIndex = 1;
+                      });
+                    },
+                    child: UpcomingServiceCard()),
 
                 16.verticalSpace,
 
@@ -98,7 +117,6 @@ class _DashboardPageState extends State<DashboardPage> {
       ],
     ));
   }
-
 
   /// Helper to return the correct widget based on the selected tab
   Widget _getTabContent(int index) {

@@ -373,4 +373,11 @@ abstract class AppTypography {
     color: AppColors.textGrey,
   );
 
+  /// Request a Tesr text: 16sp, weight 700, color #1668D6
+  static TextStyle get requestTestText => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.primaryBlue,
+  );
 }

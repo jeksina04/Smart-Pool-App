@@ -4,8 +4,10 @@ import 'package:flutter_skeleton/presentation/screen/register/register_page.dart
 
 import '../screen/customer/dashboard/dashboard_page.dart';
 import '../screen/customer/history/history_page.dart';
+import '../screen/customer/pool_health/pool_health_page.dart';
 import '../screen/customer/profile/profile_page.dart';
 import '../screen/customer/services/services_page.dart';
+import '../screen/customer/water_test/water_test_page.dart';
 import '../screen/init_page.dart';
 import '../screen/onboarding/onboarding_page.dart';
 import '../screen/register/register_args.dart';
@@ -26,6 +28,8 @@ class Routes {
   static const String services = 'services';
   static const String history = 'history';
   static const String profile = 'profile';
+  static const String poolHealth = 'pool_health';
+  static const String waterTest = 'water_test';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -65,6 +69,12 @@ Route? onGenerateRoute(RouteSettings settings) {
       break;
     case Routes.profile:
       page = const ProfilePage();
+      break;
+    case Routes.poolHealth:
+      page = const PoolHealthPage();
+      break;
+    case Routes.waterTest:
+      page = const WaterTestPage();
       break;
   }
 

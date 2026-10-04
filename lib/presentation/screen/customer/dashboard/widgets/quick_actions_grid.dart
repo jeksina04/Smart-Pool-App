@@ -1,19 +1,20 @@
+import 'package:ez_localization/ez_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ez_localization/ez_localization.dart';
+
 import '../../../../../util/app_assets.dart';
 import '../../../../../util/app_colors.dart';
 import '../../../../../util/app_typography.dart';
 
 /// A grid widget that displays a set of quick action buttons for the customer.
 class QuickActionsGrid extends StatelessWidget {
-  const QuickActionsGrid({super.key});
+  final VoidCallback? onHistoryTap;
+  const QuickActionsGrid({super.key, this.onHistoryTap});
 
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-
       /// Prevents the grid from scrolling independently within the dashboard
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -22,10 +23,18 @@ class QuickActionsGrid extends StatelessWidget {
       crossAxisSpacing: 12.w,
       childAspectRatio: 0.7,
       children: [
-        _buildActionItem(context, AppAssets.icPlus, 'add_service'),
-        _buildActionItem(context, AppAssets.icFlask, 'water_test'),
-        _buildActionItem(context, AppAssets.icDocument, 'history'),
-        _buildActionItem(context, AppAssets.icAlert, 'report_issue'),
+        GestureDetector(
+            //onTap: () => Navigator.pushNamed(context, 'add_service'),
+            child: _buildActionItem(context, AppAssets.icPlus, 'add_service')),
+        GestureDetector(
+            onTap: () => Navigator.pushNamed(context, 'water_test'),
+            child: _buildActionItem(context, AppAssets.icFlask, 'water_test')),
+        GestureDetector(
+            onTap: onHistoryTap,
+            child: _buildActionItem(context, AppAssets.icDocument, 'history')),
+        GestureDetector(
+            //onTap: () => Navigator.pushNamed(context, 'report_issue'),
+            child: _buildActionItem(context, AppAssets.icAlert, 'report_issue')),
       ],
     );
   }
@@ -58,7 +67,8 @@ class QuickActionsGrid extends StatelessWidget {
         /// The localized label text below the icon
         Text(
           context.getString(labelKey),
-          style: AppTypography.infoText.copyWith(color: AppColors.quickActionLabel),
+          style: AppTypography.infoText
+              .copyWith(color: AppColors.quickActionLabel),
           textAlign: TextAlign.center,
         ),
       ],

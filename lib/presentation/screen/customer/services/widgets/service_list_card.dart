@@ -29,7 +29,6 @@ class ServiceListCard extends StatelessWidget {
           icon: AppAssets.icCalendar,
           title: context.getString('scheduled_visits'),
           subtitle: context.getString('next_visit', {'date': 'Fri 7Aug, 10:00 AM'}), // --> Replace with actual date
-          isFirsItem: true,
         ),
         _buildItem(context,
             icon: AppAssets.icFlask,
@@ -56,7 +55,6 @@ class ServiceListCard extends StatelessWidget {
     required String icon,
     required String title,
     String? subtitle,
-    bool isFirsItem = false,
     bool isLast = false,
   }) {
     return Column(children: [

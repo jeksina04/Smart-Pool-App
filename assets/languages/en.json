@@ -114,5 +114,20 @@
   "help_support": "Help & Support",
   "settings": "Settings",
   "log_out": "Log out",
-  "items_due": "{count} due"
+  "items_due": "{count} due",
+  "pool_health_title": "Pool health",
+  "out_of_100": "out of 100",
+  "everything_in_range": "Everything is in range",
+  "equipment": "Equipment",
+  "chemistry": "Chemistry",
+  "cleanliness": "Cleanliness",
+  "latest_readings": "Latest readings",
+  "what_this_means": "What this means",
+  "pool_health_desc": "Your water is balanced and safe to swim in. Cleanliness is slightly down because leaves were heavy this week — your next visit on 24 May will clear it.",
+  "water_test_title": "Water test",
+  "latest_reading": "Latest reading",
+  "ph_last_8_weeks": "pH — last 8 weeks",
+  "chlorine_last_8_weeks": "Chlorine — last 8 weeks",
+  "test_history": "Test history",
+  "request_a_test": "Request a Test"
 }

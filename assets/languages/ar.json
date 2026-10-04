@@ -114,5 +114,20 @@
   "help_support": "المساعدة والدعم",
   "settings": "الإعدادات",
   "log_out": "تسجيل الخروج",
-  "items_due": "مستحق {count}"
+  "items_due": "مستحق {count}",
+  "pool_health_title": "صحة المسبح",
+  "out_of_100": "من 100",
+  "everything_in_range": "كل شيء في النطاق المطلوب",
+  "equipment": "المعدات",
+  "chemistry": "الكيمياء",
+  "cleanliness": "النظافة",
+  "latest_readings": "آخر القراءات",
+  "what_this_means": "ماذا يعني هذا",
+  "pool_health_desc": "مياهك متوازنة وآمنة للسباحة. النظافة منخفضة قليلاً لأن الأوراق كانت كثيفة هذا الأسبوع - زيارتك القادمة في 24 مايو ستعالج الأمر.",
+  "water_test_title": "اختبار المياه",
+  "latest_reading": "أحدث قراءة",
+  "ph_last_8_weeks": "درجة الحموضة — آخر 8 أسابيع",
+  "chlorine_last_8_weeks": "الكلور — آخر 8 أسابيع",
+  "test_history": "سجل الاختبارات",
+  "request_a_test": "طلب اختبار"
 }

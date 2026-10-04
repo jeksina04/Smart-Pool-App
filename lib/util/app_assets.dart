@@ -24,6 +24,8 @@ abstract class AppAssets {
   static const String icAlert = 'assets/drawables/ic_alert.svg';
   static const String icCalendar = 'assets/drawables/ic_calendar.svg';
   static const String icChevronRight = 'assets/drawables/ic_chevron_right.svg';
+  static const String icChevronLeft = 'assets/drawables/ic_chevron_left.svg';
+  static const String icCheck = 'assets/drawables/ic_check.svg';
 
   /// Navigation bar icons
   static const String icNavHome = 'assets/drawables/ic_nav_home.svg';
@@ -36,9 +38,6 @@ abstract class AppAssets {
   static const String icShoppingBag = 'assets/drawables/ic_shopping_bag.svg';
   static const String icWaterDrop = 'assets/drawables/ic_water_drop.svg';
   static const String icAdd = 'assets/drawables/ic_add.svg';
-
-  /// History screen specific icons
-  static const String icCheck = 'assets/drawables/ic_check.svg';
 
   /// Profile specific icons
   static const String icEdit = 'assets/drawables/ic_edit.svg';
