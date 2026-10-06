@@ -1,4 +1,5 @@
 import '../model/otp_model.dart';
+import '../model/reset_password_model.dart';
 import 'otp_data_source.dart';
 
 class OtpRepo {
@@ -32,5 +33,9 @@ class OtpRepo {
       purpose: purpose,
       countryCode: countryCode,
     );
+  }
+
+  Future<ResetPasswordResModel> resetPassword(ResetPasswordReqModel request) {
+    return otpDataSource.resetPassword(request);
   }
 }

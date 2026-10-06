@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_skeleton/presentation/screen/login/login_page.dart';
 import 'package:flutter_skeleton/presentation/screen/register/register_page.dart';
+import 'package:get_it/get_it.dart';
 
+import '../../domain/interactor/interactor.dart';
 import '../screen/customer/dashboard/dashboard_page.dart';
 import '../screen/customer/history/history_page.dart';
 import '../screen/customer/pool_health/pool_health_page.dart';
@@ -14,6 +17,7 @@ import '../screen/customer/water_test/water_test_page.dart';
 import '../screen/init_page.dart';
 import '../screen/onboarding/onboarding_page.dart';
 import '../screen/register/register_args.dart';
+import '../screen/reset_password/bloc/forgot_password_bloc.dart';
 import '../screen/reset_password/new_password_page.dart';
 import '../screen/reset_password/reset_password_page.dart';
 import '../screen/verify/verify_number_args.dart';
@@ -59,10 +63,16 @@ Route? onGenerateRoute(RouteSettings settings) {
       page = VerifyNumberPage(args: args);
       break;
     case Routes.resetPassword:
-      page = const ResetPasswordPage();
+      page = BlocProvider(
+        create: (_) => ForgotPasswordBloc(GetIt.I.get<Interactor>()),
+        child: const ResetPasswordPage(),
+      );
       break;
     case Routes.newPassword:
-      page = const NewPasswordPage();
+      page = BlocProvider(
+        create: (_) => ForgotPasswordBloc(GetIt.I.get<Interactor>()),
+        child: const NewPasswordPage(),
+      );
       break;
     case Routes.dashboard:
       page = const DashboardPage();
@@ -93,7 +103,12 @@ Route? onGenerateRoute(RouteSettings settings) {
       break;
   }
 
-  if (page != null) return MaterialPageRoute(builder: (_) => page!);
+  if (page != null) {
+    return MaterialPageRoute(
+      builder: (_) => page!,
+      settings: settings,
+    );
+  }
 
   return null;
 }
@@ -108,6 +123,5 @@ class NavigationService {
       navigatorKey.currentState!
           .pushReplacementNamed(routeName, arguments: arguments);
 
-  void pop([Object? result]) =>
-      navigatorKey.currentState!.pop(result);
+  void pop([Object? result]) => navigatorKey.currentState!.pop(result);
 }

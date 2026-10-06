@@ -1,4 +1,5 @@
 import '../model/otp_model.dart';
+import '../model/reset_password_model.dart';
 
 abstract class OtpDataSource {
   Future<SendOtpResModel> sendOtp({
@@ -14,4 +15,6 @@ abstract class OtpDataSource {
     required OtpPurpose purpose,
     String countryCode = "US",
   });
+
+  Future<ResetPasswordResModel> resetPassword(ResetPasswordReqModel request);
 }

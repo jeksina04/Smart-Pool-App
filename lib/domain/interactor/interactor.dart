@@ -7,11 +7,13 @@ class Interactor {
   final SendOtp sendOtp;
   final VerifyOtp verifyOtp;
   final RegisterUser register;
+  final ResetPassword resetPassword;
 
   Interactor(
     this.login, {
     required this.sendOtp,
     required this.verifyOtp,
     required this.register,
+    required this.resetPassword,
   });
 }

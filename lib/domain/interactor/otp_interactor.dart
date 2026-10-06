@@ -1,4 +1,5 @@
 import '../model/otp_model.dart';
+import '../model/reset_password_model.dart';
 import '../repo/otp_repo.dart';
 
 class SendOtp {
@@ -38,5 +39,15 @@ class VerifyOtp {
       purpose: purpose,
       countryCode: countryCode,
     );
+  }
+}
+
+class ResetPassword {
+  final OtpRepo _repo;
+
+  ResetPassword(this._repo);
+
+  Future<ResetPasswordResModel> invoke(ResetPasswordReqModel request) {
+    return _repo.resetPassword(request);
   }
 }
