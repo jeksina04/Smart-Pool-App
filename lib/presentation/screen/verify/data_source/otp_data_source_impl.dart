@@ -1,6 +1,7 @@
 import 'package:flutter_skeleton/data/api/api_caller.dart';
 import 'package:flutter_skeleton/data/api/api_constants.dart' as api_constants;
 import 'package:flutter_skeleton/domain/model/otp_model.dart';
+import 'package:flutter_skeleton/domain/model/reset_password_model.dart';
 import 'package:flutter_skeleton/domain/repo/otp_data_source.dart';
 
 class OtpDataSourceImpl extends OtpDataSource with ApiCaller {
@@ -23,8 +24,10 @@ class OtpDataSourceImpl extends OtpDataSource with ApiCaller {
       "phone": _cleanPhone(phone),
       "countryCode": countryCode,
       "purpose": purpose.value,
-      "email": email,
     };
+    if (email.isNotEmpty) {
+      body["email"] = email;
+    }
     var data = await execute(
       apiCaller.post(url: api_constants.sendOtp, data: body),
     );
@@ -48,5 +51,13 @@ class OtpDataSourceImpl extends OtpDataSource with ApiCaller {
       apiCaller.post(url: api_constants.verifyOtp, data: body),
     );
     return VerifyOtpResModel.fromJson(data);
+  }
+
+  @override
+  Future<ResetPasswordResModel> resetPassword(ResetPasswordReqModel request) async {
+    var data = await execute(
+      apiCaller.post(url: api_constants.resetPassword, data: request.toJson()),
+    );
+    return ResetPasswordResModel.fromJson(data);
   }
 }

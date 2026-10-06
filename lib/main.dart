@@ -72,16 +72,18 @@ void registerDi() {
   final sendOtp = SendOtp(otpRepo);
   final verifyOtp = VerifyOtp(otpRepo);
   final registerUser = RegisterUser(RegisterRepo(RegisterDataSourceImpl()));
+  final resetPassword = ResetPassword(otpRepo);
 
   getIt.registerSingleton<Login>(login);
   getIt.registerSingleton<SendOtp>(sendOtp);
   getIt.registerSingleton<VerifyOtp>(verifyOtp);
   getIt.registerSingleton<RegisterUser>(registerUser);
+  getIt.registerSingleton<ResetPassword>(resetPassword);
 
-  getIt.registerLazySingleton<Interactor>(() => Interactor(
-        login,
-        sendOtp: sendOtp,
-        verifyOtp: verifyOtp,
-        register: registerUser,
-      ));
+  getIt.registerLazySingleton<Interactor>(() => Interactor(login,
+      sendOtp: sendOtp,
+      verifyOtp: verifyOtp,
+      register: registerUser,
+      resetPassword: resetPassword)
+  );
 }
