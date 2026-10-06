@@ -24,7 +24,7 @@ class QuickActionsGrid extends StatelessWidget {
       childAspectRatio: 0.7,
       children: [
         GestureDetector(
-            //onTap: () => Navigator.pushNamed(context, 'add_service'),
+            onTap: () => Navigator.pushNamed(context, 'request_service'),
             child: _buildActionItem(context, AppAssets.icPlus, 'add_service')),
         GestureDetector(
             onTap: () => Navigator.pushNamed(context, 'water_test'),
@@ -33,7 +33,7 @@ class QuickActionsGrid extends StatelessWidget {
             onTap: onHistoryTap,
             child: _buildActionItem(context, AppAssets.icDocument, 'history')),
         GestureDetector(
-            //onTap: () => Navigator.pushNamed(context, 'report_issue'),
+            onTap: () => Navigator.pushNamed(context, 'report_issue'),
             child: _buildActionItem(context, AppAssets.icAlert, 'report_issue')),
       ],
     );
@@ -55,7 +55,7 @@ class QuickActionsGrid extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 color: AppColors.cardShadow,
-                blurRadius: 10,
+                blurRadius: 8,
                 offset: const Offset(0, 4),
               )
             ],

@@ -1,23 +1,25 @@
 import 'package:ez_localization/ez_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_skeleton/presentation/screen/customer/water_test/widgets/latest_reading_summary_card.dart';
-import 'package:flutter_skeleton/presentation/screen/customer/water_test/widgets/reading_chart_card.dart';
-import 'package:flutter_skeleton/presentation/screen/customer/water_test/widgets/test_history_list.dart';
+import 'package:flutter_skeleton/presentation/screen/customer/service_company/widgets/account_details_section.dart';
+import 'package:flutter_skeleton/presentation/screen/customer/service_company/widgets/company_info_card.dart';
+import 'package:flutter_skeleton/presentation/screen/customer/service_company/widgets/contact_section.dart';
+import 'package:flutter_skeleton/presentation/screen/customer/service_company/widgets/other_providers_section.dart';
+import 'package:flutter_skeleton/presentation/screen/customer/service_company/widgets/technicians_section.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../util/app_assets.dart';
 import '../../../../util/app_colors.dart';
 import '../../../../util/app_typography.dart';
 
-class WaterTestPage extends StatefulWidget {
-  const WaterTestPage({super.key});
+class ServiceCompanyPage extends StatefulWidget {
+  const ServiceCompanyPage({super.key});
 
   @override
-  State<WaterTestPage> createState() => _WaterTestPageState();
+  State<ServiceCompanyPage> createState() => _ServiceCompanyPageState();
 }
 
-class _WaterTestPageState extends State<WaterTestPage> {
+class _ServiceCompanyPageState extends State<ServiceCompanyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,54 +53,47 @@ class _WaterTestPageState extends State<WaterTestPage> {
                       ),
                     ),
                     Text(
-                      context.getString('water_test_title'),
+                      context.getString('service_company'),
                       style: AppTypography.sectionHeader,
                     ),
                   ],
                 ),
               ),
             ),
-
             Expanded(
               child: SingleChildScrollView(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       10.verticalSpace,
-
-                      /// Latest Readings Chips
-                      const LatestReadingSummaryCard(),
-
-                      8.verticalSpace,
-
-                      /// pH History Chart
-                      ReadingChartCard(
-                        title: context.getString('ph_last_8_weeks'),
-                        lineColor: AppColors.statusGreen,
-                        // --> Replace with actual pH data
-                        dataPoints: const [7.2, 7.4, 7.3, 7.6, 7.5, 7.2, 7.1, 7.2],
-                      ),
-
-                      8.verticalSpace,
-
-                      /// Chlorine History Chart
-                      ReadingChartCard(
-                        title: context.getString('chlorine_last_8_weeks'),
-                        lineColor: AppColors.primaryBlue,
-                        // --> Replace with actual chlorine data
-                        dataPoints: const [1.5, 1.2, 1.8, 2.0, 1.5, 1.4, 1.6, 1.5],
-                      ),
-
+                      const CompanyInfoCard(),
                       16.verticalSpace,
-
-                      /// Test History List Section
-                      const TestHistoryList(),
-
+                      Text(context.getString('contact'),
+                          style: AppTypography.dashboardHeading
+                              .copyWith(fontSize: 18.sp)),
+                      12.verticalSpace,
+                      const ContactSection(),
                       16.verticalSpace,
-
-                      /// Request Test Button
-                      _buildRequestTestButton(context),
-
+                      Text(context.getString('your_technicians'),
+                          style: AppTypography.dashboardHeading
+                              .copyWith(fontSize: 18.sp)),
+                      16.verticalSpace,
+                      const TechniciansSection(),
+                      16.verticalSpace,
+                      Text(context.getString('your_account_with_them'),
+                          style: AppTypography.dashboardHeading
+                              .copyWith(fontSize: 18.sp)),
+                      16.verticalSpace,
+                      const AccountDetailsSection(),
+                      16.verticalSpace,
+                      Text(context.getString('other_providers'),
+                          style: AppTypography.dashboardHeading
+                              .copyWith(fontSize: 18.sp)),
+                      16.verticalSpace,
+                      OtherProvidersSection(),
+                      16.verticalSpace,
+                      _buildProblemButton(context),
                       8.verticalSpace,
                     ],
                   )),
@@ -107,8 +102,7 @@ class _WaterTestPageState extends State<WaterTestPage> {
         )));
   }
 
-  /// Builds a white rounded button for the Log Out action
-  Widget _buildRequestTestButton(BuildContext context) {
+  Widget _buildProblemButton(BuildContext context) {
     return Container(
       width: double.infinity,
       height: 56.h,
@@ -124,14 +118,21 @@ class _WaterTestPageState extends State<WaterTestPage> {
         ],
       ),
       child: InkWell(
-        onTap: () {}, // --> Trigger request test
+        onTap: () {}, // --> Trigger Problem with this Company? button logic
         borderRadius: BorderRadius.circular(28.r),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SvgPicture.asset(
+              AppAssets.icAlert,
+              width: 20.w,
+              colorFilter:
+                  ColorFilter.mode(AppColors.darkNavy, BlendMode.srcIn),
+            ),
+            12.horizontalSpace,
             Text(
-              context.getString('request_a_test'),
-              style: AppTypography.requestTestText,
+              context.getString('problem_with_company'),
+              style: AppTypography.dashboardHeading.copyWith(fontSize: 16.sp),
             ),
           ],
         ),

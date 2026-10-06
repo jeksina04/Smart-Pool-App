@@ -6,6 +6,9 @@ import '../screen/customer/dashboard/dashboard_page.dart';
 import '../screen/customer/history/history_page.dart';
 import '../screen/customer/pool_health/pool_health_page.dart';
 import '../screen/customer/profile/profile_page.dart';
+import '../screen/customer/report_issue/report_issue_page.dart';
+import '../screen/customer/request_service/request_service_page.dart';
+import '../screen/customer/service_company/service_company.dart';
 import '../screen/customer/services/services_page.dart';
 import '../screen/customer/water_test/water_test_page.dart';
 import '../screen/init_page.dart';
@@ -30,6 +33,9 @@ class Routes {
   static const String profile = 'profile';
   static const String poolHealth = 'pool_health';
   static const String waterTest = 'water_test';
+  static const String requestService = 'request_service';
+  static const String reportIssue = 'report_issue';
+  static const String serviceCompany = 'service_company';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -75,6 +81,15 @@ Route? onGenerateRoute(RouteSettings settings) {
       break;
     case Routes.waterTest:
       page = const WaterTestPage();
+      break;
+    case Routes.requestService:
+      page = const RequestServicePage();
+      break;
+    case Routes.reportIssue:
+      page = const ReportIssuePage();
+      break;
+    case Routes.serviceCompany:
+      page = const ServiceCompanyPage();
       break;
   }
 

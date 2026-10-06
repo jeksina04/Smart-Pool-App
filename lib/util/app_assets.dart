@@ -47,4 +47,9 @@ abstract class AppAssets {
   static const String icCreditCard = 'assets/drawables/ic_credit_card.svg';
   static const String icLegalDocuments = 'assets/drawables/ic_legal_documents.svg';
 
+  static const String icCamera = 'assets/drawables/ic_camera.svg';
+  static const String icLocation = 'assets/drawables/ic_location.svg';
+  static const String icLicense = 'assets/drawables/ic_license.svg';
+  static const String icSwitch = 'assets/drawables/ic_switch.svg';
+  static const String icLock = 'assets/drawables/ic_lock.svg';
 }

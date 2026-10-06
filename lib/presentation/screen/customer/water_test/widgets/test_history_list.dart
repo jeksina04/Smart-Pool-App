@@ -24,7 +24,7 @@ class TestHistoryList extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(20.r),
-            boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 10)],
+            boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8)],
           ),
           child: Column(
             children: [

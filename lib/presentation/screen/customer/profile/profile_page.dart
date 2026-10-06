@@ -132,14 +132,14 @@ class _ProfilePageState extends State<ProfilePage> {
         boxShadow: [
           BoxShadow(
             color: AppColors.cardShadow,
-            blurRadius: 10,
+            blurRadius: 8,
             offset: const Offset(0, 4),
           )
         ],
       ),
       child: InkWell(
         onTap: () {}, // --> Trigger logout logic
-        borderRadius: BorderRadius.circular(30.r),
+        borderRadius: BorderRadius.circular(28.r),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

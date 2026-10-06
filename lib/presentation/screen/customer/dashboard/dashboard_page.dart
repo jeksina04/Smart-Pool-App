@@ -6,6 +6,7 @@ import 'package:flutter_skeleton/presentation/screen/customer/dashboard/widgets/
 
 import '../../../../util/app_colors.dart';
 import '../../../../util/app_typography.dart';
+import '../../../service/navigation.dart';
 import '../history/history_page.dart';
 import '../profile/profile_page.dart';
 import '../services/services_page.dart';
@@ -17,7 +18,8 @@ import 'widgets/water_metrics_section.dart';
 
 /// Main Dashboard screen for Customers
 class DashboardPage extends StatefulWidget {
-  const DashboardPage({super.key});
+  final int initialIndex;
+  const DashboardPage({super.key, this.initialIndex = 0});
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
@@ -25,11 +27,17 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   /// Current index for bottom navigation
-  int _currentIndex = 0;
+  late int _currentIndex;
 
   // --> Replace with actual data for pHData & ChlorineData
   final List<double> _phData = [7.0, 7.3, 7.15, 7.5, 7.35, 7.0, 6.9, 7.1,];
   final List<double> _chlorineData = [1.2, 1.0, 1.5, 1.8, 1.4, 1.3, 1.6, 1.4,];
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +115,17 @@ class _DashboardPageState extends State<DashboardPage> {
 
                 16.verticalSpace,
 
-                const PoolServiceCompanyCard(),
+                GestureDetector(
+                  onTap: () async {
+                    final result = await Navigator.pushNamed(context, Routes.serviceCompany);
+                    if (result is int && mounted) {
+                      setState(() {
+                        _currentIndex = result;
+                      });
+                    }
+                  },
+                  child: const PoolServiceCompanyCard(),
+                ),
 
                 16.verticalSpace
               ],
@@ -131,6 +149,16 @@ class _DashboardPageState extends State<DashboardPage> {
         return const ProfilePage();
       default:
         return _buildDashboardHome();
+    }
+  }
+
+  void _navigateToCompany(BuildContext context) async {
+    final result = await Navigator.pushNamed(context, Routes.serviceCompany);
+
+    if (result is int && context.mounted) {
+      setState(() {
+        _currentIndex = result;
+      });
     }
   }
 }

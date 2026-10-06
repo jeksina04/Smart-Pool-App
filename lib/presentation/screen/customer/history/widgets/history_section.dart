@@ -33,7 +33,7 @@ class HistorySection extends StatelessWidget {
             boxShadow: const [
               BoxShadow(
                 color: AppColors.cardShadow,
-                blurRadius: 10,
+                blurRadius: 8,
                 offset: Offset(0, 4),
               )
             ],

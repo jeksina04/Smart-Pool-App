@@ -89,6 +89,15 @@ abstract class AppColors {
   /// Status "High" indicator text color `#8A5A00`
   static const Color statusHighText = Color(0xFF8A5A00);
 
+  /// Notes hint text color `#757575`
+  static const Color notesHint = Color(0xFF757575);
+
+  /// Photo Upload button border color `#9BC4FF`
+  static const Color photoUploadBorderColor = Color(0xFF9BC4FF);
+
+  /// Providers strip background color `#FDF4E7`
+  static const Color providersStripBg = Color(0xFFFDF4E7);
+
   /// Linear gradient colors for the Water Quality card
   static const List<Color> waterQualityGradient = [
     Color(0xFF1668D6), // Primary Blue

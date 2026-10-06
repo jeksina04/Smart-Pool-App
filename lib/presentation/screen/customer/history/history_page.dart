@@ -137,7 +137,7 @@ class _HistoryPageState extends State<HistoryPage> {
                             boxShadow: [
                               BoxShadow(
                                 color: AppColors.cardShadow,
-                                blurRadius: 10,
+                                blurRadius: 8,
                                 offset: const Offset(0, 4),
                               )
                             ],

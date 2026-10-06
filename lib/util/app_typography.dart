@@ -380,4 +380,36 @@ abstract class AppTypography {
     fontWeight: FontWeight.w700,
     color: AppColors.primaryBlue,
   );
+
+  /// Notes hint text: 15.sp, weight 400, color #757575
+  static TextStyle get notesHint => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.notesHint,
+  );
+
+  /// Booking notice, Report issue notice, Technician notice text: 12.5sp, weight 600, color #0D5BC4
+  static TextStyle get stripText => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 12.5.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.infoBannerText,
+  );
+
+  /// Message, Call button text: 15.sp, weight 700, color #FFFFFF
+  static TextStyle get buttonText => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.white,
+  );
+
+  /// Proposed not agreed yet text: 12.5.sp, weight 900, color #8A5A00
+  static TextStyle get statusText => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 12.5.sp,
+    fontWeight: FontWeight.w900,
+    color: AppColors.statusHighText,
+  );
 }
