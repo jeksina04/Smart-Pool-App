@@ -24,9 +24,9 @@ class _RequestServicePageState extends State<RequestServicePage> {
             child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.fromLTRB(12.w, 16.h, 12.w, 0),
+              padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 0),
               child: SizedBox(
-                height: 40.h,
+                //height: 40.h,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [

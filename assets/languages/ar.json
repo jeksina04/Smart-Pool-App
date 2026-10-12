@@ -168,5 +168,22 @@
   "call": "اتصال",
   "visit_history_before_not": "يظل سجل زياراتك محفوظًا لديك عند تغيير الشركة. تبقى سجلات مقدم الخدمة السابق مرئية لك، ولكن ",
   "visit_history_not": "لا",
-  "visit_history_after_not": " تتم مشاركتها مع شركتك الحالية إلا إذا اخترت مشاركتها."
+  "visit_history_after_not": " تتم مشاركتها مع شركتك الحالية إلا إذا اخترت مشاركتها.",
+  "notifications_title": "الإشعارات",
+  "mark_all": "تحديد الكل",
+  "unread_updates": "لديك {count} تحديثات غير مقروءة",
+  "your_quote_title": "عرض السعر الخاص بك",
+  "quote_number": "عرض السعر {id}",
+  "status_awaiting": "بانتظار موافقتك",
+  "quoted_by": "مقدم من",
+  "valid_until": "صالح حتى",
+  "what_they_will_do": "ما الذي سيقومون به",
+  "price_section_title": "السعر",
+  "total_label": "الإجمالي",
+  "recurring_over_months": "على مدار {months} شهرًا",
+  "quote_fee_disclaimer": "عرض السعر هذا لا يشمل رسوم الدفع. تُضاف رسوم بنسبة 2.99% عند الدفع بالبطاقة و1% عند التحويل البنكي، بينما لا تُضاف أي رسوم عند الدفع بالشيك أو عبر Zelle أو نقدًا. لا تُفرض أي رسوم على بطاقات الخصم المباشر. سيظهر المبلغ الإجمالي الدقيق قبل تأكيد الدفع.",
+  "approve_amount": "الموافقة على {amount}",
+  "approve_recurring_amount": "الموافقة على {amount} أسبوعيًا",
+  "decline": "رفض",
+  "ask_question_first": "اطرح سؤالًا أولًا"
 }

@@ -130,7 +130,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         }).toList(),
 
                         Container(
-                          padding: EdgeInsets.fromLTRB(10.w, 8.h, 0.w, 8.h),
+                          padding: EdgeInsets.fromLTRB(16.w, 8.h, 8.w, 8.h),
                           decoration: BoxDecoration(
                             color: AppColors.primaryBlue.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(10.r),
@@ -138,7 +138,7 @@ class _HistoryPageState extends State<HistoryPage> {
                               BoxShadow(
                                 color: AppColors.cardShadow,
                                 blurRadius: 8,
-                                offset: const Offset(0, 4),
+                                offset: const Offset(0, 2),
                               )
                             ],
                           ),

@@ -54,7 +54,7 @@ class ServiceRequestForm extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text(""), // --> Selected value
-          Icon(Icons.chevron_right, color: AppColors.textGrey, size: 20.sp),
+          Icon(Icons.chevron_right, color: AppColors.textGrey,),
         ],
       ),
     );
@@ -81,7 +81,7 @@ class ServiceRequestForm extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8)],
+        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8, offset: Offset(0, 2))],
       ),
       child: TextField(
         maxLines: 4,
@@ -97,7 +97,7 @@ class ServiceRequestForm extends StatelessWidget {
 
   Widget _buildBookingNotice(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(16.w, 8.h, 8.h, 8.h),
+      padding: EdgeInsets.fromLTRB(16.w, 8.h, 8.w, 8.h),
       decoration: BoxDecoration(
         color: AppColors.infoBannerBg,
         borderRadius: BorderRadius.circular(12.r),
@@ -150,7 +150,7 @@ class ServiceRequestForm extends StatelessWidget {
     return BoxDecoration(
       color: AppColors.white,
       borderRadius: BorderRadius.circular(28.r),
-      boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8)],
+      boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8, offset: Offset(0, 2))],
     );
   }
 }

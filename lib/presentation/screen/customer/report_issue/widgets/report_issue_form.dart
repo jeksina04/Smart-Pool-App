@@ -45,12 +45,16 @@ class ReportIssueForm extends StatelessWidget {
   Widget _buildDropdownField(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-      decoration: _inputDecoration(),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(28.r),
+        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8, offset: Offset(0, 2))],
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text(""), // --> Selected value
-          Icon(Icons.chevron_right, color: AppColors.textGrey, size: 20.sp),
+          SvgPicture.asset(AppAssets.icChevronRight),
         ],
       ),
     );
@@ -62,7 +66,7 @@ class ReportIssueForm extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8)],
+        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8, offset: Offset(0, 2))],
       ),
       child: TextField(
         maxLines: 4,
@@ -78,7 +82,7 @@ class ReportIssueForm extends StatelessWidget {
 
   Widget _buildTicketNotice(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(16.w, 8.h, 8.h, 8.h),
+      padding: EdgeInsets.fromLTRB(16.w, 8.h, 8.w, 8.h),
       decoration: BoxDecoration(
         color: AppColors.infoBannerBg,
         borderRadius: BorderRadius.circular(10.r),
@@ -117,14 +121,6 @@ class ReportIssueForm extends StatelessWidget {
         ),
         child: Text(context.getString('submit_button'), style: AppTypography.signInButton),
       ),
-    );
-  }
-
-  BoxDecoration _inputDecoration() {
-    return BoxDecoration(
-      color: AppColors.white,
-      borderRadius: BorderRadius.circular(28.r),
-      boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8)],
     );
   }
 }

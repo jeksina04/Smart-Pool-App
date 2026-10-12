@@ -24,26 +24,28 @@ class ProfileHeaderCard extends StatelessWidget {
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(20.r),
+        borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
               color: AppColors.cardShadow,
               blurRadius: 8,
-              offset: const Offset(0, 4))
+              offset: const Offset(0, 2))
         ],
       ),
       child: Row(
         children: [
           /// User Avatar Placeholder
           Container(
-            width: 60.w,
-            height: 60.w,
+            width: 52.w,
+            height: 52.w,
             decoration: const BoxDecoration(
               color: AppColors.infoBannerBg,
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.person_outline,
-                color: AppColors.primaryBlue, size: 30.sp),
+            child: Center(
+              child: SvgPicture.asset(AppAssets.icNavProfile,
+                  color: AppColors.primaryBlue, width: 26.w, height: 26.w,),
+            ),
           ),
           16.horizontalSpace,
 
@@ -52,7 +54,7 @@ class ProfileHeaderCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(name, style: AppTypography.dashboardHeading.copyWith(fontSize: 18.sp)),
+                Text(name, style: AppTypography.userNameText),
                 4.verticalSpace,
                 Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
@@ -81,6 +83,7 @@ class ProfileHeaderCard extends StatelessWidget {
             padding: EdgeInsets.all(8.w),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
+              color: AppColors.white,
               boxShadow: [
                 BoxShadow(
                   color: AppColors.cardShadow,

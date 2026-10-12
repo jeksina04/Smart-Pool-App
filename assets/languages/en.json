@@ -169,5 +169,22 @@
   "proposed_not_agreed_yet": "Proposed — not yet agreed.",
   "visit_history_before_not": " Your visit history stays with you when you change company. Records from a previous provider remain visible to you, but are ",
   "visit_history_not": "not",
-  "visit_history_after_not": " shared with your current company unless you choose to share them."
+  "visit_history_after_not": " shared with your current company unless you choose to share them.",
+  "notifications_title": "Notifications",
+  "mark_all": "Mark all",
+  "unread_updates": "You have {count} unread updates",
+  "your_quote_title": "Your quote",
+  "quote_number": "Quote {id}",
+  "status_awaiting": "Awaiting you",
+  "quoted_by": "Quoted by",
+  "valid_until": "Valid until",
+  "what_they_will_do": "What they will do",
+  "price_section_title": "Price",
+  "total_label": "Total",
+  "recurring_over_months": "Over {months} months",
+  "quote_fee_disclaimer": "This quote is fee-exclusive. Paying by card adds 2.99%; bank transfer adds 1%; cheque, Zelle and cash add nothing. Debit cards are never charged a card fee. The exact total is shown before you confirm.",
+  "approve_amount": "Approve {amount}",
+  "approve_recurring_amount": "Approve {amount} per week",
+  "decline": "Decline",
+  "ask_question_first": "Ask a question first"
 }

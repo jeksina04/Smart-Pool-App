@@ -17,7 +17,7 @@ class CompanyInfoCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8)],
+        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8, offset: Offset(0, 2))],
       ),
       child: Column(
         children: [
@@ -46,8 +46,7 @@ class CompanyInfoCard extends StatelessWidget {
                   children: [
                     // --> Replace with actual company name
                     Text("NSP Pool & Spa Services",
-                        style: AppTypography.sectionHeader
-                            .copyWith(fontSize: 17.sp)),
+                        style: AppTypography.userNameText),
                     // --> Replace with actual date and count
                     Text(
                       context.getString('provider_since',
@@ -92,32 +91,42 @@ class CompanyInfoCard extends StatelessWidget {
   Widget _buildActionButton(
       BuildContext context, String iconAsset, String labelKey,
       {required bool isPrimary}) {
-    return ElevatedButton.icon(
-      onPressed: () {}, // --> Handle actual action
-      icon: SvgPicture.asset(
-        iconAsset,
-        width: 16.w,
-        height: 16.h,
-        colorFilter: ColorFilter.mode(
-          isPrimary ? Colors.white : AppColors.darkNavy,
-          BlendMode.srcIn,
-        ),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24.r),
+        boxShadow: isPrimary
+            ? []
+            : [
+          BoxShadow(
+            color: AppColors.cardShadow,
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-      label: Text(context.getString(labelKey),
-          style: isPrimary
-              ? AppTypography.buttonText
-              : AppTypography.buttonText.copyWith(color: AppColors.darkNavy)
-      ),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: isPrimary ? AppColors.primaryBlue : AppColors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24.r),
+      child: ElevatedButton.icon(
+        onPressed: () {}, // --> Handle actual action
+        icon: SvgPicture.asset(
+          iconAsset,
+          width: 16.w,
+          height: 16.h,
+          colorFilter: ColorFilter.mode(
+            isPrimary ? Colors.white : AppColors.darkNavy,
+            BlendMode.srcIn,
+          ),
         ),
-        padding: EdgeInsets.symmetric(vertical: 12.h),
-        elevation: isPrimary ? 0 : 3,
-        shadowColor: isPrimary
-            ? Colors.transparent
-            : AppColors.cardShadow.withOpacity(0.35),
+        label: Text(context.getString(labelKey),
+            style: isPrimary
+                ? AppTypography.buttonText
+                : AppTypography.buttonText.copyWith(color: AppColors.darkNavy)
+        ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isPrimary ? AppColors.primaryBlue : AppColors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24.r),
+          ),
+          padding: EdgeInsets.symmetric(vertical: 12.h),
+        ),
       ),
     );
   }

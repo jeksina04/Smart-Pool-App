@@ -32,7 +32,10 @@ class WaterMetricsSection extends StatelessWidget {
               child: Container(
                 height: 231.h,
                 width: 170.5.w,
-                padding: EdgeInsets.all(20.w),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20.w,
+                  vertical: 16.h,
+                ),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     colors: AppColors.waterQualityGradient,
@@ -45,8 +48,7 @@ class WaterMetricsSection extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(context.getString('water_quality'),
-                        style: AppTypography.infoLabel
-                            .copyWith(color: AppColors.white)),
+                        style: AppTypography.waterQualityLabel),
                     4.verticalSpace,
                     Text("Good", // --> Replace with actual quality
                         style: AppTypography.cardValueLarge),
@@ -54,14 +56,14 @@ class WaterMetricsSection extends StatelessWidget {
                     Text(
                         context.getString('last_checked_day', {'day': 'today'}),
                         // --> Replace with actual date
-                        style: AppTypography.infoText),
+                        style: AppTypography.infoText,),
                     const Spacer(),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
                         padding: EdgeInsets.all(12.w),
                         decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.white),
+                            border: Border.all(color: AppColors.white.withOpacity(0.35), width: 1,),
                             shape: BoxShape.circle),
                         child: SvgPicture.asset(AppAssets.icHeart,
                             colorFilter: const ColorFilter.mode(
@@ -117,27 +119,25 @@ class WaterMetricsSection extends StatelessWidget {
         width: 170.5.w,
         decoration: BoxDecoration(
           color: AppColors.white,
-          borderRadius: BorderRadius.circular(20.r),
+          borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
                 color: AppColors.cardShadow,
                 blurRadius: 8,
-                offset: const Offset(0, 4))
+                offset: const Offset(0, 2))
           ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: AppTypography.cardLabel),
+            Text(title, style: AppTypography.cardTitle),
             8.verticalSpace,
             Row(
               children: [
                 Text(value, style: AppTypography.metricValue),
                 if (unit != null) ...[
                   2.horizontalSpace,
-                  Text(unit,
-                      style:
-                          AppTypography.metricValue.copyWith(fontSize: 13.sp))
+                  Text(unit, style: AppTypography.unitText)
                 ],
                 8.horizontalSpace,
 

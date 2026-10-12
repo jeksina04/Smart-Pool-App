@@ -56,7 +56,7 @@ class QuickActionsGrid extends StatelessWidget {
               BoxShadow(
                 color: AppColors.cardShadow,
                 blurRadius: 8,
-                offset: const Offset(0, 4),
+                offset: const Offset(0, 2),
               )
             ],
           ),
@@ -67,8 +67,7 @@ class QuickActionsGrid extends StatelessWidget {
         /// The localized label text below the icon
         Text(
           context.getString(labelKey),
-          style: AppTypography.infoText
-              .copyWith(color: AppColors.quickActionLabel),
+          style: AppTypography.quickActionLabel,
           textAlign: TextAlign.center,
         ),
       ],

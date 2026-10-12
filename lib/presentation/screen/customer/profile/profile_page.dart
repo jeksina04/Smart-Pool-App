@@ -133,7 +133,7 @@ class _ProfilePageState extends State<ProfilePage> {
           BoxShadow(
             color: AppColors.cardShadow,
             blurRadius: 8,
-            offset: const Offset(0, 4),
+            offset: const Offset(0, 2),
           )
         ],
       ),
@@ -147,7 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
             12.horizontalSpace,
             Text(
               context.getString('log_out'),
-              style: AppTypography.dashboardHeading.copyWith(fontSize: 16.sp),
+              style: AppTypography.logOut,
             ),
           ],
         ),

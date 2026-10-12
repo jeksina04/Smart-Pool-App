@@ -18,13 +18,13 @@ class TestHistoryList extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(left: 4.w, bottom: 12.h),
           child: Text(context.getString('test_history'),
-              style: AppTypography.dashboardHeading.copyWith(fontSize: 22.sp)),
+              style: AppTypography.quickActionsHeading),
         ),
         Container(
           decoration: BoxDecoration(
             color: AppColors.white,
-            borderRadius: BorderRadius.circular(20.r),
-            boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8)],
+            borderRadius: BorderRadius.circular(16.r),
+            boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8, offset: Offset(0, 2))],
           ),
           child: Column(
             children: [
@@ -50,7 +50,7 @@ class TestHistoryList extends StatelessWidget {
 
     return Column(children: [
       ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
         title: Text(date, style: AppTypography.sectionHeader),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,

@@ -43,15 +43,13 @@ class OtherProvidersSection extends StatelessWidget {
         16.verticalSpace,
         // Warning/Notice Banner
         Container(
-          padding: EdgeInsets.all(16.w),
+          padding: EdgeInsets.fromLTRB(16.w, 8.h, 8.w, 8.h),
           decoration: BoxDecoration(
             color: AppColors.providersStripBg,
-            borderRadius: BorderRadius.circular(12.r),
+            borderRadius: BorderRadius.circular(10.r),
           ),
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SvgPicture.asset(
-              AppAssets.icLock,
-            ),
+            SvgPicture.asset(AppAssets.icLock,),
             8.horizontalSpace,
             Expanded(
               child: RichText(

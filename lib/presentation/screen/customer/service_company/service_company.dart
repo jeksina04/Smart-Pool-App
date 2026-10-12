@@ -28,9 +28,9 @@ class _ServiceCompanyPageState extends State<ServiceCompanyPage> {
             child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.fromLTRB(12.w, 16.h, 12.w, 0),
+              padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 0),
               child: SizedBox(
-                height: 40.h,
+                //height: 40.h,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
@@ -70,26 +70,22 @@ class _ServiceCompanyPageState extends State<ServiceCompanyPage> {
                       const CompanyInfoCard(),
                       16.verticalSpace,
                       Text(context.getString('contact'),
-                          style: AppTypography.dashboardHeading
-                              .copyWith(fontSize: 18.sp)),
+                          style: AppTypography.quickActionsHeading),
                       12.verticalSpace,
                       const ContactSection(),
                       16.verticalSpace,
                       Text(context.getString('your_technicians'),
-                          style: AppTypography.dashboardHeading
-                              .copyWith(fontSize: 18.sp)),
+                          style: AppTypography.quickActionsHeading),
                       16.verticalSpace,
                       const TechniciansSection(),
                       16.verticalSpace,
                       Text(context.getString('your_account_with_them'),
-                          style: AppTypography.dashboardHeading
-                              .copyWith(fontSize: 18.sp)),
+                          style: AppTypography.quickActionsHeading),
                       16.verticalSpace,
                       const AccountDetailsSection(),
                       16.verticalSpace,
                       Text(context.getString('other_providers'),
-                          style: AppTypography.dashboardHeading
-                              .copyWith(fontSize: 18.sp)),
+                          style: AppTypography.quickActionsHeading),
                       16.verticalSpace,
                       OtherProvidersSection(),
                       16.verticalSpace,
@@ -113,7 +109,7 @@ class _ServiceCompanyPageState extends State<ServiceCompanyPage> {
           BoxShadow(
             color: AppColors.cardShadow,
             blurRadius: 8,
-            offset: const Offset(0, 4),
+            offset: const Offset(0, 2),
           )
         ],
       ),
@@ -132,7 +128,7 @@ class _ServiceCompanyPageState extends State<ServiceCompanyPage> {
             12.horizontalSpace,
             Text(
               context.getString('problem_with_company'),
-              style: AppTypography.dashboardHeading.copyWith(fontSize: 16.sp),
+              style: AppTypography.logOut,
             ),
           ],
         ),

@@ -42,6 +42,7 @@ class CompanyListItem extends StatelessWidget {
           child: SvgPicture.asset(
             icon,
             width: 20.w,
+            height: 20.w,
             colorFilter:
                 const ColorFilter.mode(AppColors.primaryBlue, BlendMode.srcIn),
           ),

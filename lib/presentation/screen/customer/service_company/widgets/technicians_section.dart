@@ -17,8 +17,7 @@ class TechniciansSection extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             color: AppColors.white,
-            borderRadius: BorderRadius.circular(16.r),
-            boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8)],
+            borderRadius: BorderRadius.circular(10.r),
           ),
           child: const Column(
             children: [
@@ -40,7 +39,7 @@ class TechniciansSection extends StatelessWidget {
         16.verticalSpace,
         // Technician Notice Banner
         Container(
-          padding: EdgeInsets.fromLTRB(16.w, 8.h, 8.h, 8.h),
+          padding: EdgeInsets.fromLTRB(16.w, 8.h, 8.w, 8.h),
           decoration: BoxDecoration(
             color: AppColors.infoBannerBg,
             borderRadius: BorderRadius.circular(10.r),

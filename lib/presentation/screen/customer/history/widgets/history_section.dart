@@ -23,18 +23,18 @@ class HistorySection extends StatelessWidget {
           padding: EdgeInsets.only(bottom: 12.h),
           child: Text(
             header,
-            style: AppTypography.dashboardHeading.copyWith(fontSize: 18.sp),
+            style: AppTypography.quickActionsHeading,
           ),
         ),
         Container(
           decoration: BoxDecoration(
             color: AppColors.white,
-            borderRadius: BorderRadius.circular(20.r),
+            borderRadius: BorderRadius.circular(16.r),
             boxShadow: const [
               BoxShadow(
                 color: AppColors.cardShadow,
                 blurRadius: 8,
-                offset: Offset(0, 4),
+                offset: Offset(0, 2),
               )
             ],
           ),

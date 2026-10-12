@@ -8,6 +8,7 @@ import '../../../../util/app_colors.dart';
 import '../../../../util/app_typography.dart';
 import '../../../service/navigation.dart';
 import '../history/history_page.dart';
+import '../notifications/notifications_page.dart';
 import '../profile/profile_page.dart';
 import '../services/services_page.dart';
 import 'widgets/custom_bottom_nav.dart';
@@ -19,6 +20,7 @@ import 'widgets/water_metrics_section.dart';
 /// Main Dashboard screen for Customers
 class DashboardPage extends StatefulWidget {
   final int initialIndex;
+
   const DashboardPage({super.key, this.initialIndex = 0});
 
   @override
@@ -29,9 +31,30 @@ class _DashboardPageState extends State<DashboardPage> {
   /// Current index for bottom navigation
   late int _currentIndex;
 
+  /// Show Notifications flag to handle sub-navigation within the Home tab
+  bool _showNotifications = false;
+
   // --> Replace with actual data for pHData & ChlorineData
-  final List<double> _phData = [7.0, 7.3, 7.15, 7.5, 7.35, 7.0, 6.9, 7.1,];
-  final List<double> _chlorineData = [1.2, 1.0, 1.5, 1.8, 1.4, 1.3, 1.6, 1.4,];
+  final List<double> _phData = [
+    7.0,
+    7.3,
+    7.15,
+    7.5,
+    7.35,
+    7.0,
+    6.9,
+    7.1,
+  ];
+  final List<double> _chlorineData = [
+    1.2,
+    1.0,
+    1.5,
+    1.8,
+    1.4,
+    1.3,
+    1.6,
+    1.4,
+  ];
 
   @override
   void initState() {
@@ -45,22 +68,32 @@ class _DashboardPageState extends State<DashboardPage> {
       backgroundColor: AppColors.dashboardBg,
       body: _getTabContent(_currentIndex),
 
-      /// Tab navigation at the bottom.
-      /// The onTap callback updates the _currentIndex and triggers a UI rebuild via setState.
+      /// The onTap callback updates the _currentIndex and resets notification view.
       bottomNavigationBar: CustomBottomNav(
         currentIndex: _currentIndex,
-        onTap: (index) => setState(() => _currentIndex = index),
+        onTap: (index) => setState(() {
+          _currentIndex = index;
+          _showNotifications = false;
+        }),
       ),
     );
   }
 
   Widget _buildDashboardHome() {
+    if (_showNotifications) {
+      return NotificationsPage(
+        onBack: () => setState(() => _showNotifications = false),
+      );
+    }
+
     return SafeArea(
         child: Column(
       children: [
         Padding(
           padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 0),
-          child: const DashboardHeader(),
+          child: DashboardHeader(
+            onNotificationsTap: () => setState(() => _showNotifications = true),
+          ),
         ),
         8.verticalSpace,
         Expanded(
@@ -85,11 +118,8 @@ class _DashboardPageState extends State<DashboardPage> {
                 16.verticalSpace,
 
                 /// Quick Actions section title
-                Text(
-                  context.getString('quick_actions'),
-                  style:
-                      AppTypography.dashboardHeading.copyWith(fontSize: 18.sp),
-                ),
+                Text(context.getString('quick_actions'),
+                    style: AppTypography.quickActionsHeading),
 
                 16.verticalSpace,
 
@@ -117,7 +147,8 @@ class _DashboardPageState extends State<DashboardPage> {
 
                 GestureDetector(
                   onTap: () async {
-                    final result = await Navigator.pushNamed(context, Routes.serviceCompany);
+                    final result = await Navigator.pushNamed(
+                        context, Routes.serviceCompany);
                     if (result is int && mounted) {
                       setState(() {
                         _currentIndex = result;
@@ -140,7 +171,11 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget _getTabContent(int index) {
     switch (index) {
       case 0:
-        return _buildDashboardHome();
+        // If we are on Home tab, decide between the Home Grid or Notifications
+        return _showNotifications
+            ? NotificationsPage(
+                onBack: () => setState(() => _showNotifications = false))
+            : _buildDashboardHome();
       case 1:
         return const ServicesPage();
       case 2:
@@ -149,16 +184,6 @@ class _DashboardPageState extends State<DashboardPage> {
         return const ProfilePage();
       default:
         return _buildDashboardHome();
-    }
-  }
-
-  void _navigateToCompany(BuildContext context) async {
-    final result = await Navigator.pushNamed(context, Routes.serviceCompany);
-
-    if (result is int && context.mounted) {
-      setState(() {
-        _currentIndex = result;
-      });
     }
   }
 }

@@ -14,7 +14,7 @@ class PoolMetricsList extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8)],
+        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8, offset: Offset(0, 2))],
       ),
       child: Column(
         children: [
@@ -40,11 +40,11 @@ class PoolMetricsList extends StatelessWidget {
   }) {
     return Column(children: [
       ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
         title: Text(title, style: AppTypography.sectionHeader),
         trailing: Text(
           value,
-          style: AppTypography.sectionHeader,
+          style: AppTypography.poolHealthScore,
         ),
       ),
       if (!isLast)

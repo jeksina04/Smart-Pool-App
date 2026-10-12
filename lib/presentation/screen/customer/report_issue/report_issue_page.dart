@@ -2,7 +2,6 @@ import 'package:ez_localization/ez_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_skeleton/presentation/screen/customer/report_issue/widgets/report_issue_form.dart';
-import 'package:flutter_skeleton/presentation/screen/customer/request_service/widgets/service_request_form.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../util/app_assets.dart';
@@ -25,7 +24,7 @@ class _ReportIssuePageState extends State<ReportIssuePage> {
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(12.w, 16.h, 12.w, 0),
+                  padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 0),
                   child: SizedBox(
                     height: 40.h,
                     child: Stack(

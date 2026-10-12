@@ -15,12 +15,12 @@ class WhatThisMeansCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8)],
+        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8, offset: Offset(0, 2))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(context.getString('what_this_means'), style: AppTypography.sectionHeader.copyWith(fontSize: 15.sp)),
+          Text(context.getString('what_this_means'), style: AppTypography.companyNameText),
           8.verticalSpace,
           Text(
             context.getString('pool_health_desc'),

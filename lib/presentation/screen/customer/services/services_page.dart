@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../util/app_assets.dart';
 import '../../../../util/app_colors.dart';
+import '../../../service/navigation.dart';
 
 class ServicesPage extends StatefulWidget {
   const ServicesPage({super.key});
@@ -47,7 +48,9 @@ class _ServicesPageState extends State<ServicesPage> {
                                 width: double.infinity,
                                 height: 56.h,
                                 child: ElevatedButton(
-                                    onPressed: () {}, // --> Request a service
+                                    onPressed: () {
+                                      Navigator.pushNamed(context, Routes.requestService);
+                                    },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: AppColors.primaryBlue,
                                       shape: RoundedRectangleBorder(

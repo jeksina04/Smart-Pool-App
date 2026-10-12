@@ -48,6 +48,12 @@ abstract class AppColors {
   static const Color infoBannerText = Color(0xFF0D5BC4);
   static const Color infoBannerBg = Color(0xFFE9EEFC);
 
+  /// Read Notifications icon background color `#E3F0FD`
+  static const Color readNotificationIconBg = Color(0xFFE3F0FD);
+
+  /// Read Notifications icon color #0A4AA8
+  static const Color readNotificationIconColor = Color(0xFF0A4AA8);
+
   /// Timer disabled button colors
   static const Color timerButtonBg = Color(0xFFD8DFE7);
   static const Color timerButtonText = Color(0xFFA9B4BF);
@@ -97,6 +103,9 @@ abstract class AppColors {
 
   /// Providers strip background color `#FDF4E7`
   static const Color providersStripBg = Color(0xFFFDF4E7);
+
+  /// Recurring Quote Card background color `#E9EEFC`
+  static const Color recurringQuoteBg = Color(0xFFE9EEFC);
 
   /// Linear gradient colors for the Water Quality card
   static const List<Color> waterQualityGradient = [

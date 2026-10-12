@@ -25,12 +25,12 @@ class ReadingChartCard extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(20.r),
+        borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
             color: AppColors.cardShadow,
             blurRadius: 8,
-            offset: const Offset(0, 4),
+            offset: const Offset(0, 2),
           )
         ],
       ),
@@ -41,7 +41,7 @@ class ReadingChartCard extends StatelessWidget {
           const Spacer(),
           // The Chart Area
           SizedBox(
-            height: 60.h,
+            height: 64.h,
             width: double.infinity,
             child: CustomPaint(
               painter: ReadingTrendPainter(

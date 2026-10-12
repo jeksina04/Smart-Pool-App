@@ -15,8 +15,8 @@ class IssuePhotoUploadSection extends StatelessWidget {
       children: [
         // Placeholder for an uploaded photo
         Container(
-          width: 88.w,
-          height: 88.w,
+          width: 96.w,
+          height: 96.w,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.r),
             gradient: LinearGradient(
@@ -43,8 +43,8 @@ class IssuePhotoUploadSection extends StatelessWidget {
               padding: EdgeInsets.zero,
             ),
             child: SizedBox(
-              width: 88.w,
-              height: 88.w,
+              width: 96.w,
+              height: 96.w,
               child: Center(
                 child: SvgPicture.asset(AppAssets.icCamera)
               ),

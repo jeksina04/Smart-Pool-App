@@ -46,7 +46,7 @@ class LatestReadingsCard extends StatelessWidget {
         color: AppColors.textGrey.withOpacity(0.08),
         borderRadius: BorderRadius.circular(12.r),
       ),
-      child: Text(label, style: AppTypography.badgeText.copyWith(color: AppColors.textGrey)),
+      child: Text(label, style: AppTypography.latestReadings),
     );
   }
 }

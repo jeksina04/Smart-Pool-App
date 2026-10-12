@@ -27,9 +27,9 @@ class _PoolHealthPageState extends State<PoolHealthPage> {
             child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.fromLTRB(12.w, 16.h, 12.w, 0),
+              padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 0),
               child: SizedBox(
-                height: 40.h,
+                //height: 40.h,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
@@ -100,7 +100,7 @@ class _PoolHealthPageState extends State<PoolHealthPage> {
 
   Widget _buildStatusBanner(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+      padding: EdgeInsets.fromLTRB(16.w, 8.h, 8.w, 8.h),
       decoration: BoxDecoration(
         color: AppColors.statusGreenBg,
         borderRadius: BorderRadius.circular(12.r),
@@ -112,14 +112,12 @@ class _PoolHealthPageState extends State<PoolHealthPage> {
             AppAssets.icCheck,
             width: 16.w,
             height: 16.w,
-            colorFilter:
-                ColorFilter.mode(AppColors.inRangeGreen, BlendMode.srcIn),
+            colorFilter: ColorFilter.mode(AppColors.inRangeGreen, BlendMode.srcIn),
           ),
           8.horizontalSpace,
           Text(
             context.getString('everything_in_range'),
-            style: AppTypography.badgeText
-                .copyWith(fontSize: 12.5.sp, color: AppColors.inRangeGreen),
+            style: AppTypography.stripText.copyWith(color: AppColors.inRangeGreen),
           ),
         ],
       ),

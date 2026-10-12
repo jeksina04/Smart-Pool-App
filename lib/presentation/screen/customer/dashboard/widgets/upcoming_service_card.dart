@@ -16,12 +16,12 @@ class UpcomingServiceCard extends StatelessWidget {
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(20.r),
+        borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
             color: AppColors.cardShadow,
             blurRadius: 8,
-            offset: const Offset(0, 4),
+            offset: const Offset(0, 2),
           )
         ],
       ),
@@ -40,6 +40,7 @@ class UpcomingServiceCard extends StatelessWidget {
                 child: SvgPicture.asset(
                   AppAssets.icCalendar,
                   width: 20.w,
+                  height: 20.w,
                   colorFilter: const ColorFilter.mode(AppColors.primaryBlue, BlendMode.srcIn),
                 ),
               ),
@@ -51,10 +52,10 @@ class UpcomingServiceCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(context.getString('upcoming_service'), style: AppTypography.cardLabel.copyWith(fontWeight: FontWeight.w400)),
+                    Text(context.getString('upcoming_service'), style: AppTypography.cardTitle),
                     Text(
                       "Pool Cleaning", // --> Replace with actual service name
-                      style: AppTypography.cardLabel.copyWith(fontSize: 16.sp, color: AppColors.darkNavy),
+                      style: AppTypography.sectionHeader,
                     ),
                   ],
                 ),

@@ -1,6 +1,7 @@
 import 'package:ez_localization/ez_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../../../util/app_colors.dart';
 import '../../../../../util/app_typography.dart';
 
@@ -21,10 +22,15 @@ class HistoryFilterTabs extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(4.w),
       decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(26.r),
-        border: Border.all(color: AppColors.dividerColor.withOpacity(0.5)),
-      ),
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(26.r),
+          border: Border.all(color: AppColors.dividerColor.withOpacity(0.5)),
+          boxShadow: [
+            BoxShadow(
+                color: AppColors.cardShadow,
+                blurRadius: 8,
+                offset: const Offset(0, 2))
+          ]),
       child: Row(
         children: List.generate(filters.length, (index) {
           final isSelected = selectedIndex == index;
@@ -32,7 +38,7 @@ class HistoryFilterTabs extends StatelessWidget {
             child: GestureDetector(
               onTap: () => onChanged(index),
               child: Container(
-                height: 40.h,
+                height: 44.h,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: isSelected ? AppColors.primaryBlue : null,
@@ -41,8 +47,10 @@ class HistoryFilterTabs extends StatelessWidget {
                 child: Text(
                   context.getString(filters[index]),
                   style: isSelected
-                      ? AppTypography.tabTextSelected.copyWith(fontSize: 13.5.sp)
-                      : AppTypography.tabTextUnselected.copyWith(fontSize: 13.5.sp),
+                      ? AppTypography.tabTextSelected
+                          .copyWith(fontSize: 13.5.sp)
+                      : AppTypography.tabTextUnselected
+                          .copyWith(fontSize: 13.5.sp),
                 ),
               ),
             ),

@@ -5,8 +5,10 @@ import 'package:flutter_skeleton/presentation/screen/register/register_page.dart
 import 'package:get_it/get_it.dart';
 
 import '../../domain/interactor/interactor.dart';
+import '../screen/customer/approve_quote/approve_quote_page.dart';
 import '../screen/customer/dashboard/dashboard_page.dart';
 import '../screen/customer/history/history_page.dart';
+import '../screen/customer/notifications/notifications_page.dart';
 import '../screen/customer/pool_health/pool_health_page.dart';
 import '../screen/customer/profile/profile_page.dart';
 import '../screen/customer/report_issue/report_issue_page.dart';
@@ -40,6 +42,8 @@ class Routes {
   static const String requestService = 'request_service';
   static const String reportIssue = 'report_issue';
   static const String serviceCompany = 'service_company';
+  static const String notifications = 'notifications';
+  static const String approveQuote = 'approve_quote';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -100,6 +104,12 @@ Route? onGenerateRoute(RouteSettings settings) {
       break;
     case Routes.serviceCompany:
       page = const ServiceCompanyPage();
+      break;
+    case Routes.notifications:
+      page = const NotificationsPage();
+      break;
+    case Routes.approveQuote:
+      page = const ApproveQuotePage();
       break;
   }
 

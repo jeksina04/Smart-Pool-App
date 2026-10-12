@@ -12,11 +12,11 @@ class LatestReadingSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.fromLTRB(16.w, 16.h, 16, 16.h),
+      padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8)],
+        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8, offset: Offset(0, 2))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +30,7 @@ class LatestReadingSummaryCard extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
               decoration: BoxDecoration(
                   color: AppColors.statusGreenBg,
-                  borderRadius: BorderRadius.circular(8.r)),
+                  borderRadius: BorderRadius.circular(12.r)),
               child: Text(
                 "All Normal", // --> Replace with actual status
                 style: AppTypography.badgeText

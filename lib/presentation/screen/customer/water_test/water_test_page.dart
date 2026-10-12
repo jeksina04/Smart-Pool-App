@@ -26,9 +26,9 @@ class _WaterTestPageState extends State<WaterTestPage> {
             child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.fromLTRB(12.w, 16.h, 12.w, 0),
+              padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 0),
               child: SizedBox(
-                height: 40.h,
+                //height: 40.h,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
@@ -115,13 +115,6 @@ class _WaterTestPageState extends State<WaterTestPage> {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(28.r),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.cardShadow,
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          )
-        ],
       ),
       child: InkWell(
         onTap: () {}, // --> Trigger request test

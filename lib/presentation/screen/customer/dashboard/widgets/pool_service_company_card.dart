@@ -17,12 +17,12 @@ class PoolServiceCompanyCard extends StatelessWidget {
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(20.r),
+        borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
             color: AppColors.cardShadow,
             blurRadius: 8,
-            offset: const Offset(0, 4),
+            offset: const Offset(0, 2),
           )
         ],
       ),
@@ -56,12 +56,10 @@ class PoolServiceCompanyCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(context.getString('pool_service_company'),
-                        style: AppTypography.cardLabel
-                            .copyWith(fontWeight: FontWeight.w400)),
+                        style: AppTypography.cardTitle),
                     Text(
                       "NSP Pool & Spa Services", // --> Replace with actual service name
-                      style: AppTypography.cardLabel
-                          .copyWith(fontSize: 16.sp, color: AppColors.darkNavy),
+                      style: AppTypography.companyNameText,
                     ),
                   ],
                 ),

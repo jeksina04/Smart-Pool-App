@@ -20,7 +20,7 @@ class HistoryCardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, ),
+      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
       leading: Container(
         padding: EdgeInsets.all(10.w),
         decoration: BoxDecoration(
@@ -35,7 +35,7 @@ class HistoryCardItem extends StatelessWidget {
       ),
       title: Text(
           date,
-          style: AppTypography.inputLabel.copyWith(fontSize: 16.sp)
+          style: AppTypography.sectionHeader
       ),
       subtitle: Text(
           description,

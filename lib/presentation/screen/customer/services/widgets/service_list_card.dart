@@ -20,7 +20,7 @@ class ServiceListCard extends StatelessWidget {
           BoxShadow(
               color: AppColors.cardShadow,
               blurRadius: 8,
-              offset: const Offset(0, 4)),
+              offset: const Offset(0, 2)),
         ],
       ),
       child: Column(children: [

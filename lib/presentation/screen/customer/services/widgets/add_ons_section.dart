@@ -18,18 +18,18 @@ class AddOnsSection extends StatelessWidget {
         Text(
           context.getString(
               'add_ons_title', {'company': 'NSP Pool & Spa Services'}), // --> Replace with actual company name
-          style: AppTypography.dashboardHeading.copyWith(fontSize: 18.sp),
+          style: AppTypography.quickActionsHeading,
         ),
         16.verticalSpace,
         Container(
           decoration: BoxDecoration(
             color: AppColors.white,
-            borderRadius: BorderRadius.circular(20.r),
+            borderRadius: BorderRadius.circular(16.r),
             boxShadow: [
               BoxShadow(
                   color: AppColors.cardShadow,
                   blurRadius: 8,
-                  offset: const Offset(0, 4))
+                  offset: const Offset(0, 2))
             ],
           ),
           child: Column(
@@ -82,22 +82,19 @@ class AddOnsSection extends StatelessWidget {
               colorFilter: const ColorFilter.mode(
                   AppColors.primaryBlue, BlendMode.srcIn)),
         ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(child: Text(title, style: AppTypography.sectionHeader)),
-            Text(price, style: AppTypography.priceText),
-            8.horizontalSpace,
-            SvgPicture.asset(AppAssets.icChevronRight),
-          ],
-        ),
-        subtitle: subtitle != null
-            ? Padding(
-                padding: EdgeInsets.only(top: 4.h),
-                child: Text(subtitle, style: AppTypography.infoLabel),
-              )
-            : null,
-        onTap: () {}, // --> Handle tap
+          title: Text(title, style: AppTypography.sectionHeader),
+          subtitle: subtitle != null
+              ? Text(subtitle, style: AppTypography.infoLabel)
+              : null,
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(price, style: AppTypography.priceText,),
+              8.horizontalSpace,
+              SvgPicture.asset(AppAssets.icChevronRight,),
+            ],
+          ),
+          onTap: () {} // --> Handle tap
       ),
       if (!isLast)
         const Divider(
