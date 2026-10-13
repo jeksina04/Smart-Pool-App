@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../util/app_colors.dart';
 import '../../../../util/app_typography.dart';
+import '../../../service/navigation.dart';
 import 'widgets/profile_header_card.dart';
 import 'widgets/profile_list_section.dart';
 import 'widgets/profile_list_item.dart';
@@ -11,8 +12,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 /// The main Profile Screen displaying user information and settings categories.
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
-  
+  final VoidCallback? onSupportTap;
+  final VoidCallback? onNotificationsTap;
+
+  const ProfilePage({super.key, this.onSupportTap, this.onNotificationsTap});
+
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
@@ -50,73 +54,91 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       16.verticalSpace,
 
-                      /// First group of account related settings
-                      ProfileListSection(items: [
-                        ProfileListItem(
-                          icon: AppAssets.icShoppingBag,
-                          title: context.getString('my_service_company'),
-                          subtitle: "NSP Pool & Spa Services", // --> Replace with user company name
-                        ),
-                        ProfileListItem(
-                          icon: AppAssets.icDocument,
-                          title: context.getString('pool_care_support'),
-                          subtitle: context.getString('support_subtitle'),
-                        ),
-                        ProfileListItem(
-                          icon: AppAssets.icCreditCard,
-                          title: context.getString('invoices_payments'),
-                          badgeText: context.getString('items_due', {'count': '1'}), // --> Replace with user invoice count
-                        ),
-                        ProfileListItem(
-                          icon: AppAssets.icCreditCard,
-                          title: context.getString('payment_methods'),
-                        ),
-                        ProfileListItem(
-                          icon: AppAssets.icWrench,
-                          title: context.getString('pool_equipment'),
-                        ),
-                        ProfileListItem(
-                          icon: AppAssets.icStar,
-                          title: context.getString('membership_plan'),
-                          statusText: "Standard", // --> Replace with user plan
-                        ),
-                      ]),
+                    /// First group of account related settings
+                    ProfileListSection(items: [
+                      ProfileListItem(
+                        icon: AppAssets.icShoppingBag,
+                        title: context.getString('my_service_company'),
+                        subtitle: "NSP Pool & Spa Services",
+                        // --> Replace with user company name
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.serviceCompany);
+                        },
+                      ),
+                      ProfileListItem(
+                        icon: AppAssets.icDocument,
+                        title: context.getString('pool_care_support'),
+                        subtitle: context.getString('support_subtitle'),
+                        onTap: widget.onSupportTap,
+                      ),
+                      ProfileListItem(
+                        icon: AppAssets.icCreditCard,
+                        title: context.getString('invoices_payments'),
+                        badgeText:
+                            context.getString('items_due', {'count': '1'}),
+                        // --> Replace with user invoice count
+                        onTap: () {}, // --> Navigate to invoices page
+                      ),
+                      ProfileListItem(
+                        icon: AppAssets.icCreditCard,
+                        title: context.getString('payment_methods'),
+                        onTap: () {}, // --> Navigate to payment methods page
+                      ),
+                      ProfileListItem(
+                        icon: AppAssets.icWrench,
+                        title: context.getString('pool_equipment'),
+                        onTap: () {}, // --> Navigate to pool equipment page
+                      ),
+                      ProfileListItem(
+                        icon: AppAssets.icStar,
+                        title: context.getString('membership_plan'),
+                        statusText: "Standard",
+                        // --> Replace with user plan
+                        onTap: () {}, // --> Navigate to membership plan page
+                      ),
+                    ]),
 
-                      16.verticalSpace,
+                    16.verticalSpace,
 
-                      /// Second group of general app settings
-                      ProfileListSection(items: [
-                        ProfileListItem(
-                          icon: AppAssets.icBell,
-                          title: context.getString('notifications'),
-                          badgeText: "3", // --> Replace with user notification count
-                        ),
-                        ProfileListItem(
-                          icon: AppAssets.icLegalDocuments,
-                          title: context.getString('legal_documents'),
-                        ),
-                        ProfileListItem(
-                          icon: AppAssets.icAlert,
-                          title: context.getString('help_support'),
-                        ),
-                        ProfileListItem(
-                          icon: AppAssets.icSettings,
-                          title: context.getString('settings'),
-                        ),
-                      ]),
+                    /// Second group of general app settings
+                    ProfileListSection(items: [
+                      ProfileListItem(
+                        icon: AppAssets.icBell,
+                        title: context.getString('notifications'),
+                        badgeText: "3",
+                        onTap: () {
+                          widget.onNotificationsTap?.call();
+                        },
+                      ),
+                      ProfileListItem(
+                        icon: AppAssets.icLegalDocuments,
+                        title: context.getString('legal_documents'),
+                        onTap: () {}, // --> Navigate to legal documents page
+                      ),
+                      ProfileListItem(
+                        icon: AppAssets.icAlert,
+                        title: context.getString('help_support'),
+                        onTap: () {}, // --> Navigate to help and support page
+                      ),
+                      ProfileListItem(
+                        icon: AppAssets.icSettings,
+                        title: context.getString('settings'),
+                        onTap: () {}, // --> Navigate to settings page
+                      ),
+                    ]),
 
-                      16.verticalSpace,
+                    16.verticalSpace,
 
-                      /// Logout Action Button
-                      _buildLogoutButton(context),
+                    /// Logout Action Button
+                    _buildLogoutButton(context),
 
-                      8.verticalSpace,
-                    ],
-                  ),
+                    8.verticalSpace,
+                  ],
                 ),
-              )
-            ],
-          )
+              ),
+            )
+          ],
+        )
       )
     );
   }

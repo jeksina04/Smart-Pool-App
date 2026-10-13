@@ -591,4 +591,12 @@ abstract class AppTypography {
     color: AppColors.statusHighText,
   );
 
+  /// Pool Care Support style: 20.sp, weight 700, color #0F2A3F
+  static TextStyle get poolCareSupport => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 20.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.darkNavy,
+  );
+
 }

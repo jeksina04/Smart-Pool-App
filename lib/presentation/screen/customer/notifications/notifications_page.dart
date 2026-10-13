@@ -13,8 +13,9 @@ import './widgets/unread_banner.dart';
 class NotificationsPage extends StatefulWidget {
   // Callback to go back to the previous dashboard state
   final VoidCallback? onBack;
+  final VoidCallback? onSupportTap;
 
-  const NotificationsPage({super.key, this.onBack});
+  const NotificationsPage({super.key, this.onBack, this.onSupportTap});
 
   @override
   State<NotificationsPage> createState() => _NotificationsPageState();
@@ -34,7 +35,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
         'subtitle': '1.1 ppm — below the target range',
         'time': '10m',
         'isRead': false,
-        'type': 'alert',
+        'type': 'pool_alert',
         'isToday': true
       },
       {
@@ -187,8 +188,24 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           title: section['header'],
                           items: section['items'],
                           onItemTap: (data) {
-                            if (data['type'] == 'quote') {
+                            if (data['type'] == 'pool_alert') {
+                              Navigator.pushNamed(context, Routes.poolHealth);
+                            }
+                            else if (data['type'] == 'quote') {
                               Navigator.pushNamed(context, Routes.approveQuote);
+                            }
+                            else if (data['type'] == 'alert') {
+                              Navigator.pushNamed(context, Routes.servicePaused);
+                            }
+                            else if (data['type'] == 'calendar') {
+                              Navigator.pushNamed(context, Routes.scheduledVisits);
+                            }
+                            else if(data['type'] == 'message'){
+                              if (widget.onSupportTap != null) {
+                                widget.onSupportTap!();
+                              } else {
+                                Navigator.pushNamed(context, Routes.poolCareSupport);
+                              }
                             }
                           },
                         ),

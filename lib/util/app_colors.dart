@@ -61,6 +61,15 @@ abstract class AppColors {
   /// Quick Action label color #3A4750
   static const Color quickActionLabel = Color(0xFF3A4750);
 
+  /// Pool Care Support Profile Background color `#BBD6F5`
+  static const Color profileBg = Color(0xFFBBD6F5);
+
+  /// Pool Care Support Profile active color '#22A96B'
+  static const Color profileActive = Color(0xFF22A96B);
+
+  /// Pool Care Support Message Shadow color `#102A501A`
+  static const Color messageShadow = Color(0x1A102A50);
+
   static const List<Color> onboardingBackgroundGradient = [
     gradientStart,
     gradientMiddle,

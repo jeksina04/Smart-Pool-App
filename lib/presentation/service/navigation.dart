@@ -9,11 +9,14 @@ import '../screen/customer/approve_quote/approve_quote_page.dart';
 import '../screen/customer/dashboard/dashboard_page.dart';
 import '../screen/customer/history/history_page.dart';
 import '../screen/customer/notifications/notifications_page.dart';
+import '../screen/customer/pool_care_support/pool_care_support_page.dart';
 import '../screen/customer/pool_health/pool_health_page.dart';
 import '../screen/customer/profile/profile_page.dart';
 import '../screen/customer/report_issue/report_issue_page.dart';
 import '../screen/customer/request_service/request_service_page.dart';
+import '../screen/customer/scheduled_visits/scheduled_visits_page.dart';
 import '../screen/customer/service_company/service_company.dart';
+import '../screen/customer/service_paused/service_paused_page.dart';
 import '../screen/customer/services/services_page.dart';
 import '../screen/customer/water_test/water_test_page.dart';
 import '../screen/init_page.dart';
@@ -44,6 +47,9 @@ class Routes {
   static const String serviceCompany = 'service_company';
   static const String notifications = 'notifications';
   static const String approveQuote = 'approve_quote';
+  static const String scheduledVisits = 'scheduled_visits';
+  static const String poolCareSupport = 'pool_care_support';
+  static const String servicePaused = 'service_paused';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -79,7 +85,9 @@ Route? onGenerateRoute(RouteSettings settings) {
       );
       break;
     case Routes.dashboard:
-      page = const DashboardPage();
+    // Retrieve the index from arguments (default to 0 if null)
+      final index = settings.arguments as int?;
+      page = DashboardPage(initialIndex: index ?? 0);
       break;
     case Routes.services:
       page = const ServicesPage();
@@ -110,6 +118,19 @@ Route? onGenerateRoute(RouteSettings settings) {
       break;
     case Routes.approveQuote:
       page = const ApproveQuotePage();
+      break;
+    case Routes.scheduledVisits:
+      page = const ScheduledVisitsPage();
+      break;
+    case Routes.poolCareSupport:
+      page = Builder(
+        builder: (context) => PoolCareSupportPage(
+          onBack: () => Navigator.pop(context),
+        ),
+      );
+      break;
+    case Routes.servicePaused:
+      page = const ServicePausedPage();
       break;
   }
 

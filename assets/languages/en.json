@@ -186,5 +186,21 @@
   "approve_amount": "Approve {amount}",
   "approve_recurring_amount": "Approve {amount} per week",
   "decline": "Decline",
-  "ask_question_first": "Ask a question first"
+  "ask_question_first": "Ask a question first",
+  "scheduled_visits_title": "Scheduled visits",
+  "next_scheduled_visit": "Next visit",
+  "vehicle_search_instruction": "Look for this vehicle — check the plate before opening the gate",
+  "coming_up": "Coming up",
+  "visit_notification_message": "You are notified the day before each visit, and again when your technician is on the way.",
+  "request_a_different_day": "Request a different day",
+  "support_title": "Pool Care Support",
+  "support_status": "Typically replies in a few minutes",
+  "message_hint": "Message Support......",
+  "service_pause_title": "Service paused",
+  "not_active_at_moment": "{company} is not active on Smart Pool at the moment.",
+  "what_this_means_for_you": "What this means for you",
+  "company_inactive_message": "Your visit history, photos and water results are all still here. Outstanding invoices can still be paid. New service requests are paused until your company is active again.",
+  "view_your_service_history": "View your service history",
+  "pay_outstanding_invoice": "Pay an outstanding invoice",
+  "contact_company": "Contact {company}"
 }

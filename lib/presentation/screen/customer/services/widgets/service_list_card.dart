@@ -6,6 +6,7 @@ import 'package:flutter_skeleton/util/app_typography.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../util/app_colors.dart';
+import '../../../../service/navigation.dart';
 
 class ServiceListCard extends StatelessWidget {
   const ServiceListCard({super.key});
@@ -28,22 +29,39 @@ class ServiceListCard extends StatelessWidget {
           context,
           icon: AppAssets.icCalendar,
           title: context.getString('scheduled_visits'),
-          subtitle: context.getString('next_visit', {'date': 'Fri 7Aug, 10:00 AM'}), // --> Replace with actual date
+          subtitle: context.getString('next_visit',
+              {'date': 'Fri 7Aug, 10:00 AM'}), // --> Replace with actual date
+          onTap: () {
+            Navigator.pushNamed(context, Routes.scheduledVisits);
+          }
         ),
         _buildItem(context,
             icon: AppAssets.icFlask,
-            title: context.getString('water_test_service')),
+            title: context.getString('water_test_service'),
+            onTap: () {
+              Navigator.pushNamed(context, Routes.waterTest);
+            }
+        ),
         _buildItem(context,
             icon: AppAssets.icAlert,
-            title: context.getString('report_an_issue')),
+            title: context.getString('report_an_issue'),
+            onTap: () {
+              Navigator.pushNamed(context, Routes.reportIssue);
+            }
+        ),
         _buildItem(context,
             icon: AppAssets.icWrench,
-            title: context.getString('pool_equipment')),
+            title: context.getString('pool_equipment'),
+            onTap: () {} // --> Navigate to pool equipment page
+        ),
         _buildItem(
           context,
           icon: AppAssets.icShoppingBag,
           title: context.getString('service_company'),
           subtitle: "NSP Pool & Spa Services", // --> Replace with actual company name
+          onTap: () {
+            Navigator.pushNamed(context, Routes.serviceCompany);
+          },
           isLast: true,
         ),
       ]),
@@ -55,6 +73,7 @@ class ServiceListCard extends StatelessWidget {
     required String icon,
     required String title,
     String? subtitle,
+    final VoidCallback? onTap,
     bool isLast = false,
   }) {
     return Column(children: [
@@ -76,8 +95,7 @@ class ServiceListCard extends StatelessWidget {
               ? Text(subtitle, style: AppTypography.infoLabel)
               : null,
           trailing: SvgPicture.asset(AppAssets.icChevronRight),
-          onTap: () {} // --> Handle tap
-          ),
+          onTap: onTap),
       if (!isLast)
         const Divider(
           height: 1,

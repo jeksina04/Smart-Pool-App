@@ -13,6 +13,7 @@ class ProfileListItem extends StatelessWidget {
   final String? subtitle;
   final String? badgeText; // Text inside a red badge
   final String? statusText; // Plain text status
+  final VoidCallback? onTap;
 
   const ProfileListItem({
     super.key,
@@ -21,12 +22,14 @@ class ProfileListItem extends StatelessWidget {
     this.subtitle,
     this.badgeText,
     this.statusText,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
+      onTap: onTap,
 
       /// Icon inside a rounded blue background
       leading: Container(
@@ -74,7 +77,6 @@ class ProfileListItem extends StatelessWidget {
           SvgPicture.asset(AppAssets.icChevronRight,),
         ],
       ),
-      onTap: () {},
     );
   }
 }

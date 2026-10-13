@@ -9,6 +9,7 @@ import '../../../../util/app_typography.dart';
 import '../../../service/navigation.dart';
 import '../history/history_page.dart';
 import '../notifications/notifications_page.dart';
+import '../pool_care_support/pool_care_support_page.dart';
 import '../profile/profile_page.dart';
 import '../services/services_page.dart';
 import 'widgets/custom_bottom_nav.dart';
@@ -33,6 +34,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   /// Show Notifications flag to handle sub-navigation within the Home tab
   bool _showNotifications = false;
+  bool _showSupport = false;
 
   // --> Replace with actual data for pHData & ChlorineData
   final List<double> _phData = [
@@ -74,6 +76,7 @@ class _DashboardPageState extends State<DashboardPage> {
         onTap: (index) => setState(() {
           _currentIndex = index;
           _showNotifications = false;
+          _showSupport = false;
         }),
       ),
     );
@@ -83,6 +86,11 @@ class _DashboardPageState extends State<DashboardPage> {
     if (_showNotifications) {
       return NotificationsPage(
         onBack: () => setState(() => _showNotifications = false),
+        onSupportTap: () => setState(() {
+          _currentIndex = 3;
+          _showNotifications = false;
+          _showSupport = true;
+        }),
       );
     }
 
@@ -171,17 +179,22 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget _getTabContent(int index) {
     switch (index) {
       case 0:
-        // If we are on Home tab, decide between the Home Grid or Notifications
-        return _showNotifications
-            ? NotificationsPage(
-                onBack: () => setState(() => _showNotifications = false))
-            : _buildDashboardHome();
+        return _buildDashboardHome();
       case 1:
         return const ServicesPage();
       case 2:
         return const HistoryPage();
       case 3:
-        return const ProfilePage();
+        return _showSupport
+            ? PoolCareSupportPage(onBack: () => setState(() => _showSupport = false))
+            : ProfilePage(
+          onSupportTap: () => setState(() => _showSupport = true),
+          // Add this logic:
+          onNotificationsTap: () => setState(() {
+            _currentIndex = 0;        // Switch to Dashboard/Home tab
+            _showNotifications = true; // Show Notifications view
+          }),
+        );
       default:
         return _buildDashboardHome();
     }

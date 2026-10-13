@@ -52,4 +52,7 @@ abstract class AppAssets {
   static const String icLicense = 'assets/drawables/ic_license.svg';
   static const String icSwitch = 'assets/drawables/ic_switch.svg';
   static const String icLock = 'assets/drawables/ic_lock.svg';
+
+  static const String icRoute = 'assets/drawables/ic_route.svg';
+  static const String icSend = 'assets/drawables/ic_send.svg';
 }
