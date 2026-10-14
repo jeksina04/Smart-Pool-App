@@ -66,7 +66,13 @@
   "save_password_button": "Save password",
   "dashboard_hello": "Hello, {name} 👋",
   "dashboard_overview": "Here's your pool overview",
+  "dashboard_first_visit_overview": "Your pool is set up — readings arrive after the first visit",
   "water_quality": "Water Quality",
+  "no_readings_yet": "No readings yet",
+  "first_visit_notice": "Your technician tests the water on the first visit",
+  "awaiting_first_visit": "Awaiting first visit",
+  "no_visit_scheduled_yet": "No visit scheduled yet",
+  "first_visit_info": "{company} will add your first visit — you’ll get a notification.",
   "last_checked_day": "Last checked {day}",
   "ph_level": "pH Level",
   "chlorine_level": "Chlorine Level",
@@ -202,5 +208,13 @@
   "company_inactive_message": "Your visit history, photos and water results are all still here. Outstanding invoices can still be paid. New service requests are paused until your company is active again.",
   "view_your_service_history": "View your service history",
   "pay_outstanding_invoice": "Pay an outstanding invoice",
-  "contact_company": "Contact {company}"
+  "contact_company": "Contact {company}",
+  "readings_taken": "Readings taken",
+  "tasks_completed": "Tasks completed",
+  "chemicals_added": "Chemicals added",
+  "rate_your_technician": "Rate your technician",
+  "leave_a_review": "Leave a Review",
+  "refer_friend": "Refer a friend — get money off",
+  "photos": "Photos {currentId} / {totalPhotos}",
+  "prev": "← Prev"
 }

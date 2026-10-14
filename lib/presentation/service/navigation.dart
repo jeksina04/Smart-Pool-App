@@ -9,6 +9,7 @@ import '../screen/customer/approve_quote/approve_quote_page.dart';
 import '../screen/customer/dashboard/dashboard_page.dart';
 import '../screen/customer/history/history_page.dart';
 import '../screen/customer/notifications/notifications_page.dart';
+import '../screen/customer/photo_viewer/photo_viewer_page.dart';
 import '../screen/customer/pool_care_support/pool_care_support_page.dart';
 import '../screen/customer/pool_health/pool_health_page.dart';
 import '../screen/customer/profile/profile_page.dart';
@@ -18,6 +19,7 @@ import '../screen/customer/scheduled_visits/scheduled_visits_page.dart';
 import '../screen/customer/service_company/service_company.dart';
 import '../screen/customer/service_paused/service_paused_page.dart';
 import '../screen/customer/services/services_page.dart';
+import '../screen/customer/visit_detail/visit_detail_page.dart';
 import '../screen/customer/water_test/water_test_page.dart';
 import '../screen/init_page.dart';
 import '../screen/onboarding/onboarding_page.dart';
@@ -50,6 +52,8 @@ class Routes {
   static const String scheduledVisits = 'scheduled_visits';
   static const String poolCareSupport = 'pool_care_support';
   static const String servicePaused = 'service_paused';
+  static const String visitDetail = 'visit_detail';
+  static const String photoViewer = 'photo_viewer';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -131,6 +135,17 @@ Route? onGenerateRoute(RouteSettings settings) {
       break;
     case Routes.servicePaused:
       page = const ServicePausedPage();
+      break;
+    case Routes.visitDetail:
+      final args = settings.arguments as Map<String, dynamic>;
+      page = VisitDetailPage(visitData: args);
+      break;
+    case Routes.photoViewer:
+      final args = settings.arguments as Map<String, dynamic>;
+      page = PhotoViewerPage(
+        photos: args['photos'] as List<Map<String, dynamic>>,
+        initialIndex: args['initialIndex'] ?? 0,
+      );
       break;
   }
 

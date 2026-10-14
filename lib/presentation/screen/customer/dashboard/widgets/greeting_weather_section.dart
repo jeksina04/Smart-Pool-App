@@ -5,7 +5,8 @@ import '../../../../../util/app_typography.dart';
 
 /// Displays app branding, notifications, user greeting, and weather
 class GreetingAndWeatherSection extends StatelessWidget {
-  const GreetingAndWeatherSection({super.key});
+  final bool isNewUser;
+  const GreetingAndWeatherSection({super.key, required this.isNewUser});
 
   @override
   Widget build(BuildContext context) {
@@ -16,19 +17,25 @@ class GreetingAndWeatherSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.getString('dashboard_hello', {'name': 'Renee'}), // --> Replace with user name
-                  style: AppTypography.dashboardHeading,
-                ),
-                4.verticalSpace,
-                Text(
-                  context.getString('dashboard_overview'),
-                  style: AppTypography.infoLabel,
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.getString('dashboard_hello', {'name': 'Renee'}), // --> Replace with user name
+                    style: AppTypography.dashboardHeading,
+                  ),
+                  4.verticalSpace,
+                  Text(
+                    context.getString(
+                      isNewUser
+                          ? 'dashboard_first_visit_overview'
+                          : 'dashboard_overview',
+                    ),
+                    style: AppTypography.infoLabel,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

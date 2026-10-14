@@ -28,6 +28,9 @@ abstract class AppColors {
   /// Primary Brand Blue `#1668D6` for buttons, active tabs, links
   static const Color primaryBlue = Color(0xFF1668D6);
 
+  /// Chlorine Level chart color'#4C97F5'
+  static const Color chlorineChartColor = Color(0xFF4C97F5);
+
   /// Secondary/subtle text and hint color `#5F6C7A`
   static const Color textGrey = Color(0xFF5F6C7A);
 
@@ -80,6 +83,23 @@ abstract class AppColors {
   /// Dashboard background light grey color `#F9FBFE`
   static const Color dashboardBg = Color(0xFFF9FBFE);
 
+  /// Water Metrics Card Gradient Background colors for new user '#9BB3C9' '#6F8AA3"
+  static const List<Color> newUserWaterQualityGradient = [
+    Color(0xFF9BB3C9), // Start color
+    Color(0xFF6F8AA3), // End color
+  ];
+
+  /// New User Metrics color '#9EADBA', '#EDF1F6', '#EEF2F6'
+  static const Color newUserMetricValue = Color(0xFF9EADBA);
+  static const Color newUserMetricPlaceholder = Color(0xFFEDF1F6);
+  static const Color newUserMetricChartPlaceholder = Color(0xFFEEF2F6);
+
+  /// New User Upcoming Service icon '#8193A5'
+  static const Color newUserIcon = Color(0xFF8193A5);
+
+  /// pH Level Status background '#E6F6EE'
+  static const Color phStatusBg = Color(0xFFE6F6EE);
+
   /// Notification badge red color `#F44336`
   static const Color notificationRed = Color(0xFFF44336);
 
@@ -115,6 +135,12 @@ abstract class AppColors {
 
   /// Recurring Quote Card background color `#E9EEFC`
   static const Color recurringQuoteBg = Color(0xFFE9EEFC);
+
+  /// Photo Viewer Background color `#0F1A24`
+  static const Color photoViewerBg = Color(0xFF0F1A24);
+
+  /// Photo info text color '#9FB8D8'
+  static const Color photoInfoText = Color(0xFF9FB8D8);
 
   /// Linear gradient colors for the Water Quality card
   static const List<Color> waterQualityGradient = [

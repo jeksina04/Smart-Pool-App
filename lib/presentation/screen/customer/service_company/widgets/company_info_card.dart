@@ -62,7 +62,7 @@ class CompanyInfoCard extends StatelessWidget {
                     color: AppColors.statusGreenBg,
                     borderRadius: BorderRadius.circular(12.r)),
                 child: Text(context.getString('active'),
-                    style: AppTypography.badgeText.copyWith(color: AppColors.inRangeGreen)),
+                    style: AppTypography.badgeText),
               ),
             ],
           ),

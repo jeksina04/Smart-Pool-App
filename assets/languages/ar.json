@@ -66,7 +66,13 @@
   "save_password_button": "حفظ كلمة المرور",
   "dashboard_hello": "مرحباً، {name} 👋",
   "dashboard_overview": "إليك نظرة عامة على حمام السباحة الخاص بك",
+  "dashboard_first_visit_overview": "تم إعداد حمام السباحة — ستظهر القراءات بعد الزيارة الأولى"
   "water_quality": "جودة المياه",
+  "no_readings_yet": "لا توجد قراءات حتى الآن",
+  "first_visit_notice": "سيقوم الفني بفحص المياه خلال الزيارة الأولى",
+  "awaiting_first_visit": "بانتظار الزيارة الأولى",
+  "no_visit_scheduled_yet": "لم يتم تحديد موعد للزيارة بعد",
+  "first_visit_info": "ستضيف {company} موعد زيارتك الأولى — وستصلك إشعارات بذلك."
   "last_checked_day": "تم التحقق آخر مرة {day}",
   "ph_level": "مستوى pH",
   "chlorine_level": "مستوى الكلور",
@@ -202,5 +208,13 @@
   "company_inactive_message": "لا يزال سجل زياراتك وصورك ونتائج فحص المياه متاحًا هنا. ويمكنك الاستمرار في دفع الفواتير المستحقة. تم إيقاف طلبات الخدمة الجديدة مؤقتًا إلى حين إعادة تفعيل شركتك.",
   "view_your_service_history": "عرض سجل خدماتك",
   "pay_outstanding_invoice": "دفع فاتورة مستحقة",
-  "contact_company": "التواصل مع {company}"
+  "contact_company": "التواصل مع {company}",
+  "readings_taken": "القراءات المسجّلة",
+  "tasks_completed": "المهام المكتملة",
+  "chemicals_added": "المواد الكيميائية المضافة",
+  "rate_your_technician": "قيّم الفني المسؤول عنك",
+  "leave_a_review": "اترك تقييمًا",
+  "refer_friend": "ادعُ صديقًا — واحصل على خصم",
+  "photos": "الصور {currentId} / {totalPhotos}",
+  "prev": "← السابق"
 }

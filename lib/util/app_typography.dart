@@ -358,6 +358,14 @@ abstract class AppTypography {
         color: AppColors.darkNavy,
       );
 
+  /// No readings yet text: 22sp, weight 700, color #FFFFFF
+  static TextStyle get noReadingsYet => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 22.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.white,
+  );
+
   /// Unit text: 13sp, weight 700, color #0F2A3F
   static TextStyle get unitText => TextStyle(
         fontFamily: poppinsFont,
@@ -374,12 +382,12 @@ abstract class AppTypography {
         color: AppColors.textGrey,
       );
 
-  /// Small badge/status text: 11sp, weight 600, color #4CAF50
+  /// Small badge/status text: 11sp, weight 600, color #157A4C
   static TextStyle get badgeText => TextStyle(
         fontFamily: poppinsFont,
         fontSize: 11.sp,
         fontWeight: FontWeight.w600,
-        color: AppColors.statusGreen,
+        color: AppColors.inRangeGreen,
       );
 
   /// Latest Readings text: 11sp, weight 600, color #5F6C7A
@@ -526,7 +534,7 @@ abstract class AppTypography {
         color: AppColors.primaryBlue,
       );
 
-  /// Day title for Notifications text: 11.sp, weight 500, color #5F6C7A
+  /// Day title for Notifications text: 11sp, weight 500, color #5F6C7A
   static TextStyle get dayTitle => TextStyle(
         fontFamily: poppinsFont,
         fontSize: 11.sp,
@@ -534,7 +542,7 @@ abstract class AppTypography {
         color: AppColors.textGrey,
       );
 
-  /// Quote ID text style: 11.sp, weight 400, color #5F6C7A
+  /// Quote ID text : 11.sp, weight 400, color #5F6C7A
   static TextStyle get quoteIdText => TextStyle(
         fontFamily: poppinsFont,
         fontSize: 11.sp,
@@ -542,7 +550,7 @@ abstract class AppTypography {
         color: AppColors.textGrey,
       );
 
-  /// Quote Detail Label, Bullet Points style: 13.sp, weight 400, color #5F6C7A
+  /// Quote Detail Label, Bullet Points text: 13.sp, weight 400, color #5F6C7A
   static TextStyle get quoteDetail => TextStyle(
         fontFamily: poppinsFont,
         fontSize: 13.sp,
@@ -550,7 +558,7 @@ abstract class AppTypography {
         color: AppColors.textGrey,
       );
 
-  /// Quote Detail Value style: 13.sp, weight 700, color #0F2A3F
+  /// Quote Detail Value text: 13.sp, weight 700, color #0F2A3F
   static TextStyle get quoteDetailValue => TextStyle(
         fontFamily: poppinsFont,
         fontSize: 13.sp,
@@ -558,7 +566,7 @@ abstract class AppTypography {
         color: AppColors.darkNavy,
       );
 
-  /// Price Label, Quote Detail Value text style: 15.sp, weight 700, color #0F2A3F
+  /// Price Label, Quote Detail Value text: 15.sp, weight 700, color #0F2A3F
   static TextStyle get quoteDetailInfo => TextStyle(
         fontFamily: poppinsFont,
         fontSize: 15.sp,
@@ -566,7 +574,7 @@ abstract class AppTypography {
         color: AppColors.darkNavy,
       );
 
-  /// Total Price text style: 22.sp, weight 800, color #0F2A3F
+  /// Total Price text: 22.sp, weight 800, color #0F2A3F
   static TextStyle get totalPriceValue => TextStyle(
         fontFamily: poppinsFont,
         fontSize: 22.sp,
@@ -574,7 +582,7 @@ abstract class AppTypography {
         color: AppColors.darkNavy,
       );
 
-  /// Disclaimer text style: 10.sp, weight 400, color #5F6C7A
+  /// Disclaimer text: 10.sp, weight 400, color #5F6C7A
   static TextStyle get disclaimerText => TextStyle(
         fontFamily: poppinsFont,
         fontSize: 10.sp,
@@ -583,7 +591,7 @@ abstract class AppTypography {
         color: AppColors.textGrey,
       );
 
-  /// Awaiting  text style: 11.sp, weight 600, color #8A5A00
+  /// Awaiting text: 11.sp, weight 600, color #8A5A00
   static TextStyle get awaitingText => TextStyle(
     fontFamily: poppinsFont,
     fontSize: 11.sp,
@@ -591,12 +599,44 @@ abstract class AppTypography {
     color: AppColors.statusHighText,
   );
 
-  /// Pool Care Support style: 20.sp, weight 700, color #0F2A3F
+  /// Pool Care Support text: 20.sp, weight 700, color #0F2A3F
   static TextStyle get poolCareSupport => TextStyle(
     fontFamily: poppinsFont,
     fontSize: 20.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.darkNavy,
+  );
+
+  /// Photo Viewer Prev, Next button text: 14.sp, weight 700, color #0F2A3F
+  static TextStyle get photoViewerBtn => TextStyle(
+      fontFamily: poppinsFont,
+      fontSize: 14.sp,
+      fontWeight: FontWeight.w700,
+      color: AppColors.darkNavy,
+  );
+
+  /// Photos text: 16sp, weight 600, color #FFFFFF
+  static TextStyle get photosHeader => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.white,
+  );
+
+  /// Photo Viewer label text: 15sp, weight 600, color #FFFFFF
+  static TextStyle get photoViewerLabel => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w600,
+    color: AppColors.white,
+  );
+
+  /// Photo Viewer info text: 11sp, weight 500, color #9FB8D8
+  static TextStyle get photoInfo => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.photoInfoText,
   );
 
 }

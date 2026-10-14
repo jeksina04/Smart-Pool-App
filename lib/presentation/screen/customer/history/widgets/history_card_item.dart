@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../../util/app_assets.dart';
 import '../../../../../util/app_colors.dart';
 import '../../../../../util/app_typography.dart';
+import '../../../../service/navigation.dart';
 
 class HistoryCardItem extends StatelessWidget {
   final String date;
@@ -42,7 +43,11 @@ class HistoryCardItem extends StatelessWidget {
           style: AppTypography.infoLabel
       ),
       trailing: SvgPicture.asset(AppAssets.icChevronRight),
-      onTap: () {}, // --> Handle tap
+      onTap: () => Navigator.pushNamed(
+          context,
+          Routes.visitDetail,
+          arguments: {'date': date, 'desc': description, 'isRepair': isRepair}
+      ),
     );
   }
 }

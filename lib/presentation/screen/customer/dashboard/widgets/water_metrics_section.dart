@@ -8,261 +8,283 @@ import '../../../../../util/app_colors.dart';
 import '../../../../../util/app_typography.dart';
 import '../../../../service/navigation.dart';
 
-/// Layout for the Water Quality card and smaller measurement cards
 class WaterMetricsSection extends StatelessWidget {
-  final List<double> phData;
-  final List<double> chlorineData;
+  final bool isNewUser;
+  final List<double> phData, chlorineData;
 
   const WaterMetricsSection({
     super.key,
+    required this.isNewUser,
     required this.phData,
     required this.chlorineData,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        /// Left Side: Large Water Quality Card
-        Expanded(
-            flex: 4,
-            child: GestureDetector(
-              onTap: () => Navigator.pushNamed(context, Routes.poolHealth),
-              child: Container(
-                height: 231.h,
-                width: 170.5.w,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 20.w,
-                  vertical: 16.h,
-                ),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: AppColors.waterQualityGradient,
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(24.r),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(context.getString('water_quality'),
-                        style: AppTypography.waterQualityLabel),
-                    4.verticalSpace,
-                    Text("Good", // --> Replace with actual quality
-                        style: AppTypography.cardValueLarge),
-                    4.verticalSpace,
-                    Text(
-                        context.getString('last_checked_day', {'day': 'today'}),
-                        // --> Replace with actual date
-                        style: AppTypography.infoText,),
-                    const Spacer(),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        padding: EdgeInsets.all(12.w),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.white.withOpacity(0.35), width: 1,),
-                            shape: BoxShape.circle),
-                        child: SvgPicture.asset(AppAssets.icHeart,
-                            colorFilter: const ColorFilter.mode(
-                                Colors.white, BlendMode.srcIn)),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            )),
-
-        8.horizontalSpace,
-
-        /// Right Side: Column of small metric cards (pH, Chlorine)
-        Expanded(
-          flex: 5,
-          child: Column(
-            children: [
-              _buildSmallMetric(
-                context,
-                context.getString('ph_level'),
-                "7.2",
-                chartData: phData,
-              ), // --> Replace with actual pH value
-              16.verticalSpace,
-              _buildSmallMetric(
-                context,
-                context.getString('chlorine_level'),
-                "1.5", // --> Replace with actual chlorine value
-                unit: "ppm",
-                chartData: chlorineData,
-              ),
-            ],
-          ),
-        )
-      ],
-    );
-  }
-
-  /// Helper to build small white measurement cards with wave charts
-  Widget _buildSmallMetric(
-    BuildContext context,
-    String title,
-    String value, {
-    String? unit,
-    List<double>? chartData,
-  }) {
-    return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, Routes.waterTest),
-      child: Container(
-        padding: EdgeInsets.all(12.w),
-        height: 108.h,
-        width: 170.5.w,
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(16.r),
-          boxShadow: [
-            BoxShadow(
-                color: AppColors.cardShadow,
-                blurRadius: 8,
-                offset: const Offset(0, 2))
-          ],
-        ),
+  Widget build(BuildContext context) => Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Expanded(flex: 4, child: _waterCard(context)),
+      8.horizontalSpace,
+      Expanded(
+        flex: 5,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: AppTypography.cardTitle),
-            8.verticalSpace,
-            Row(
-              children: [
-                Text(value, style: AppTypography.metricValue),
-                if (unit != null) ...[
-                  2.horizontalSpace,
-                  Text(unit, style: AppTypography.unitText)
-                ],
-                8.horizontalSpace,
-
-                /// "Normal" status badge
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
-                  decoration: BoxDecoration(
-                      color: unit == null
-                          ? AppColors.statusGreenBg
-                          : AppColors.primaryBlue.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8.r)),
-                  child: Text(
-                    "Normal", // --> Replace with actual status
-                    style: AppTypography.badgeText.copyWith(
-                      color: unit == null ? AppColors.inRangeGreen : AppColors.primaryBlue,
-                    ),
-                  ),
-                )
-              ],
-            ),
-            12.verticalSpace,
-
-            /// Animated wave-like placeholder
-            SizedBox(
-              height: 20.h,
-              width: double.infinity,
-              child: CustomPaint(
-                painter: ReadingTrendPainter(
-                  data: chartData ?? [],
-                  color: title.contains("pH") ? AppColors.statusGreen : AppColors.primaryBlue,
-                ),
-              ),
-            )
+            _buildMetric(context, 'ph_level', '7.2', phData), // --> Replace with actual pH
+            16.verticalSpace,
+            _buildMetric(context, 'chlorine_level', '1.5', chlorineData, unit: 'ppm'), // --> Replace with actual chlorine
           ],
         ),
       ),
-    );
+    ],
+  );
+
+  Widget _waterCard(BuildContext context) => GestureDetector(
+    onTap: isNewUser
+        ? null
+        : () => Navigator.pushNamed(context, Routes.poolHealth),
+    child: Container(
+      height: 231.h,
+      padding: EdgeInsets.all(isNewUser ? 16.w : 20.w),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: isNewUser
+              ? AppColors.newUserWaterQualityGradient
+              : AppColors.waterQualityGradient,
+        ),
+        borderRadius: BorderRadius.circular(24.r),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(context.getString('water_quality'),
+              style: AppTypography.waterQualityLabel),
+          4.verticalSpace,
+          Text(
+            isNewUser
+                ? context.getString('no_readings_yet')
+                : "Good", // --> Replace with actual water quality
+            style: isNewUser
+                ? AppTypography.noReadingsYet
+                : AppTypography.cardValueLarge,
+            softWrap: true,
+          ),
+          4.verticalSpace,
+          Text(
+            isNewUser
+                ? context.getString('first_visit_notice')
+                : context.getString('last_checked_day', {'day': 'today'}), // --> Replace with actual date
+            style: AppTypography.infoText,
+          ),
+          const Spacer(),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              padding: EdgeInsets.all(12.w),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.white.withOpacity(.35)),
+              ),
+              child: SvgPicture.asset(
+                isNewUser ? AppAssets.icFlask : AppAssets.icHeart,
+                colorFilter: const ColorFilter.mode(
+                    Colors.white, BlendMode.srcIn),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+
+  Widget _buildMetric(
+      BuildContext context,
+      String key,
+      String value,
+      List<double> data, {
+        String? unit,
+      }) {
+    final title = context.getString(key);
+    return isNewUser
+        ? _pendingMetric(context, title)
+        : _readingMetric(context, title, value, data, unit: unit);
   }
+
+  Widget _pendingMetric(BuildContext context, String title) => Container(
+    height: 102.h,
+    width: double.infinity,
+    padding: EdgeInsets.all(14.w),
+    decoration: _cardDecoration(),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: AppTypography.cardTitle),
+        4.verticalSpace,
+        Row(
+          children: [
+            Text('—', style: AppTypography.metricValue.copyWith(
+              color: AppColors.newUserMetricValue,
+            )),
+            4.horizontalSpace,
+            Flexible(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                decoration: BoxDecoration(
+                  color: AppColors.newUserMetricPlaceholder,
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+                child: Text(
+                  context.getString('awaiting_first_visit'),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.latestReadings,
+                ),
+              ),
+            ),
+          ],
+        ),
+        8.verticalSpace,
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              color: AppColors.newUserMetricChartPlaceholder,
+              borderRadius: BorderRadius.circular(6.r),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+
+  Widget _readingMetric(
+      BuildContext context,
+      String title,
+      String value,
+      List<double> data, {
+        String? unit,
+      }) =>
+      GestureDetector(
+        onTap: () => Navigator.pushNamed(context, Routes.waterTest),
+        child: Container(
+          height: 108.h,
+          width: double.infinity,
+          padding: EdgeInsets.all(12.w),
+          decoration: _cardDecoration(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title, style: AppTypography.cardTitle),
+              8.verticalSpace,
+              Row(
+                children: [
+                  Text(value, style: AppTypography.metricValue),
+                  if (unit != null) ...[
+                    2.horizontalSpace,
+                    Text(unit, style: AppTypography.unitText),
+                  ],
+                  8.horizontalSpace,
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                    decoration: BoxDecoration(
+                      color: unit == null
+                          ? AppColors.phStatusBg
+                          : AppColors.recurringQuoteBg,
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    child: Text("Normal", // --> Replace with actual status
+                        style: AppTypography.badgeText.copyWith(
+                          color: unit == null
+                              ? AppColors.inRangeGreen
+                              : AppColors.infoBannerText,
+                        )),
+                  ),
+                ],
+              ),
+              12.verticalSpace,
+              Expanded(
+                child: CustomPaint(
+                  size: Size(double.infinity, 20.h),
+                  painter: ReadingTrendPainter(
+                    data: data,
+                    color: title.contains('pH')
+                        ? AppColors.profileActive
+                        : AppColors.chlorineChartColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+
+  BoxDecoration _cardDecoration() => BoxDecoration(
+    color: AppColors.white,
+    borderRadius: BorderRadius.circular(16.r),
+    boxShadow: [
+      BoxShadow(
+        color: AppColors.cardShadow,
+        blurRadius: 8,
+        offset: const Offset(0, 2),
+      ),
+    ],
+  );
 }
 
-/// Custom painter for the wave line charts inside metric cards
 class ReadingTrendPainter extends CustomPainter {
   final List<double> data;
   final Color color;
 
-  ReadingTrendPainter({
-    required this.data,
-    required this.color,
-  });
+  ReadingTrendPainter({required this.data, required this.color});
 
   @override
   void paint(Canvas canvas, Size size) {
     if (data.length < 2) return;
 
-    final paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.5
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round
-      ..isAntiAlias = true;
-
-    // Find data range
-    final minValue = data.reduce(
-      (a, b) => a < b ? a : b,
+    final min = data.reduce((a, b) => a < b ? a : b);
+    final max = data.reduce((a, b) => a > b ? a : b);
+    final range = max == min ? 1.0 : max - min;
+    final points = List.generate(
+      data.length,
+          (i) => Offset(
+        i * size.width / (data.length - 1),
+        size.height - (data[i] - min) / range * size.height,
+      ),
     );
 
-    final maxValue = data.reduce(
-      (a, b) => a > b ? a : b,
-    );
-
-    final range = maxValue - minValue;
-    final safeRange = range == 0 ? 1.0 : range;
-
-    // Convert data values into screen points
-    final points = <Offset>[];
-
-    final dx = size.width / (data.length - 1);
-
-    for (int i = 0; i < data.length; i++) {
-      final normalized = (data[i] - minValue) / safeRange;
-      final x = i * dx;
-      final y = size.height - (normalized * size.height);
-      points.add(Offset(x, y),);
-    }
-
-    // Create smooth curve
-    final path = Path();
-
-    path.moveTo(points.first.dx, points.first.dy,);
+    final path = Path()..moveTo(points.first.dx, points.first.dy);
 
     for (int i = 0; i < points.length - 1; i++) {
-      final current = points[i];
-      final next = points[i + 1];
+      final a = points[i], b = points[i + 1];
+      final prev = i > 0 ? points[i - 1] : a;
+      final next = i + 2 < points.length ? points[i + 2] : b;
 
-      final previous = i > 0 ? points[i - 1] : current;
-
-      final following = i + 2 < points.length ? points[i + 2] : next;
-
-      // First Bézier control point
-      final controlPoint1 = Offset(
-        current.dx + (next.dx - previous.dx) / 6,
-        current.dy + (next.dy - previous.dy) / 6,
-      );
-
-      // Second Bézier control point
-      final controlPoint2 = Offset(
-        next.dx - (following.dx - current.dx) / 6,
-        next.dy - (following.dy - current.dy) / 6,
-      );
-
-      // Smooth curve instead of straight line
       path.cubicTo(
-        controlPoint1.dx,
-        controlPoint1.dy,
-        controlPoint2.dx,
-        controlPoint2.dy,
-        next.dx,
-        next.dy,
+        a.dx + (b.dx - prev.dx) / 6,
+        a.dy + (b.dy - prev.dy) / 6,
+        b.dx - (next.dx - a.dx) / 6,
+        b.dy - (next.dy - a.dy) / 6,
+        b.dx,
+        b.dy,
       );
     }
 
-    canvas.drawPath(path, paint);
+    canvas.drawPath(
+      path,
+      Paint()
+        ..color = color
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2.5
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.round
+        ..isAntiAlias = true,
+    );
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant ReadingTrendPainter old) =>
+      old.color != color ||
+          old.data.length != data.length ||
+          !List.generate(data.length, (i) => old.data.length > i &&
+              old.data[i] == data[i]).every((same) => same);
 }

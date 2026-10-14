@@ -21,8 +21,9 @@ import 'widgets/water_metrics_section.dart';
 /// Main Dashboard screen for Customers
 class DashboardPage extends StatefulWidget {
   final int initialIndex;
+  final bool isNewUser;
 
-  const DashboardPage({super.key, this.initialIndex = 0});
+  const DashboardPage({super.key, this.initialIndex = 0, this.isNewUser = false});
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
@@ -113,7 +114,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 10.verticalSpace,
 
                 /// User Greeting and Weather header
-                const GreetingAndWeatherSection(),
+                GreetingAndWeatherSection(isNewUser: widget.isNewUser),
 
                 16.verticalSpace,
 
@@ -121,6 +122,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 WaterMetricsSection(
                   phData: _phData,
                   chlorineData: _chlorineData,
+                  isNewUser: widget.isNewUser,
                 ),
 
                 16.verticalSpace,
@@ -149,7 +151,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         _currentIndex = 1;
                       });
                     },
-                    child: UpcomingServiceCard()),
+                    child: UpcomingServiceCard(isNewUser: widget.isNewUser,)),
 
                 16.verticalSpace,
 

@@ -43,7 +43,7 @@ class LatestReadingsCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
       height: 24.h,
       decoration: BoxDecoration(
-        color: AppColors.textGrey.withOpacity(0.08),
+        color: AppColors.newUserMetricPlaceholder,
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: Text(label, style: AppTypography.latestReadings),
