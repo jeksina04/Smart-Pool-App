@@ -100,7 +100,7 @@ class ServiceRequestForm extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(16.w, 8.h, 8.w, 8.h),
       decoration: BoxDecoration(
         color: AppColors.infoBannerBg,
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(10.r),
       ),
       child: Row(
         children: [

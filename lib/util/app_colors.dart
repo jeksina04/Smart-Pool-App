@@ -142,6 +142,9 @@ abstract class AppColors {
   /// Photo info text color '#9FB8D8'
   static const Color photoInfoText = Color(0xFF9FB8D8);
 
+  /// Rate Technician star  color '#7A8794'
+  static const Color rateTechnicianStar = Color(0xFF7A8794);
+
   /// Linear gradient colors for the Water Quality card
   static const List<Color> waterQualityGradient = [
     Color(0xFF1668D6), // Primary Blue

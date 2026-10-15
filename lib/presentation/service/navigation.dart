@@ -11,14 +11,17 @@ import '../screen/customer/history/history_page.dart';
 import '../screen/customer/notifications/notifications_page.dart';
 import '../screen/customer/photo_viewer/photo_viewer_page.dart';
 import '../screen/customer/pool_care_support/pool_care_support_page.dart';
+import '../screen/customer/pool_equipment/pool_equipment_page.dart';
 import '../screen/customer/pool_health/pool_health_page.dart';
 import '../screen/customer/profile/profile_page.dart';
+import '../screen/customer/rate_technician/rate_technician_page.dart';
 import '../screen/customer/report_issue/report_issue_page.dart';
 import '../screen/customer/request_service/request_service_page.dart';
 import '../screen/customer/scheduled_visits/scheduled_visits_page.dart';
 import '../screen/customer/service_company/service_company.dart';
 import '../screen/customer/service_paused/service_paused_page.dart';
 import '../screen/customer/services/services_page.dart';
+import '../screen/customer/switch_comapny/switch_company_page.dart';
 import '../screen/customer/visit_detail/visit_detail_page.dart';
 import '../screen/customer/water_test/water_test_page.dart';
 import '../screen/init_page.dart';
@@ -54,6 +57,9 @@ class Routes {
   static const String servicePaused = 'service_paused';
   static const String visitDetail = 'visit_detail';
   static const String photoViewer = 'photo_viewer';
+  static const String switchCompany = 'switch_company';
+  static const String rateTechnician = 'rate_technician';
+  static const String poolEquipment = 'pool_equipment';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -146,6 +152,15 @@ Route? onGenerateRoute(RouteSettings settings) {
         photos: args['photos'] as List<Map<String, dynamic>>,
         initialIndex: args['initialIndex'] ?? 0,
       );
+      break;
+    case Routes.switchCompany:
+      page = const SwitchCompanyPage();
+      break;
+    case Routes.rateTechnician:
+      page = const RateTechnicianPage();
+      break;
+    case Routes.poolEquipment:
+      page = const MyPoolEquipmentPage();
       break;
   }
 

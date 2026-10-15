@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../../util/app_assets.dart';
 import '../../../../../util/app_colors.dart';
 import '../../../../../util/app_typography.dart';
+import '../../../../service/navigation.dart';
 import 'company_list_item.dart';
 
 class OtherProvidersSection extends StatelessWidget {
@@ -27,6 +28,9 @@ class OtherProvidersSection extends StatelessWidget {
                 icon: AppAssets.icSwitch,
                 title: context.getString('switch_company'),
                 subtitle: context.getString('switch_company_subtitle'),
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.switchCompany);
+                },
               ),
               // --> Replace with actual company name and data
               CompanyListItem(
@@ -49,7 +53,10 @@ class OtherProvidersSection extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.r),
           ),
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SvgPicture.asset(AppAssets.icLock,),
+            Padding(
+                padding: EdgeInsets.only(top: 3.h),
+                child: SvgPicture.asset(AppAssets.icLock)
+            ),
             8.horizontalSpace,
             Expanded(
               child: RichText(

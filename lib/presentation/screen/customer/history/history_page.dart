@@ -143,11 +143,16 @@ class _HistoryPageState extends State<HistoryPage> {
                             ],
                           ),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SvgPicture.asset(
-                                AppAssets.icNavHistory,
-                                colorFilter: const ColorFilter.mode(
-                                    AppColors.primaryBlue, BlendMode.srcIn),
+                              Padding(
+                                padding: EdgeInsets.only(top: 4.h),
+                                child: SvgPicture.asset(
+                                  AppAssets.icNavHistory,
+                                  height: 8.w,
+                                  colorFilter: const ColorFilter.mode(
+                                      AppColors.primaryBlue, BlendMode.srcIn),
+                                ),
                               ),
                               8.horizontalSpace,
                               Expanded(

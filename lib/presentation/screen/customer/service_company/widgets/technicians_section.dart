@@ -2,6 +2,7 @@ import 'package:ez_localization/ez_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../../../../util/app_assets.dart';
 import '../../../../../util/app_colors.dart';
 import '../../../../../util/app_typography.dart';
@@ -47,14 +48,19 @@ class TechniciansSection extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SvgPicture.asset(AppAssets.icLicense, height: 16.w, width: 6.w),
+              Padding(
+                  padding: EdgeInsets.only(top: 4.h),
+                  child: SvgPicture.asset(
+                    AppAssets.icLicense,
+                    height: 8.w,
+                  )),
               8.horizontalSpace,
               // --> Replace with actual company name
               Expanded(
                 child: Text(
-                  context.getString('technician_employment_notice', {'company': 'NSP Pool & Spa Services'}),
-                  style: AppTypography.stripText
-                ),
+                    context.getString('technician_employment_notice',
+                        {'company': 'NSP Pool & Spa Services'}),
+                    style: AppTypography.stripText),
               ),
             ],
           ),

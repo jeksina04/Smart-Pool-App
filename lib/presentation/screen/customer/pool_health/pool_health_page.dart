@@ -103,7 +103,7 @@ class _PoolHealthPageState extends State<PoolHealthPage> {
       padding: EdgeInsets.fromLTRB(16.w, 8.h, 8.w, 8.h),
       decoration: BoxDecoration(
         color: AppColors.statusGreenBg,
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(10.r),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
