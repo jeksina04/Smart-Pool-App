@@ -165,7 +165,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 ),
               ),
             ),
-
+            8.verticalSpace,
             Expanded(
               child: SingleChildScrollView(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -199,6 +199,20 @@ class _NotificationsPageState extends State<NotificationsPage> {
                             }
                             else if (data['type'] == 'calendar') {
                               Navigator.pushNamed(context, Routes.scheduledVisits);
+                            }
+                            else if (data['type'] == 'checkin') {
+                              // --> Replace with actual data
+                              final latestVisit = {
+                                'date': "28 Jul 2026",
+                                'desc': "Ray · 7 tasks · 4 photos",
+                                'isRepair': false
+                              };
+
+                              Navigator.pushNamed(
+                                context,
+                                Routes.visitDetail,
+                                arguments: latestVisit,
+                              );
                             }
                             else if(data['type'] == 'message'){
                               if (widget.onSupportTap != null) {

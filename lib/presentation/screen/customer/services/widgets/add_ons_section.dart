@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../util/app_assets.dart';
 import '../../../../../util/app_colors.dart';
 import '../../../../../util/app_typography.dart';
+import '../../../../service/navigation.dart';
 
 class AddOnsSection extends StatelessWidget {
   const AddOnsSection({super.key});
@@ -94,7 +95,14 @@ class AddOnsSection extends StatelessWidget {
               SvgPicture.asset(AppAssets.icChevronRight,),
             ],
           ),
-          onTap: () {} // --> Handle tap
+          onTap: () {
+            if (title == context.getString('filter_deep_clean')) {
+              Navigator.pushNamed(context, Routes.addOnDetail);
+            }
+            else if (title == context.getString('green_pool_recovery')) {
+              Navigator.pushNamed(context, Routes.addOnDetail);
+            }
+          }
       ),
       if (!isLast)
         const Divider(

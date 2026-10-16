@@ -77,6 +77,7 @@ class _ScheduledVisitsPageState extends State<ScheduledVisitsPage> {
                 ),
               ),
             ),
+            8.verticalSpace,
             Expanded(
               child: SingleChildScrollView(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -130,7 +131,7 @@ class _ScheduledVisitsPageState extends State<ScheduledVisitsPage> {
                         16.verticalSpace,
                         // Request a Different Day button
                         _buildRequestDifferentDay(context),
-
+                        8.verticalSpace
                       ])),
             ),
           ],

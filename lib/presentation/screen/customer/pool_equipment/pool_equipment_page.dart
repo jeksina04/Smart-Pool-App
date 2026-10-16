@@ -55,6 +55,7 @@ class _MyPoolEquipmentPageState extends State<MyPoolEquipmentPage> {
                 ],
               ),
             ),
+            8.verticalSpace,
             Expanded(
               child: SingleChildScrollView(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),

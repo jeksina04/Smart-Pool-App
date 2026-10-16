@@ -38,7 +38,8 @@ class OtherProvidersSection extends StatelessWidget {
                 title: "Blue Wave Pools",
                 subtitle: "Previous · Jun 2025 – Feb 2026 · 34 visits",
                 onTap: () {
-                  Navigator.pop(context, 2);
+                  Navigator.pushNamed(context, Routes.dashboard,
+                      arguments: {'index': 2});
                 },
               ),
             ],

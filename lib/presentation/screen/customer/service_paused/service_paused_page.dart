@@ -58,6 +58,7 @@ class _ServicePausedPageState extends State<ServicePausedPage> {
                 ),
               ),
             ),
+            8.verticalSpace,
             Expanded(
               child: SingleChildScrollView(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),

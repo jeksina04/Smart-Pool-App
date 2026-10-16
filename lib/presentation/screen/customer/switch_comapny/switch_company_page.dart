@@ -56,6 +56,7 @@ class _SwitchCompanyPageState extends State<SwitchCompanyPage> {
                 ],
               ),
             ),
+            8.verticalSpace,
             Expanded(
               child: SingleChildScrollView(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),

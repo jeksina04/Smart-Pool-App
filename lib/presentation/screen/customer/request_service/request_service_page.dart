@@ -56,6 +56,7 @@ class _RequestServicePageState extends State<RequestServicePage> {
                 ),
               ),
             ),
+            8.verticalSpace,
             Expanded(
               child: SingleChildScrollView(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),

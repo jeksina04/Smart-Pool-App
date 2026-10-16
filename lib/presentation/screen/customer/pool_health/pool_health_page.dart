@@ -59,7 +59,7 @@ class _PoolHealthPageState extends State<PoolHealthPage> {
                 ),
               ),
             ),
-
+            8.verticalSpace,
             Expanded(
               child: SingleChildScrollView(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),

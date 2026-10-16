@@ -56,6 +56,7 @@ class _ReportIssuePageState extends State<ReportIssuePage> {
                     ),
                   ),
                 ),
+                8.verticalSpace,
                 Expanded(
                   child: SingleChildScrollView(
                       padding: EdgeInsets.symmetric(horizontal: 20.w),

@@ -56,6 +56,7 @@ class _RateTechnicianPageState extends State<RateTechnicianPage> {
                 ],
               ),
             ),
+            8.verticalSpace,
             Expanded(
               child: SingleChildScrollView(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),

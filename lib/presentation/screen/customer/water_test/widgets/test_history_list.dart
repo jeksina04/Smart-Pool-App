@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../util/app_assets.dart';
 import '../../../../../util/app_colors.dart';
 import '../../../../../util/app_typography.dart';
+import '../../../../service/navigation.dart';
 
 class TestHistoryList extends StatelessWidget {
   const TestHistoryList({super.key});
@@ -68,7 +69,32 @@ class TestHistoryList extends StatelessWidget {
             SvgPicture.asset(AppAssets.icChevronRight),
           ],
         ),
-        onTap: () {}, // --> Trigger test details
+        onTap: () {
+          // --> Replace with actual visit data
+          Map<String, dynamic> visitData;
+
+          if (date == "28 Jul 2026") {
+            visitData = {
+              'date': "28 Jul 2026",
+              'desc': "Ray · 7 tasks · 4 photos",
+              'isRepair': false
+            };
+          } else if (date == "21 Jul 2026") {
+            visitData = {
+              'date': "21 Jul 2026",
+              'desc': "Ray · 7 tasks · 2 photos",
+              'isRepair': false
+            };
+          } else {
+            visitData = {
+              'date': date,
+              'desc': "Dan · 7 tasks · 3 photos",
+              'isRepair': false
+            };
+          }
+
+          Navigator.pushNamed(context, Routes.visitDetail, arguments: visitData);
+        },
       ),
       if (!isLast)
         const Divider(
