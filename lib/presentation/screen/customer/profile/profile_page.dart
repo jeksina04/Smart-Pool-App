@@ -87,7 +87,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       ProfileListItem(
                         icon: AppAssets.icWrench,
                         title: context.getString('pool_equipment'),
-                        onTap: () {}, // --> Navigate to pool equipment page
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.poolEquipment);
+                        },
                       ),
                       ProfileListItem(
                         icon: AppAssets.icStar,

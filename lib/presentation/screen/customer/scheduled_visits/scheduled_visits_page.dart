@@ -130,7 +130,7 @@ class _ScheduledVisitsPageState extends State<ScheduledVisitsPage> {
                         16.verticalSpace,
                         // Request a Different Day button
                         _buildRequestDifferentDay(context),
-
+                        8.verticalSpace
                       ])),
             ),
           ],

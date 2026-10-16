@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../util/app_assets.dart';
 import '../../../../../util/app_colors.dart';
+import '../../../../service/navigation.dart';
 import 'company_list_item.dart';
 
 class AccountDetailsSection extends StatelessWidget {
@@ -23,13 +24,15 @@ class AccountDetailsSection extends StatelessWidget {
             icon: AppAssets.icStar,
             title: context.getString('plan'),
             trailingText: "Standard",
-            onTap: () {},
+            onTap: () {}, // --> Handle plan tap
           ),
           CompanyListItem(
             icon: AppAssets.icCalendar,
             title: context.getString('service_day'),
             trailingText: "Fridays, weekly",
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, Routes.scheduledVisits);
+            },
           ),
           CompanyListItem(
             icon: AppAssets.icUserId,
@@ -42,7 +45,7 @@ class AccountDetailsSection extends StatelessWidget {
             title: context.getString('service_agreement'),
             subtitle: context.getString('service_agreement_subtitle', {'company': 'NSP Pool & Spa Services'}),
             isLast: true,
-            onTap: () {},
+            onTap: () {}, // --> Handle service agreement tap
           ),
         ],
       ),

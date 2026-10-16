@@ -15,7 +15,6 @@ class EquipmentListCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: AppColors.cardBorder),
         boxShadow: const [
           BoxShadow(
             color: AppColors.cardShadow,
@@ -77,7 +76,7 @@ class _EquipmentItem extends StatelessWidget {
       onTap: () {}, // --> Handle equipment item tap
       borderRadius: BorderRadius.circular(16.r),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
         child: Row(
           children: [
             Container(

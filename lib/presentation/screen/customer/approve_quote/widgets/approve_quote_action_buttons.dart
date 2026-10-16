@@ -4,17 +4,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../util/app_colors.dart';
 import '../../../../../util/app_typography.dart';
+import '../../../../service/navigation.dart';
 
 class ApproveQuoteActionButtons extends StatelessWidget {
   final String total;
   final bool isRecurring;
-  final VoidCallback onApprove;
 
   const ApproveQuoteActionButtons({
     super.key,
     required this.total,
     required this.isRecurring,
-    required this.onApprove,
   });
 
   @override
@@ -29,7 +28,8 @@ class ApproveQuoteActionButtons extends StatelessWidget {
           width: double.infinity,
           height: 54.h,
           child: ElevatedButton(
-            onPressed: onApprove,
+            onPressed: () =>
+                Navigator.pushNamed(context, Routes.scheduledVisits),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primaryBlue,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28.r)),
@@ -75,7 +75,17 @@ class ApproveQuoteActionButtons extends StatelessWidget {
 
         // Ask Question
         InkWell(
-          onTap: () {}, // --> Handle ask question button press
+          onTap: () {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              Routes.dashboard,
+              (route) => false, // Clears the stack to go home
+              arguments: {
+                'index': 3,
+                'showSupport': true,
+              },
+            );
+          },
           borderRadius: BorderRadius.circular(28.r),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

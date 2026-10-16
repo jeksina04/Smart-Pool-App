@@ -5,6 +5,7 @@ import 'package:flutter_skeleton/presentation/screen/register/register_page.dart
 import 'package:get_it/get_it.dart';
 
 import '../../domain/interactor/interactor.dart';
+import '../screen/customer/add_on_detail/add_on_detail_page.dart';
 import '../screen/customer/approve_quote/approve_quote_page.dart';
 import '../screen/customer/dashboard/dashboard_page.dart';
 import '../screen/customer/history/history_page.dart';
@@ -60,6 +61,7 @@ class Routes {
   static const String switchCompany = 'switch_company';
   static const String rateTechnician = 'rate_technician';
   static const String poolEquipment = 'pool_equipment';
+  static const String addOnDetail = 'add_on_detail';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -95,9 +97,17 @@ Route? onGenerateRoute(RouteSettings settings) {
       );
       break;
     case Routes.dashboard:
-    // Retrieve the index from arguments (default to 0 if null)
-      final index = settings.arguments as int?;
-      page = DashboardPage(initialIndex: index ?? 0);
+      final args = settings.arguments;
+      if (args is Map<String, dynamic>) {
+        page = DashboardPage(
+          initialIndex: args['index'] ?? 0,
+          initialShowSupport: args['showSupport'] ?? false,
+        );
+      } else if (args is int) {
+        page = DashboardPage(initialIndex: args);
+      } else {
+        page = const DashboardPage();
+      }
       break;
     case Routes.services:
       page = const ServicesPage();
@@ -161,6 +171,9 @@ Route? onGenerateRoute(RouteSettings settings) {
       break;
     case Routes.poolEquipment:
       page = const MyPoolEquipmentPage();
+      break;
+    case Routes.addOnDetail:
+      page = const AddOnDetailPage();
       break;
   }
 

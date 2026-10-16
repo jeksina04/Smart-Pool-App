@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../util/app_colors.dart';
 import '../../../../../util/app_typography.dart';
+import '../../../../service/navigation.dart';
 import 'issue_photo_upload_section.dart';
 
 class ReportIssueForm extends StatelessWidget {
@@ -112,7 +113,15 @@ class ReportIssueForm extends StatelessWidget {
       height: 56.h,
       child: ElevatedButton(
         onPressed: () {
-          // --> Handle submit button press
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            Routes.dashboard,
+            (route) => false,
+            arguments: {
+              'index': 3,
+              'showSupport': true,
+            },
+          );
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primaryBlue,

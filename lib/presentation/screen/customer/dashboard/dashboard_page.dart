@@ -22,8 +22,13 @@ import 'widgets/water_metrics_section.dart';
 class DashboardPage extends StatefulWidget {
   final int initialIndex;
   final bool isNewUser;
+  final bool initialShowSupport;
 
-  const DashboardPage({super.key, this.initialIndex = 0, this.isNewUser = false});
+  const DashboardPage(
+      {super.key,
+      this.initialIndex = 0,
+      this.isNewUser = false,
+      this.initialShowSupport = false});
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
@@ -35,7 +40,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   /// Show Notifications flag to handle sub-navigation within the Home tab
   bool _showNotifications = false;
-  bool _showSupport = false;
+  late bool _showSupport;
 
   // --> Replace with actual data for pHData & ChlorineData
   final List<double> _phData = [
@@ -63,6 +68,7 @@ class _DashboardPageState extends State<DashboardPage> {
   void initState() {
     super.initState();
     _currentIndex = widget.initialIndex;
+    _showSupport = widget.initialShowSupport;
   }
 
   @override

@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../../util/app_colors.dart';
 import '../../../../../util/app_typography.dart';
+import '../../../../service/navigation.dart';
 
 class CompanyInfoCard extends StatelessWidget {
   const CompanyInfoCard({super.key});
@@ -105,7 +106,21 @@ class CompanyInfoCard extends StatelessWidget {
         ],
       ),
       child: ElevatedButton.icon(
-        onPressed: () {}, // --> Handle actual action
+        onPressed: () {
+          if (labelKey == 'message') {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              Routes.dashboard,
+                  (route) => false,
+              arguments: {
+                'index': 3,
+                'showSupport': true,
+              },
+            );
+          } else if (labelKey == 'call') {
+            // --> Handle call action here (e.g., using url_launcher)
+          }
+        },
         icon: SvgPicture.asset(
           iconAsset,
           width: 16.w,

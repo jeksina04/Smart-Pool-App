@@ -151,14 +151,44 @@ class _ApproveQuotePageState extends State<ApproveQuotePage> {
                     ApproveQuoteInfoBanner(text: quote['infoBanner']),
 
                     8.verticalSpace,
-                    Text(context.getString('quote_fee_disclaimer'), style: AppTypography.disclaimerText),
+                    RichText(
+                      text: TextSpan(
+                        style: AppTypography.disclaimerText,
+                        children: [
+                          TextSpan(
+                              text: context
+                                  .getString('quote_fee_disclaimer')
+                                  .split('{cardFee}')[0]),
+                          const TextSpan(
+                            text: "2.99%",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.darkNavy),
+                          ),
+                          TextSpan(
+                              text: context
+                                  .getString('quote_fee_disclaimer')
+                                  .split('{cardFee}')[1]
+                                  .split('{bankFee}')[0]),
+                          const TextSpan(
+                            text: "1%",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.darkNavy),
+                          ),
+                          TextSpan(
+                              text: context
+                                  .getString('quote_fee_disclaimer')
+                                  .split('{bankFee}')[1]),
+                        ],
+                      ),
+                    ),
                     16.verticalSpace,
 
                     // Approve Quote Action Buttons
                     ApproveQuoteActionButtons(
                       total: quote['total'],
                       isRecurring: quote['isRecurring'],
-                      onApprove: () {},
                     ),
                     16.verticalSpace,
                   ],
