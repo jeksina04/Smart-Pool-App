@@ -50,7 +50,7 @@ class _SwitchCompanyPageState extends State<SwitchCompanyPage> {
                     ),
                   ),
                   Text(
-                    context.getString('switch_company_title') ?? 'Switch company',
+                    context.getString('switch_company_title'),
                     style: AppTypography.sectionHeader,
                   ),
                 ],
