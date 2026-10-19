@@ -7,7 +7,11 @@ class Login {
 
   Login(this._loginRepo);
 
-  Future<LoginResModel> invoke(String username, String password) {
-    return _loginRepo.login(username, password);
+  Future<LoginResModel> invoke({
+    required UserRole role,
+    required String email,
+    required String password,
+  }) {
+    return _loginRepo.login(role: role, email: email, password: password);
   }
 }

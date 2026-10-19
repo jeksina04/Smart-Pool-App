@@ -18,7 +18,15 @@ mixin class ApiCaller {
       }
     } catch (e) {
       if (e is DioException) {
-        message = e.error.toString();
+        if (e.response?.data is Map && e.response?.data['message'] != null) {
+          message = e.response?.data['message'].toString() ?? message;
+        } else if (e.response?.data is Map && e.response?.data['error'] != null) {
+          message = e.response?.data['error'].toString() ?? message;
+        } else if (e.message != null && e.message!.isNotEmpty) {
+          message = e.message!;
+        } else {
+          message = e.error?.toString() ?? "Something went wrong";
+        }
       } else if (e is HttpException) {
         message = e.message;
       }

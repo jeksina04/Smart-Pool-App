@@ -17,7 +17,7 @@ class SplashPage extends BaseWidget {
         child: BlocConsumer<SplashBloc, SplashState>(
           listener: (_, state) {
             if (state is GotoLoginState) {
-              navigation.pushReplacement(Routes.login);
+              navigation.pushReplacement(Routes.onboarding);
             }
           },
           builder: (_, state) => Scaffold(
