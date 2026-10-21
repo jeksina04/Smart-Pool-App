@@ -360,11 +360,11 @@ abstract class AppTypography {
 
   /// No readings yet text: 22sp, weight 700, color #FFFFFF
   static TextStyle get noReadingsYet => TextStyle(
-    fontFamily: poppinsFont,
-    fontSize: 22.sp,
-    fontWeight: FontWeight.w700,
-    color: AppColors.white,
-  );
+        fontFamily: poppinsFont,
+        fontSize: 22.sp,
+        fontWeight: FontWeight.w700,
+        color: AppColors.white,
+      );
 
   /// Unit text: 13sp, weight 700, color #0F2A3F
   static TextStyle get unitText => TextStyle(
@@ -398,7 +398,7 @@ abstract class AppTypography {
         color: AppColors.textGrey,
       );
 
-  /// Notification Alert text text: 11sp, weight 600, color #4CAF50
+  /// Notification Alert text text: 11sp, weight 600, color #A12525
   static TextStyle get notificationAlert => TextStyle(
         fontFamily: poppinsFont,
         fontSize: 11.sp,
@@ -411,8 +411,7 @@ abstract class AppTypography {
       fontFamily: poppinsFont,
       fontSize: 13.sp,
       fontWeight: FontWeight.w400,
-      color: AppColors.white
-  );
+      color: AppColors.white);
 
   /// "Here's your pool overview", Water matrics label text: 13sp, weight 400, color #5F6C7A
   static TextStyle get infoLabel => TextStyle(
@@ -512,19 +511,19 @@ abstract class AppTypography {
 
   /// Approve Quote unselected  tab text: 13.5.sp, weight 600, color #0F2A3F
   static TextStyle get approveQuoteUnselectedTab => TextStyle(
-    fontFamily: poppinsFont,
-    fontSize: 13.5.sp,
-    fontWeight: FontWeight.w600,
-    color: AppColors.darkNavy,
-  );
+        fontFamily: poppinsFont,
+        fontSize: 13.5.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.darkNavy,
+      );
 
   /// Approve Quote selected  tab text: 13.5.sp, weight 600, color #FFFFFF
   static TextStyle get approveQuoteSelectedTab => TextStyle(
-    fontFamily: poppinsFont,
-    fontSize: 13.5.sp,
-    fontWeight: FontWeight.w600,
-    color: AppColors.white,
-  );
+        fontFamily: poppinsFont,
+        fontSize: 13.5.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.white,
+      );
 
   /// Notifications Mark all text: 11.sp, weight 700, color #1668D6
   static TextStyle get markAllText => TextStyle(
@@ -593,50 +592,89 @@ abstract class AppTypography {
 
   /// Awaiting text: 11.sp, weight 600, color #8A5A00
   static TextStyle get awaitingText => TextStyle(
-    fontFamily: poppinsFont,
-    fontSize: 11.sp,
-    fontWeight: FontWeight.w600,
-    color: AppColors.statusHighText,
-  );
+        fontFamily: poppinsFont,
+        fontSize: 11.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.statusHighText,
+      );
 
   /// Pool Care Support text: 20.sp, weight 700, color #0F2A3F
   static TextStyle get poolCareSupport => TextStyle(
-    fontFamily: poppinsFont,
-    fontSize: 20.sp,
-    fontWeight: FontWeight.w700,
-    color: AppColors.darkNavy,
-  );
+        fontFamily: poppinsFont,
+        fontSize: 20.sp,
+        fontWeight: FontWeight.w700,
+        color: AppColors.darkNavy,
+      );
 
   /// Photo Viewer Prev, Next button text: 14.sp, weight 700, color #0F2A3F
   static TextStyle get photoViewerBtn => TextStyle(
-      fontFamily: poppinsFont,
-      fontSize: 14.sp,
-      fontWeight: FontWeight.w700,
-      color: AppColors.darkNavy,
-  );
+        fontFamily: poppinsFont,
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w700,
+        color: AppColors.darkNavy,
+      );
 
   /// Photos text: 16sp, weight 600, color #FFFFFF
   static TextStyle get photosHeader => TextStyle(
-    fontFamily: poppinsFont,
-    fontSize: 16.sp,
-    fontWeight: FontWeight.w600,
-    color: AppColors.white,
-  );
+        fontFamily: poppinsFont,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.white,
+      );
 
   /// Photo Viewer label text: 15sp, weight 600, color #FFFFFF
   static TextStyle get photoViewerLabel => TextStyle(
-    fontFamily: poppinsFont,
-    fontSize: 15.sp,
-    fontWeight: FontWeight.w600,
-    color: AppColors.white,
-  );
+        fontFamily: poppinsFont,
+        fontSize: 15.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.white,
+      );
 
   /// Photo Viewer info text: 11sp, weight 500, color #9FB8D8
   static TextStyle get photoInfo => TextStyle(
-    fontFamily: poppinsFont,
-    fontSize: 11.sp,
-    fontWeight: FontWeight.w500,
-    color: AppColors.photoInfoText,
-  );
+        fontFamily: poppinsFont,
+        fontSize: 11.sp,
+        fontWeight: FontWeight.w500,
+        color: AppColors.photoInfoText,
+      );
 
+  /// Payment due text: 13sp, weight 700, color #A12525
+  static TextStyle get paymentDue => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 13.sp,
+        fontWeight: FontWeight.w700,
+        color: AppColors.notificationAlertText,
+      );
+
+  /// Other Ways to pay text: 13.33sp, weight 400, color #000000
+  static TextStyle get otherWaysToPay => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 13.33.sp,
+        fontWeight: FontWeight.w400,
+        color: AppColors.black,
+      );
+
+  /// Cheapest text: 13sp, weight 400, color #157A4C
+  static TextStyle get cheapestText => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 13.sp,
+        fontWeight: FontWeight.w400,
+        color: AppColors.inRangeGreen,
+      );
+
+  /// How to Pay Info Banner text: 12.5sp, weight 600, color #157A4C
+  static TextStyle get howToPayInfoBannerText => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 12.5.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.inRangeGreen,
+      );
+
+  /// How to Pay Info Banner Bold text: 12.5sp, weight 600, color #157A4C
+  static TextStyle get howToPayInfoBannerBoldText => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 12.5.sp,
+        fontWeight: FontWeight.w900,
+        color: AppColors.inRangeGreen,
+      );
 }

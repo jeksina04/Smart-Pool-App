@@ -145,6 +145,21 @@ abstract class AppColors {
   /// Rate Technician star  color '#7A8794'
   static const Color rateTechnicianStar = Color(0xFF7A8794);
 
+  /// Other Ways to pay text color '#000000'
+  static const Color black = Color(0xFF000000);
+
+  /// Other Ways to pay background color '#EFEFEF'
+  static const Color otherWaysToPayBg = Color(0xFFEFEFEF);
+
+  /// Due Badge background color '#FDECEC'
+  static const Color dueBadgeBg = Color(0xFFFDECEC);
+
+  /// Invoice Detail Total background color '#F2F6FE'
+  static const Color invoiceDetailTotalBg = Color(0xFFF2F6FE);
+
+  /// If you Pay online background color '#F7FAFF'
+  static const Color ifYouPayOnlineBg = Color(0xFFF7FAFF);
+
   /// Linear gradient colors for the Water Quality card
   static const List<Color> waterQualityGradient = [
     Color(0xFF1668D6), // Primary Blue

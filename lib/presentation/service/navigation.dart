@@ -25,6 +25,9 @@ import '../screen/customer/services/services_page.dart';
 import '../screen/customer/switch_comapny/switch_company_page.dart';
 import '../screen/customer/visit_detail/visit_detail_page.dart';
 import '../screen/customer/water_test/water_test_page.dart';
+import '../screen/customer_billing/how_to_pay/how_to_pay_page.dart';
+import '../screen/customer_billing/invoice_detail/invoice_detail_page.dart';
+import '../screen/customer_billing/invoices/invoices_page.dart';
 import '../screen/init_page.dart';
 import '../screen/onboarding/onboarding_page.dart';
 import '../screen/register/register_args.dart';
@@ -62,6 +65,9 @@ class Routes {
   static const String rateTechnician = 'rate_technician';
   static const String poolEquipment = 'pool_equipment';
   static const String addOnDetail = 'add_on_detail';
+  static const String invoices = 'invoices';
+  static const String invoiceDetail = 'invoice_detail';
+  static const String howToPay = 'how_to_pay';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -174,6 +180,17 @@ Route? onGenerateRoute(RouteSettings settings) {
       break;
     case Routes.addOnDetail:
       page = const AddOnDetailPage();
+      break;
+    case Routes.invoices:
+      page = const InvoicesPage();
+      break;
+    case Routes.invoiceDetail:
+      final args = settings.arguments as Map<String, dynamic>;
+      page = InvoiceDetailPage(invoice: args);
+      break;
+    case Routes.howToPay:
+      final args = settings.arguments as Map<String, dynamic>;
+      page = HowToPayPage(invoice: args);
       break;
   }
 
