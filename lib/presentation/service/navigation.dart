@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_skeleton/presentation/screen/login/login_page.dart';
-import 'package:flutter_skeleton/presentation/screen/register/register_page.dart';
+import 'package:flutter_skeleton/presentation/screen/auth/login/login_page.dart';
+import 'package:flutter_skeleton/presentation/screen/auth/register/register_page.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../domain/interactor/interactor.dart';
@@ -26,13 +26,22 @@ import '../screen/customer/switch_comapny/switch_company_page.dart';
 import '../screen/customer/visit_detail/visit_detail_page.dart';
 import '../screen/customer/water_test/water_test_page.dart';
 import '../screen/init_page.dart';
-import '../screen/onboarding/onboarding_page.dart';
-import '../screen/register/register_args.dart';
-import '../screen/reset_password/bloc/forgot_password_bloc.dart';
-import '../screen/reset_password/new_password_page.dart';
-import '../screen/reset_password/reset_password_page.dart';
-import '../screen/verify/verify_number_args.dart';
-import '../screen/verify/verify_number_page.dart';
+import '../screen/auth/onboarding/onboarding_page.dart';
+import '../screen/auth/register/register_args.dart';
+import '../screen/auth/reset_password/bloc/forgot_password_bloc.dart';
+import '../screen/auth/reset_password/new_password_page.dart';
+import '../screen/auth/reset_password/reset_password_page.dart';
+import '../screen/auth/verify/verify_number_args.dart';
+import '../screen/auth/verify/verify_number_page.dart';
+import '../screen/technician/menu/technician_menu_screen.dart';
+import '../screen/technician/new_work_order/new_work_order_screen.dart';
+import '../screen/technician/notifications/technician_notifications_screen.dart';
+import '../screen/technician/service_history/service_history_screen.dart';
+import '../screen/technician/shopping_list/shopping_list_screen.dart';
+import '../screen/technician/sync_status/sync_status_screen.dart';
+import '../screen/technician/today_route/today_route_screen.dart';
+import '../screen/technician/visit_detail/tech_visit_detail_screen.dart';
+import '../screen/technician/work_orders/work_orders_screen.dart';
 
 class Routes {
   static const String init = 'init';
@@ -62,6 +71,15 @@ class Routes {
   static const String rateTechnician = 'rate_technician';
   static const String poolEquipment = 'pool_equipment';
   static const String addOnDetail = 'add_on_detail';
+  static const String technicianMenu = 'technician_menu';
+  static const String todayRoute = 'today_route';
+  static const String workOrders = 'work_orders';
+  static const String newWorkOrder = 'new_work_order';
+  static const String shoppingList = 'shopping_list';
+  static const String technicianServiceHistory = 'technician_service_history';
+  static const String syncStatus = 'sync_status';
+  static const String technicianNotifications = 'technician_notifications';
+  static const String techVisitDetail = 'tech_visit_detail';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -174,6 +192,38 @@ Route? onGenerateRoute(RouteSettings settings) {
       break;
     case Routes.addOnDetail:
       page = const AddOnDetailPage();
+      break;
+    case Routes.technicianMenu:
+      page = const TechnicianMenuScreen(isStandalone: true);
+      break;
+    case Routes.todayRoute:
+      page = const TodayRouteScreen();
+      break;
+    case Routes.workOrders:
+      page = const WorkOrdersScreen();
+      break;
+    case Routes.newWorkOrder:
+      page = const NewWorkOrderScreen();
+      break;
+    case Routes.shoppingList:
+      page = const ShoppingListScreen();
+      break;
+    case Routes.technicianServiceHistory:
+      final customerName = settings.arguments as String?;
+      page = ServiceHistoryScreen(customerName: customerName ?? 'A. Keys');
+      break;
+    case Routes.syncStatus:
+      page = const SyncStatusScreen();
+      break;
+    case Routes.technicianNotifications:
+      page = const TechnicianNotificationsScreen();
+      break;
+    case Routes.techVisitDetail:
+      final args = settings.arguments as Map<String, dynamic>?;
+      page = TechVisitDetailScreen(
+        visitDate: args?['visitDate'] ?? '28 Jul',
+        technicianName: args?['technicianName'] ?? 'Ray Delgado',
+      );
       break;
   }
 

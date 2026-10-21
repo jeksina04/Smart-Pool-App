@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_skeleton/presentation/base/base_widget.dart';
 
-import '../screen/login/bloc/login_state.dart';
+import '../screen/auth/login/bloc/login_state.dart';
 
 class CustomBlocConsumer<T extends StateStreamable<R>, R> extends BaseWidget {
   final Function(BuildContext context, R state) listener;

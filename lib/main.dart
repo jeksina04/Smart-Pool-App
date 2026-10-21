@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_skeleton/data/api/api_service.dart';
 import 'package:flutter_skeleton/data/storage/storage.dart';
 import 'package:flutter_skeleton/domain/interactor/interactor.dart';
-import 'package:flutter_skeleton/presentation/screen/login/data_source/login_data_source_impl.dart';
+import 'package:flutter_skeleton/presentation/screen/auth/login/data_source/login_data_source_impl.dart';
 import 'package:flutter_skeleton/presentation/service/date_time.dart';
 import 'package:flutter_skeleton/presentation/service/location.dart';
 import 'package:flutter_skeleton/presentation/service/misc.dart';
@@ -19,8 +19,8 @@ import 'domain/interactor/register_interactor.dart';
 import 'domain/repo/login_repo.dart';
 import 'domain/repo/otp_repo.dart';
 import 'domain/repo/register_repo.dart';
-import 'presentation/screen/register/data_source/register_data_source_impl.dart';
-import 'presentation/screen/verify/data_source/otp_data_source_impl.dart';
+import 'presentation/screen/auth/register/data_source/register_data_source_impl.dart';
+import 'presentation/screen/auth/verify/data_source/otp_data_source_impl.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -2,8 +2,8 @@ import 'package:ez_localization/ez_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../../util/app_colors.dart';
-import '../../../../../../util/app_typography.dart';
+import '../../../../../util/app_colors.dart';
+import '../../../../../util/app_typography.dart';
 
 class CheckoutPriceBreakdown extends StatelessWidget {
   const CheckoutPriceBreakdown({super.key});

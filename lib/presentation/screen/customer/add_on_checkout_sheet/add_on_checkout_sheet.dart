@@ -6,8 +6,8 @@ import 'package:flutter_skeleton/presentation/screen/customer/add_on_checkout_sh
 import 'package:flutter_skeleton/presentation/screen/customer/add_on_checkout_sheet/widgets/payment_method_card.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../../util/app_colors.dart';
-import '../../../../../util/app_typography.dart';
+import '../../../../util/app_colors.dart';
+import '../../../../util/app_typography.dart';
 import '../../../../util/app_assets.dart';
 
 class AddOnCheckoutSheet extends StatefulWidget {
