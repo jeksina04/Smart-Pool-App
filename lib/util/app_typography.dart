@@ -411,7 +411,8 @@ abstract class AppTypography {
       fontFamily: poppinsFont,
       fontSize: 13.sp,
       fontWeight: FontWeight.w400,
-      color: AppColors.white);
+      color: AppColors.white
+    );
 
   /// "Here's your pool overview", Water matrics label text: 13sp, weight 400, color #5F6C7A
   static TextStyle get infoLabel => TextStyle(
@@ -676,5 +677,13 @@ abstract class AppTypography {
         fontSize: 12.5.sp,
         fontWeight: FontWeight.w900,
         color: AppColors.inRangeGreen,
+      );
+
+  /// Default text: 11.sp, weight: 600, color #0D5BC4
+  static TextStyle get defaultText => TextStyle(
+        fontFamily: poppinsFont,
+        fontSize: 11.sp,
+        fontWeight: FontWeight.w600,
+        color: AppColors.infoBannerText,
       );
 }

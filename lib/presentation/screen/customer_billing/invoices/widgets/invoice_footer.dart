@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../util/app_colors.dart';
 import '../../../../../util/app_typography.dart';
 import '../../../../service/navigation.dart';
+import '../../pay_invoice_sheet/pay_invoice_sheet.dart';
 
 class InvoiceFooter extends StatelessWidget {
   final String totalDue;
@@ -45,7 +46,9 @@ class InvoiceFooter extends StatelessWidget {
           ),
           16.verticalSpace,
           ElevatedButton(
-            onPressed: () {}, // --> Handle payment logic here
+            onPressed: () {
+              _showPaySheet(context, invoice);
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primaryBlue,
               minimumSize: Size(double.infinity, 56.h),
@@ -86,6 +89,20 @@ class InvoiceFooter extends StatelessWidget {
           ),
           16.verticalSpace,
         ],
+    );
+  }
+
+  void _showPaySheet(BuildContext context, Map<String, dynamic> invoice) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return FractionallySizedBox(
+          heightFactor: 0.90,
+          child: PayInvoiceSheet(invoice: invoice,),
+        );
+      },
     );
   }
 }

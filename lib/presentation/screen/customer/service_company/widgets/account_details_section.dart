@@ -24,7 +24,9 @@ class AccountDetailsSection extends StatelessWidget {
             icon: AppAssets.icStar,
             title: context.getString('plan'),
             trailingText: "Standard",
-            onTap: () {}, // --> Handle plan tap
+            onTap: () {
+              Navigator.pushNamed(context, Routes.myPlan);
+            },
           ),
           CompanyListItem(
             icon: AppAssets.icCalendar,

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../util/app_colors.dart';
 import '../../../../../util/app_typography.dart';
 import '../../../../service/navigation.dart';
+import '../../pay_invoice_sheet/pay_invoice_sheet.dart';
 
 class InvoiceDetailFooter extends StatelessWidget {
   final Map<String, dynamic> invoice;
@@ -14,7 +15,9 @@ class InvoiceDetailFooter extends StatelessWidget {
     return Column(
       children: [
         ElevatedButton(
-          onPressed: () {}, // --> Add your onPressed logic here
+          onPressed: () {
+            _showPaySheet(context, invoice);
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primaryBlue,
             minimumSize: Size(double.infinity, 56.h),
@@ -46,6 +49,20 @@ class InvoiceDetailFooter extends StatelessWidget {
           style: AppTypography.dayTitle,
         ),
       ],
+    );
+  }
+
+  void _showPaySheet(BuildContext context, Map<String, dynamic> invoice) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return FractionallySizedBox(
+          heightFactor: 0.90,
+          child: PayInvoiceSheet(invoice: invoice,),
+        );
+      },
     );
   }
 }

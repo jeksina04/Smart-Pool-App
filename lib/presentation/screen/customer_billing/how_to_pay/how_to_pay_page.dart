@@ -12,11 +12,16 @@ import 'widgets/how_to_pay_methods_card.dart';
 import 'widgets/how_to_pay_notice_card.dart';
 import 'widgets/how_to_pay_summary_card.dart';
 
-class HowToPayPage extends StatelessWidget {
+class HowToPayPage extends StatefulWidget {
   final Map<String, dynamic> invoice;
 
   const HowToPayPage({super.key, required this.invoice});
 
+  @override
+  State<HowToPayPage> createState() => _HowToPayPage();
+}
+
+class _HowToPayPage extends State<HowToPayPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +69,7 @@ class HowToPayPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     10.verticalSpace,
-                    HowToPaySummaryCard(invoice: invoice),
+                    HowToPaySummaryCard(invoice: widget.invoice),
                     16.verticalSpace,
                     Text(
                       context.getString('company_accepts', {'company': 'NSP POOL & SPA'}),
@@ -73,9 +78,9 @@ class HowToPayPage extends StatelessWidget {
                     16.verticalSpace,
                     const HowToPayMethodsCard(),
                     16.verticalSpace,
-                    HowToPayInfoBanner(amount: invoice['amount'] ?? ''),
+                    HowToPayInfoBanner(amount: widget.invoice['amount'] ?? ''),
                     16.verticalSpace,
-                    HowToPayNoticeCard(invoiceId: invoice['id'] ?? ''),
+                    HowToPayNoticeCard(invoiceId: widget.invoice['id'] ?? ''),
                     16.verticalSpace,
                     const HowToPayActions(),
                     16.verticalSpace,

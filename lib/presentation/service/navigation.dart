@@ -28,6 +28,9 @@ import '../screen/customer/water_test/water_test_page.dart';
 import '../screen/customer_billing/how_to_pay/how_to_pay_page.dart';
 import '../screen/customer_billing/invoice_detail/invoice_detail_page.dart';
 import '../screen/customer_billing/invoices/invoices_page.dart';
+import '../screen/customer_billing/my_plan/my_plan_page.dart';
+import '../screen/customer_billing/payment_methods/payment_methods_page.dart';
+import '../screen/customer_billing/refer_a_friend/refer_a_friend.dart';
 import '../screen/init_page.dart';
 import '../screen/onboarding/onboarding_page.dart';
 import '../screen/register/register_args.dart';
@@ -68,6 +71,9 @@ class Routes {
   static const String invoices = 'invoices';
   static const String invoiceDetail = 'invoice_detail';
   static const String howToPay = 'how_to_pay';
+  static const String referAFriend = 'refer_a_friend';
+  static const String paymentMethods = 'payment_methods';
+  static const String myPlan = 'my_plan';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -191,6 +197,15 @@ Route? onGenerateRoute(RouteSettings settings) {
     case Routes.howToPay:
       final args = settings.arguments as Map<String, dynamic>;
       page = HowToPayPage(invoice: args);
+      break;
+    case Routes.referAFriend:
+      page = const ReferAFriendPage();
+      break;
+    case Routes.paymentMethods:
+      page = const PaymentMethodsPage();
+      break;
+    case Routes.myPlan:
+      page = const MyPlanPage();
       break;
   }
 

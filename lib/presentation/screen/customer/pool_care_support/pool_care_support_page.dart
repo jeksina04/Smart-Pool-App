@@ -90,10 +90,20 @@ class PoolCareSupportPage extends StatelessWidget {
                     12.verticalSpace,
 
                     // Invoice Attachment
+                    // --> Replace with actual data
                     const InvoiceAttachment(
                       invoiceId: "INV-3379",
                       amount: "\$65",
                       date: "Jun 24",
+                      invoiceData: {
+                        "id": "#3379",
+                        "amount": "\$65",
+                        "month": "June",
+                        "isDue": false,
+                        "items": [
+                          {"title": "Filter replacement", "subtitle": "24 Jun", "price": "\$65"}
+                        ]
+                      },
                     ),
                   ],
                 ),

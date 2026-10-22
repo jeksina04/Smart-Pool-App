@@ -7,16 +7,23 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../util/app_assets.dart';
 import '../../../../util/app_colors.dart';
 import '../../../../util/app_typography.dart';
+import '../../../service/navigation.dart';
 import 'widgets/invoice_detail_summary_card.dart';
 import 'widgets/invoice_detail_footer.dart';
 
-class InvoiceDetailPage extends StatelessWidget {
+class InvoiceDetailPage extends StatefulWidget {
   final Map<String, dynamic> invoice;
 
   const InvoiceDetailPage({super.key, required this.invoice});
 
   @override
+  State<InvoiceDetailPage> createState() => _InvoiceDetailPageState();
+}
+
+class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
+  @override
   Widget build(BuildContext context) {
+    final invoice = widget.invoice;
     return Scaffold(
       backgroundColor: AppColors.dashboardBg,
       body: SafeArea(
@@ -84,9 +91,9 @@ class InvoiceDetailPage extends StatelessWidget {
           child: Column(
             children: [
               10.verticalSpace,
-              const InvoiceDetailSummaryCard(),
+              InvoiceDetailSummaryCard(),
               16.verticalSpace,
-              const InvoiceDetailItemsCard(),
+              InvoiceDetailItemsCard(),
               16.verticalSpace,
               _buildVisitLink(context),
               16.verticalSpace,
@@ -106,8 +113,22 @@ class InvoiceDetailPage extends StatelessWidget {
       children: [
         Text(context.getString('linked_to_visit', {'date': '18 Aug'}),
             style: AppTypography.infoLabel),
-        Text(context.getString('view_visit'),
-            style: AppTypography.bottomTextHighlight),
+        GestureDetector(
+          onTap: () {
+            // --> Replace with Actual Data
+             Navigator.pushNamed(
+              context,
+              Routes.visitDetail,
+              arguments: {
+                'date': '18 Aug 2026',
+                'desc': 'Ray Delgado · 7 tasks · 4 photos',
+                'isRepair': false,
+              },
+            );
+          },
+          child: Text(context.getString('view_visit'),
+              style: AppTypography.bottomTextHighlight),
+        ),
       ],
     );
   }
