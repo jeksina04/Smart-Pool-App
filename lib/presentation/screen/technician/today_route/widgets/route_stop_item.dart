@@ -76,13 +76,17 @@ class RouteStopItem extends StatelessWidget {
                     children: [
                       _buildTypeTag(),
                       8.horizontalSpace,
-                      Text(
-                        '${stop.time} · ${stop.distance}',
-                        style: TextStyle(
-                          fontFamily: AppTypography.poppinsFont,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.textGrey,
+                      Flexible(
+                        child: Text(
+                          '${stop.time} · ${stop.distance}',
+                          style: TextStyle(
+                            fontFamily: AppTypography.poppinsFont,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textGrey,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],

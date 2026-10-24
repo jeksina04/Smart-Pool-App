@@ -5,6 +5,7 @@ import 'package:flutter_skeleton/presentation/screen/technician/menu/technician_
 import 'package:flutter_skeleton/presentation/screen/technician/today_route/today_route_screen.dart';
 
 import 'customer/dashboard/dashboard_page.dart';
+import 'technician/dashboard/technician_dashboard_screen.dart';
 
 class InitPage extends StatelessWidget {
   const InitPage({super.key});
@@ -13,8 +14,8 @@ class InitPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(360, 690),
-      //builder: (context, child) => SplashPage(),
-      builder: (context, child) => TodayRouteScreen(),
+      builder: (context, child) => SplashPage(),
+      // builder: (context, child) => const TechnicianDashboardScreen(),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_skeleton/presentation/screen/technician/menu/technician_menu_screen.dart';
+import 'package:flutter_skeleton/presentation/screen/technician/today_route/widgets/technician_bottom_nav.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
 
@@ -21,6 +22,7 @@ class WorkOrdersScreen extends StatefulWidget {
 class _WorkOrdersScreenState extends State<WorkOrdersScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _selectedTab = 0; // 0 for Open, 1 for Done
+  int _currentBottomNavIndex = 3; // 'More' tab active
 
   final List<WorkOrderItemModel> _openWorkOrders = const [
     WorkOrderItemModel(
@@ -86,6 +88,18 @@ class _WorkOrdersScreenState extends State<WorkOrdersScreen> {
             // Handle logout
           },
         ),
+      ),
+      bottomNavigationBar: TechnicianBottomNav(
+        currentIndex: _currentBottomNavIndex,
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.of(context).popUntil((route) => route.isFirst);
+          } else if (index == 3) {
+            setState(() => _currentBottomNavIndex = 3);
+          } else {
+            setState(() => _currentBottomNavIndex = index);
+          }
+        },
       ),
       body: SafeArea(
         child: Column(

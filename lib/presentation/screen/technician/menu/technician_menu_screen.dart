@@ -14,6 +14,7 @@ import 'widgets/technician_menu_item.dart';
 /// Can be used both as a standard Drawer widget or as a standalone screen/modal.
 class TechnicianMenuScreen extends StatelessWidget {
   final VoidCallback? onClose;
+  final ValueChanged<int>? onNavigateToTab;
   final VoidCallback? onLogout;
   final String technicianName;
   final String technicianRole;
@@ -22,6 +23,7 @@ class TechnicianMenuScreen extends StatelessWidget {
   const TechnicianMenuScreen({
     super.key,
     this.onClose,
+    this.onNavigateToTab,
     this.onLogout,
     this.technicianName = 'Ray Delgado',
     this.technicianRole = 'Lead technician · ID 24',
@@ -64,7 +66,11 @@ class TechnicianMenuScreen extends StatelessWidget {
                       ),
                       title: "Today's Route",
                       onTap: () {
-                        onClose?.call();
+                        if (onNavigateToTab != null) {
+                          onNavigateToTab!(0);
+                        } else {
+                          onClose?.call();
+                        }
                       },
                     ),
                     _buildDivider(),
@@ -84,8 +90,12 @@ class TechnicianMenuScreen extends StatelessWidget {
                       badgeColor: const Color(0xFFE2EDFE),
                       badgeTextColor: AppColors.primaryBlue,
                       onTap: () {
-                        onClose?.call();
-                        Navigator.of(context).pushNamed(Routes.workOrders);
+                        if (onNavigateToTab != null) {
+                          onNavigateToTab!(3);
+                        } else {
+                          onClose?.call();
+                          Navigator.of(context).pushNamed(Routes.workOrders);
+                        }
                       },
                     ),
                     _buildDivider(),
@@ -128,7 +138,13 @@ class TechnicianMenuScreen extends StatelessWidget {
                         color: AppColors.primaryBlue,
                       ),
                       title: 'Customers',
-                      onTap: () {},
+                      onTap: () {
+                        if (onNavigateToTab != null) {
+                          onNavigateToTab!(2);
+                        } else {
+                          onClose?.call();
+                        }
+                      },
                     ),
                     _buildDivider(),
 
@@ -181,7 +197,10 @@ class TechnicianMenuScreen extends StatelessWidget {
                         ),
                       ),
                       title: 'Settings',
-                      onTap: () {},
+                      onTap: () {
+                        onClose?.call();
+                        Navigator.of(context).pushNamed(Routes.technicianSettings);
+                      },
                     ),
                     _buildDivider(),
 
@@ -193,7 +212,10 @@ class TechnicianMenuScreen extends StatelessWidget {
                       ),
                       title: 'My day',
                       subtitle: 'Start and end your day,\nhours, breaks',
-                      onTap: () {},
+                      onTap: () {
+                        onClose?.call();
+                        Navigator.of(context).pushNamed(Routes.myDay);
+                      },
                     ),
                     _buildDivider(),
 

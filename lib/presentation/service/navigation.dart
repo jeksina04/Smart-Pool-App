@@ -33,10 +33,17 @@ import '../screen/auth/reset_password/new_password_page.dart';
 import '../screen/auth/reset_password/reset_password_page.dart';
 import '../screen/auth/verify/verify_number_args.dart';
 import '../screen/auth/verify/verify_number_page.dart';
+import '../screen/technician/add_customer/add_customer_screen.dart';
+import '../screen/technician/change_password/change_password_screen.dart';
+import '../screen/technician/customer_detail/customer_detail_screen.dart';
+import '../screen/technician/dashboard/technician_dashboard_screen.dart';
 import '../screen/technician/menu/technician_menu_screen.dart';
+import '../screen/technician/my_day/my_day_screen.dart';
 import '../screen/technician/new_work_order/new_work_order_screen.dart';
 import '../screen/technician/notifications/technician_notifications_screen.dart';
+import '../screen/technician/profile/technician_profile_screen.dart';
 import '../screen/technician/service_history/service_history_screen.dart';
+import '../screen/technician/settings/technician_settings_screen.dart';
 import '../screen/technician/shopping_list/shopping_list_screen.dart';
 import '../screen/technician/sync_status/sync_status_screen.dart';
 import '../screen/technician/today_route/today_route_screen.dart';
@@ -72,6 +79,7 @@ class Routes {
   static const String poolEquipment = 'pool_equipment';
   static const String addOnDetail = 'add_on_detail';
   static const String technicianMenu = 'technician_menu';
+  static const String technicianDashboard = 'technician_dashboard';
   static const String todayRoute = 'today_route';
   static const String workOrders = 'work_orders';
   static const String newWorkOrder = 'new_work_order';
@@ -80,6 +88,12 @@ class Routes {
   static const String syncStatus = 'sync_status';
   static const String technicianNotifications = 'technician_notifications';
   static const String techVisitDetail = 'tech_visit_detail';
+  static const String technicianSettings = 'technician_settings';
+  static const String technicianProfile = 'technician_profile';
+  static const String changePassword = 'change_password';
+  static const String techCustomerDetail = 'tech_customer_detail';
+  static const String addCustomer = 'add_customer';
+  static const String myDay = 'my_day';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -196,8 +210,13 @@ Route? onGenerateRoute(RouteSettings settings) {
     case Routes.technicianMenu:
       page = const TechnicianMenuScreen(isStandalone: true);
       break;
+    case Routes.technicianDashboard:
+      final initialIndex = settings.arguments as int?;
+      page = TechnicianDashboardScreen(initialIndex: initialIndex ?? 0);
+      break;
     case Routes.todayRoute:
-      page = const TodayRouteScreen();
+      final initialIndex = settings.arguments as int?;
+      page = TechnicianDashboardScreen(initialIndex: initialIndex ?? 0);
       break;
     case Routes.workOrders:
       page = const WorkOrdersScreen();
@@ -224,6 +243,33 @@ Route? onGenerateRoute(RouteSettings settings) {
         visitDate: args?['visitDate'] ?? '28 Jul',
         technicianName: args?['technicianName'] ?? 'Ray Delgado',
       );
+      break;
+    case Routes.technicianSettings:
+      page = const TechnicianSettingsScreen();
+      break;
+    case Routes.technicianProfile:
+      page = const TechnicianProfileScreen();
+      break;
+    case Routes.changePassword:
+      page = const ChangePasswordScreen();
+      break;
+    case Routes.techCustomerDetail:
+      final args = settings.arguments as Map<String, dynamic>?;
+      page = CustomerDetailScreen(
+        name: args?['name'] ?? 'Alicia Keys',
+        address: args?['address'] ?? '26 Marina Way',
+        frequency: args?['frequency'] ?? 'weekly',
+        healthScore: args?['healthScore'] ?? 92,
+        nextVisit: args?['nextVisit'] ?? 'Mon',
+        workOrdersCount: args?['workOrdersCount'] ?? 1,
+        shoppingItemsCount: args?['shoppingItemsCount'] ?? 2,
+      );
+      break;
+    case Routes.addCustomer:
+      page = const AddCustomerScreen();
+      break;
+    case Routes.myDay:
+      page = const MyDayScreen();
       break;
   }
 

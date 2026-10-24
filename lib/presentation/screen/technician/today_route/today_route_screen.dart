@@ -107,7 +107,7 @@ class _TodayRouteScreenState extends State<TodayRouteScreen> {
         currentIndex: _currentBottomNavIndex,
         onTap: (index) {
           if (index == 3) {
-            _openDrawer();
+            Navigator.of(context).pushNamed(Routes.workOrders);
           } else {
             setState(() => _currentBottomNavIndex = index);
           }

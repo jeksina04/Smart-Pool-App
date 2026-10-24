@@ -87,10 +87,9 @@ class TechnicianBottomNav extends StatelessWidget {
     final isSelected = currentIndex == index;
     final color = isSelected ? AppColors.primaryBlue : AppColors.textGrey;
 
-    return InkWell(
-      onTap: () => onTap(index),
-      child: SizedBox(
-        width: 70.w,
+    return Expanded(
+      child: InkWell(
+        onTap: () => onTap(index),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -98,6 +97,9 @@ class TechnicianBottomNav extends StatelessWidget {
             2.verticalSpace,
             Text(
               label,
+              maxLines: 1,
+              softWrap: false,
+              overflow: TextOverflow.visible,
               style: TextStyle(
                 fontFamily: AppTypography.poppinsFont,
                 fontSize: 11.sp,
