@@ -15,7 +15,7 @@ class AccountDetailsSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8)],
+        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8, offset: Offset(0, 2))],
       ),
       child: Column(
         children: [
@@ -45,7 +45,9 @@ class AccountDetailsSection extends StatelessWidget {
             title: context.getString('service_agreement'),
             subtitle: context.getString('service_agreement_subtitle', {'company': 'NSP Pool & Spa Services'}),
             isLast: true,
-            onTap: () {}, // --> Handle service agreement tap
+            onTap: () {
+              Navigator.pushNamed(context, Routes.termsAndConditions);
+            },
           ),
         ],
       ),

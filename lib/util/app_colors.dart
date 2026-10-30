@@ -145,6 +145,12 @@ abstract class AppColors {
   /// Rate Technician star  color '#7A8794'
   static const Color rateTechnicianStar = Color(0xFF7A8794);
 
+  /// Delete Account Button Background color `#D93B3B`
+  static const Color deleteAccountBg = Color(0xFFD93B3B);
+
+  /// Delete Account Icon Background color `#FDECEC`
+  static const Color deleteAccountIconBg = Color(0xFFFDECEC);
+
   /// Linear gradient colors for the Water Quality card
   static const List<Color> waterQualityGradient = [
     Color(0xFF1668D6), // Primary Blue

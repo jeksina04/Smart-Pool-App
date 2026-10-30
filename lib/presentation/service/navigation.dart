@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_skeleton/presentation/screen/customer_settings_legal/legal_and_documents/legal_and_documents.dart';
+import 'package:flutter_skeleton/presentation/screen/customer_settings_legal/terms_and_conditions/terms_and_conditions.dart';
 import 'package:flutter_skeleton/presentation/screen/login/login_page.dart';
 import 'package:flutter_skeleton/presentation/screen/register/register_page.dart';
 import 'package:get_it/get_it.dart';
@@ -25,6 +27,8 @@ import '../screen/customer/services/services_page.dart';
 import '../screen/customer/switch_comapny/switch_company_page.dart';
 import '../screen/customer/visit_detail/visit_detail_page.dart';
 import '../screen/customer/water_test/water_test_page.dart';
+import '../screen/customer_settings_legal/delete_account/delete_account.dart';
+import '../screen/customer_settings_legal/settings/settings_page.dart';
 import '../screen/init_page.dart';
 import '../screen/onboarding/onboarding_page.dart';
 import '../screen/register/register_args.dart';
@@ -62,6 +66,10 @@ class Routes {
   static const String rateTechnician = 'rate_technician';
   static const String poolEquipment = 'pool_equipment';
   static const String addOnDetail = 'add_on_detail';
+  static const String settings = 'settings';
+  static const String termsAndConditions = 'terms_and_conditions';
+  static const String deleteAccount = 'delete_account';
+  static const String legalAndDocuments = 'legal_and_documents';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -174,6 +182,18 @@ Route? onGenerateRoute(RouteSettings settings) {
       break;
     case Routes.addOnDetail:
       page = const AddOnDetailPage();
+      break;
+    case Routes.settings:
+      page = const SettingsPage();
+      break;
+    case Routes.termsAndConditions:
+      page = const TermsAndConditionsPage();
+      break;
+    case Routes.deleteAccount:
+      page =  const DeleteAccountPage();
+      break;
+    case Routes.legalAndDocuments:
+      page = const LegalAndDocumentsPage();
       break;
   }
 

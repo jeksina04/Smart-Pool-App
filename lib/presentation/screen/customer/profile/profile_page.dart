@@ -115,7 +115,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       ProfileListItem(
                         icon: AppAssets.icLegalDocuments,
                         title: context.getString('legal_documents'),
-                        onTap: () {}, // --> Navigate to legal documents page
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.legalAndDocuments);
+                        },
                       ),
                       ProfileListItem(
                         icon: AppAssets.icAlert,
@@ -125,7 +127,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       ProfileListItem(
                         icon: AppAssets.icSettings,
                         title: context.getString('settings'),
-                        onTap: () {}, // --> Navigate to settings page
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.settings);
+                        },
                       ),
                     ]),
 
