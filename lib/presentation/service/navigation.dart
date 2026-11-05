@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_skeleton/presentation/screen/help_and_change_password/change_password/change_password.dart';
 import 'package:flutter_skeleton/presentation/screen/login/login_page.dart';
 import 'package:flutter_skeleton/presentation/screen/register/register_page.dart';
 import 'package:get_it/get_it.dart';
@@ -31,6 +32,7 @@ import '../screen/customer_billing/invoices/invoices_page.dart';
 import '../screen/customer_billing/my_plan/my_plan_page.dart';
 import '../screen/customer_billing/payment_methods/payment_methods_page.dart';
 import '../screen/customer_billing/refer_a_friend/refer_a_friend.dart';
+import '../screen/help_and_change_password/help_and_support/help_and_support.dart';
 import '../screen/init_page.dart';
 import '../screen/onboarding/onboarding_page.dart';
 import '../screen/register/register_args.dart';
@@ -74,6 +76,8 @@ class Routes {
   static const String referAFriend = 'refer_a_friend';
   static const String paymentMethods = 'payment_methods';
   static const String myPlan = 'my_plan';
+  static const String helpAndSupport = 'help_and_support';
+  static const String changePassword = 'change_password';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -206,6 +210,12 @@ Route? onGenerateRoute(RouteSettings settings) {
       break;
     case Routes.myPlan:
       page = const MyPlanPage();
+      break;
+    case Routes.helpAndSupport:
+      page = const HelpAndSupportPage();
+      break;
+    case Routes.changePassword: // --> Navigation from Customer Settings
+      page = const ChangePasswordPage();
       break;
   }
 

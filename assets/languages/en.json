@@ -341,5 +341,17 @@
   "premium_plan": "Weekly + filter cleans + priority",
   "full_service": "Full-service",
   "full_service_plan": "Everything + equipment cover",
-  "my_plan_notice": "Plan prices exclude card fees. Paying by card adds {cardFee}; bank transfer adds {bankFee}; cheque, Zelle and cash add nothing. Debit cards are never charged a card fee. The exact total is shown before you confirm."
+  "my_plan_notice": "Plan prices exclude card fees. Paying by card adds {cardFee}; bank transfer adds {bankFee}; cheque, Zelle and cash add nothing. Debit cards are never charged a card fee. The exact total is shown before you confirm.",
+  "help_support_title": "Help & Support",
+  "message_pool_care_support": "Message Pool Care Support",
+  "call_office": "Call office",
+  "email_us": "Email us",
+  "common_questions": "Common questions",
+  "still_stuck": "Still stuck?",
+  "support_reply_notice": "Support replies in a few minutes during office hours (Mon–Sat, 8am–6pm). Outside those hours we answer the next working morning.",
+  "change_password_title": "Change password",
+  "current_password_label": "Current password",
+  "repeat_it_hint": "Repeat it",
+  "password_guideline_hint": "Use at least 8 characters. A longer passphrase beats a short complicated one.",
+  "update_password_button": "Update password"
 }
