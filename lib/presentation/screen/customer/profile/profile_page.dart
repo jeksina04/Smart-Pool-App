@@ -126,7 +126,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       ProfileListItem(
                         icon: AppAssets.icAlert,
                         title: context.getString('help_support'),
-                        onTap: () {}, // --> Navigate to help and support page
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.helpAndSupport);
+                        },
                       ),
                       ProfileListItem(
                         icon: AppAssets.icSettings,

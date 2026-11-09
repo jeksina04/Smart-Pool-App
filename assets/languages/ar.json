@@ -381,5 +381,17 @@
   "what_we_collect_and_why": "ما نجمعه من بيانات ولماذا",
   "warranty_info": "معلومات الضمان",
   "permanently_removes_your_data": "إزالة بياناتك نهائياً",
-  "account_deletion_requirement": "يُعدّ توفير خيار حذف الحساب متطلباً من متطلبات متجري App Store وPlay Store لجميع التطبيقات التي تتيح إنشاء حسابات."
+  "account_deletion_requirement": "يُعدّ توفير خيار حذف الحساب متطلباً من متطلبات متجري App Store وPlay Store لجميع التطبيقات التي تتيح إنشاء حسابات.",
+  "help_support_title": "المساعدة والدعم",
+  "message_pool_care_support": "راسل فريق دعم العناية بالمسبح",
+  "call_office": "اتصل بالمكتب",
+  "email_us": "راسلنا عبر البريد الإلكتروني",
+  "common_questions": "الأسئلة الشائعة",
+  "still_stuck": "هل ما زلت بحاجة إلى مساعدة؟",
+  "support_reply_notice": "يرد فريق الدعم خلال بضع دقائق أثناء ساعات العمل (من الاثنين إلى السبت، من 8 صباحًا حتى 6 مساءً). وخارج هذه الساعات، سنرد في صباح يوم العمل التالي.",
+  "change_password_title": "تغيير كلمة المرور",
+  "current_password_label": "كلمة المرور الحالية",
+  "repeat_it_hint": "أعد إدخالها",
+  "password_guideline_hint": "استخدم 8 أحرف على الأقل. عبارة مرور طويلة أفضل من كلمة مرور قصيرة ومعقدة.",
+  "update_password_button": "تحديث كلمة المرور"
 }

@@ -381,5 +381,17 @@
   "what_we_collect_and_why": "What we collect and why",
   "warranty_info": "Warranty info",
   "permanently_removes_your_data": "Permanently removes your data",
-  "account_deletion_requirement": "Account deletion is an App Store and Play Store requirement for any app with accounts."
+  "account_deletion_requirement": "Account deletion is an App Store and Play Store requirement for any app with accounts.",
+  "help_support_title": "Help & Support",
+  "message_pool_care_support": "Message Pool Care Support",
+  "call_office": "Call office",
+  "email_us": "Email us",
+  "common_questions": "Common questions",
+  "still_stuck": "Still stuck?",
+  "support_reply_notice": "Support replies in a few minutes during office hours (Mon–Sat, 8am–6pm). Outside those hours we answer the next working morning.",
+  "change_password_title": "Change password",
+  "current_password_label": "Current password",
+  "repeat_it_hint": "Repeat it",
+  "password_guideline_hint": "Use at least 8 characters. A longer passphrase beats a short complicated one.",
+  "update_password_button": "Update password"
 }
