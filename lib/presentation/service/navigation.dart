@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_skeleton/presentation/screen/customer_settings_legal/legal_and_documents/legal_and_documents.dart';
+import 'package:flutter_skeleton/presentation/screen/customer_settings_legal/terms_and_conditions/terms_and_conditions.dart';
 import 'package:flutter_skeleton/presentation/screen/login/login_page.dart';
 import 'package:flutter_skeleton/presentation/screen/register/register_page.dart';
 import 'package:get_it/get_it.dart';
@@ -31,6 +33,8 @@ import '../screen/customer_billing/invoices/invoices_page.dart';
 import '../screen/customer_billing/my_plan/my_plan_page.dart';
 import '../screen/customer_billing/payment_methods/payment_methods_page.dart';
 import '../screen/customer_billing/refer_a_friend/refer_a_friend.dart';
+import '../screen/customer_settings_legal/delete_account/delete_account.dart';
+import '../screen/customer_settings_legal/settings/settings_page.dart';
 import '../screen/init_page.dart';
 import '../screen/onboarding/onboarding_page.dart';
 import '../screen/register/register_args.dart';
@@ -74,6 +78,10 @@ class Routes {
   static const String referAFriend = 'refer_a_friend';
   static const String paymentMethods = 'payment_methods';
   static const String myPlan = 'my_plan';
+  static const String settings = 'settings';
+  static const String termsAndConditions = 'terms_and_conditions';
+  static const String deleteAccount = 'delete_account';
+  static const String legalAndDocuments = 'legal_and_documents';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -206,6 +214,18 @@ Route? onGenerateRoute(RouteSettings settings) {
       break;
     case Routes.myPlan:
       page = const MyPlanPage();
+      break;
+    case Routes.settings:
+      page = const SettingsPage();
+      break;
+    case Routes.termsAndConditions:
+      page = const TermsAndConditionsPage();
+      break;
+    case Routes.deleteAccount:
+      page =  const DeleteAccountPage();
+      break;
+    case Routes.legalAndDocuments:
+      page = const LegalAndDocumentsPage();
       break;
   }
 

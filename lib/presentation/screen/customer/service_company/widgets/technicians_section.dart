@@ -18,7 +18,14 @@ class TechniciansSection extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             color: AppColors.white,
-            borderRadius: BorderRadius.circular(10.r),
+            borderRadius: BorderRadius.circular(16.r),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.cardShadow,
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              )
+            ],
           ),
           child: const Column(
             children: [

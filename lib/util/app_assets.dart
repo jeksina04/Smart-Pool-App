@@ -58,4 +58,7 @@ abstract class AppAssets {
   static const String icClose = 'assets/drawables/ic_close.svg';
 
   static const String icTransfer = 'assets/drawables/ic_transfer.svg';
+  static const String icChangePassword = 'assets/drawables/ic_change_password.svg';
+  static const String icPrivacyPolicy = 'assets/drawables/ic_privacy_policy.svg';
+  static const String icDelete = 'assets/drawables/ic_delete.svg';
 }

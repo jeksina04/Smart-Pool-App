@@ -160,6 +160,12 @@ abstract class AppColors {
   /// If you Pay online background color '#F7FAFF'
   static const Color ifYouPayOnlineBg = Color(0xFFF7FAFF);
 
+  /// Delete Account Button Background color `#D93B3B`
+  static const Color deleteAccountBg = Color(0xFFD93B3B);
+
+  /// Delete Account Icon Background color `#FDECEC`
+  static const Color deleteAccountIconBg = Color(0xFFFDECEC);
+
   /// Linear gradient colors for the Water Quality card
   static const List<Color> waterQualityGradient = [
     Color(0xFF1668D6), // Primary Blue
