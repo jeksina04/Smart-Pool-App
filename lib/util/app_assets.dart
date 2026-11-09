@@ -56,4 +56,6 @@ abstract class AppAssets {
   static const String icRoute = 'assets/drawables/ic_route.svg';
   static const String icSend = 'assets/drawables/ic_send.svg';
   static const String icClose = 'assets/drawables/ic_close.svg';
+
+  static const String icTransfer = 'assets/drawables/ic_transfer.svg';
 }

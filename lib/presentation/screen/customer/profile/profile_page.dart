@@ -76,13 +76,16 @@ class _ProfilePageState extends State<ProfilePage> {
                         title: context.getString('invoices_payments'),
                         badgeText:
                             context.getString('items_due', {'count': '1'}),
-                        // --> Replace with user invoice count
-                        onTap: () {}, // --> Navigate to invoices page
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.invoices);
+                        },
                       ),
                       ProfileListItem(
                         icon: AppAssets.icCreditCard,
                         title: context.getString('payment_methods'),
-                        onTap: () {}, // --> Navigate to payment methods page
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.paymentMethods);
+                        },
                       ),
                       ProfileListItem(
                         icon: AppAssets.icWrench,
@@ -95,8 +98,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         icon: AppAssets.icStar,
                         title: context.getString('membership_plan'),
                         statusText: "Standard",
-                        // --> Replace with user plan
-                        onTap: () {}, // --> Navigate to membership plan page
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.myPlan);
+                        },
                       ),
                     ]),
 

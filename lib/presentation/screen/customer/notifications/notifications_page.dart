@@ -221,6 +221,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
                                 Navigator.pushNamed(context, Routes.poolCareSupport);
                               }
                             }
+                            else if(data['type'] == 'payment'){
+                              Navigator.pushNamed(context, Routes.invoices);
+                            }
                           },
                         ),
                       );

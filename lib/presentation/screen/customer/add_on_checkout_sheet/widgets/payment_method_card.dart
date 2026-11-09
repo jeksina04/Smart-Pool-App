@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../util/app_assets.dart';
 import '../../../../../util/app_colors.dart';
 import '../../../../../util/app_typography.dart';
+import '../../../../service/navigation.dart';
 
 class PaymentMethodCard extends StatelessWidget {
   const PaymentMethodCard({super.key});
@@ -36,14 +37,19 @@ class PaymentMethodCard extends StatelessWidget {
           ),
           12.horizontalSpace,
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // --> Replace with actual card number
-                Text("Visa •••• 6411", style: AppTypography.sectionHeader),
-                Text("On file with NSP Pool & Spa Services",
-                    style: AppTypography.infoLabel),
-              ],
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, Routes.paymentMethods);
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // --> Replace with actual card number
+                  Text("Visa •••• 6411", style: AppTypography.sectionHeader),
+                  Text("On file with NSP Pool & Spa Services",
+                      style: AppTypography.infoLabel),
+                ],
+              ),
             ),
           ),
           SvgPicture.asset(AppAssets.icChevronRight),

@@ -50,8 +50,9 @@ class VisitActionButtons extends StatelessWidget {
         16.verticalSpace,
         _textLink(AppAssets.icStar, context.getString('leave_a_review'), () {}),
         // --> Navigate to review page
-        _textLink(AppAssets.icSend, context.getString('refer_friend'), () {}),
-        // --> Navigate to refer a friend page
+        _textLink(AppAssets.icSend, context.getString('refer_friend'), () {
+          Navigator.pushNamed(context, Routes.referAFriend);
+        }),
       ],
     );
   }
