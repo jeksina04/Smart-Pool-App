@@ -228,8 +228,19 @@ Route? onGenerateRoute(RouteSettings settings) {
       page = const ShoppingListScreen();
       break;
     case Routes.technicianServiceHistory:
-      final customerName = settings.arguments as String?;
-      page = ServiceHistoryScreen(customerName: customerName ?? 'A. Keys');
+      String? customerName;
+      int initialTab = 0;
+      if (settings.arguments is String) {
+        customerName = settings.arguments as String;
+      } else if (settings.arguments is Map) {
+        final args = settings.arguments as Map<String, dynamic>;
+        customerName = args['customerName'] as String?;
+        initialTab = (args['initialTab'] as int?) ?? 0;
+      }
+      page = ServiceHistoryScreen(
+        customerName: customerName ?? 'A. Keys',
+        initialTab: initialTab,
+      );
       break;
     case Routes.syncStatus:
       page = const SyncStatusScreen();

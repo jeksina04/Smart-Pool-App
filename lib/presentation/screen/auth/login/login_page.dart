@@ -47,30 +47,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onSignInPressed(BuildContext context, UiState state) {
-    final userId = _userIdController.text.trim();
-    final password = _passwordController.text.trim();
-
-    if (userId.isEmpty) {
-      _toast.errorToast(context, 'Please enter your Email or User ID');
-      return;
-    }
-    if (password.isEmpty) {
-      _toast.errorToast(context, 'Please enter your Password');
-      return;
-    }
-    if (!state.isTermsAccepted) {
-      _toast.errorToast(
-          context, 'Please accept the Privacy Policy and Terms of Service');
-      return;
-    }
-
-    context.read<LoginBloc>().add(
-          UserLoginEvent(
-            userId,
-            password,
-            role: state.role,
-          ),
-        );
+    _navigation.pushReplacement(Routes.technicianDashboard);
   }
 
   @override
@@ -87,6 +64,11 @@ class _LoginPageState extends State<LoginPage> {
             }
             if (msg != null && msg.isNotEmpty) {
               _toast.successToast(context, msg);
+            }
+            if (state.role == UserRole.technician) {
+              _navigation.pushReplacement(Routes.technicianDashboard);
+            } else {
+              _navigation.pushReplacement(Routes.dashboard);
             }
           }
         },

@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_skeleton/presentation/service/navigation.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
+import 'package:flutter_svg/svg.dart';
 
+import '../../../../util/app_assets.dart';
 import 'widgets/customer_detail_header_bar.dart';
 
 /// Screen displaying Customer Details for a Technician
@@ -106,10 +108,14 @@ class CustomerDetailScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(16.r),
             ),
             child: Center(
-              child: Icon(
-                Icons.person_outline_rounded,
-                size: 26.w,
-                color: AppColors.primaryBlue,
+              child: SvgPicture.asset(
+                AppAssets.icProfile,
+                width: 24.w,
+                height: 24.w,
+                colorFilter: const ColorFilter.mode(
+                  AppColors.primaryBlue,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
           ),
@@ -283,7 +289,15 @@ class CustomerDetailScreen extends StatelessWidget {
         children: [
           // 1. Pool & equipment
           _buildMenuRow(
-            icon: Icons.build_outlined,
+            icon: SvgPicture.asset(
+              AppAssets.icRepair,
+              width: 20.w,
+              height: 20.w,
+              colorFilter: const ColorFilter.mode(
+                AppColors.primaryBlue,
+                BlendMode.srcIn,
+              ),
+            ),
             iconBgColor: const Color(0xFFEDF4FE),
             iconColor: AppColors.primaryBlue,
             title: 'Pool & equipment',
@@ -295,7 +309,15 @@ class CustomerDetailScreen extends StatelessWidget {
 
           // 2. Service history
           _buildMenuRow(
-            icon: Icons.access_time_rounded,
+            icon: SvgPicture.asset(
+              AppAssets.icClock,
+              width: 20.w,
+              height: 20.w,
+              colorFilter: const ColorFilter.mode(
+                AppColors.primaryBlue,
+                BlendMode.srcIn,
+              ),
+            ),
             iconBgColor: const Color(0xFFEDF4FE),
             iconColor: AppColors.primaryBlue,
             title: 'Service history',
@@ -310,7 +332,15 @@ class CustomerDetailScreen extends StatelessWidget {
 
           // 3. Work orders
           _buildMenuRow(
-            icon: Icons.assignment_outlined,
+            icon: SvgPicture.asset(
+              AppAssets.icDocument,
+              width: 20.w,
+              height: 20.w,
+              colorFilter: const ColorFilter.mode(
+                AppColors.primaryBlue,
+                BlendMode.srcIn,
+              ),
+            ),
             iconBgColor: const Color(0xFFEDF4FE),
             iconColor: AppColors.primaryBlue,
             title: 'Work orders',
@@ -325,7 +355,15 @@ class CustomerDetailScreen extends StatelessWidget {
 
           // 4. Items / shopping
           _buildMenuRow(
-            icon: Icons.shopping_cart_outlined,
+            icon: SvgPicture.asset(
+              AppAssets.icShoppingList,
+              width: 20.w,
+              height: 20.w,
+              colorFilter: const ColorFilter.mode(
+                AppColors.primaryBlue,
+                BlendMode.srcIn,
+              ),
+            ),
             iconBgColor: const Color(0xFFEDF4FE),
             iconColor: AppColors.primaryBlue,
             title: 'Items / shopping',
@@ -342,7 +380,7 @@ class CustomerDetailScreen extends StatelessWidget {
   }
 
   Widget _buildMenuRow({
-    required IconData icon,
+    required Widget icon,
     required Color iconBgColor,
     required Color iconColor,
     required String title,
@@ -366,11 +404,7 @@ class CustomerDetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12.r),
               ),
               child: Center(
-                child: Icon(
-                  icon,
-                  size: 20.w,
-                  color: iconColor,
-                ),
+                child: icon
               ),
             ),
             14.horizontalSpace,
@@ -449,10 +483,14 @@ class CustomerDetailScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.phone_outlined,
-                size: 20.w,
-                color: AppColors.darkNavy,
+              SvgPicture.asset(
+                AppAssets.icPhone,
+                width: 18.w,
+                height: 18.w,
+                colorFilter: const ColorFilter.mode(
+                  Colors.black,
+                  BlendMode.srcIn,
+                ),
               ),
               10.horizontalSpace,
               Text(

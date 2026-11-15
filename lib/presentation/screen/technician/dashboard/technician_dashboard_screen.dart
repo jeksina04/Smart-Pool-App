@@ -102,7 +102,7 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
       title: 'Filter clean · A. Keys',
       subtitle: 'WO #1042 · due Fri',
       status: WorkOrderStatus.open,
-      iconType: WorkOrderIconType.wrench,
+      iconType: WorkOrderIconType.repair,
     ),
     WorkOrderItemModel(
       title: 'Repair callback · Roth',
@@ -114,22 +114,34 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
       title: 'Pump replace · Hull',
       subtitle: 'WO #1035 · parts ordered',
       status: WorkOrderStatus.approved,
-      iconType: WorkOrderIconType.wrench,
+      iconType: WorkOrderIconType.repair,
     ),
   ];
 
   final List<WorkOrderItemModel> _doneWorkOrders = const [
     WorkOrderItemModel(
-      title: 'Salt cell inspect · Garcia',
-      subtitle: 'WO #1031 · completed yesterday',
-      status: WorkOrderStatus.approved,
-      iconType: WorkOrderIconType.wrench,
+      title: 'Salt cell service · A. Keys',
+      subtitle: 'WO #1031 · completed Fri 1 Aug',
+      status: WorkOrderStatus.done,
+      iconType: WorkOrderIconType.checkmark,
     ),
     WorkOrderItemModel(
-      title: 'Heater sensor fix · Miller',
-      subtitle: 'WO #1028 · completed Mon',
-      status: WorkOrderStatus.approved,
-      iconType: WorkOrderIconType.wrench,
+      title: 'Heater ignitor · Pike',
+      subtitle: 'WO #1027 · completed Wed 30 Jul',
+      status: WorkOrderStatus.done,
+      iconType: WorkOrderIconType.checkmark,
+    ),
+    WorkOrderItemModel(
+      title: 'Green pool recovery · Diaz',
+      subtitle: 'WO #1022 · completed Mon 28 Jul',
+      status: WorkOrderStatus.done,
+      iconType: WorkOrderIconType.checkmark,
+    ),
+    WorkOrderItemModel(
+      title: 'Filter deep clean · Shannon',
+      subtitle: 'WO #1018 · completed Thu 24 Jul',
+      status: WorkOrderStatus.done,
+      iconType: WorkOrderIconType.checkmark,
     ),
   ];
 
@@ -740,80 +752,88 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
         // Custom Header Bar with Hamburger, Title "Customers (7)", and "+" button
         _buildCustomersHeaderBar(),
 
+        // Fixed Top Controls: Search Bar, Filter Chips, Segmented Filter
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildCustomerSearchBar(),
+              14.verticalSpace,
+              _buildCustomerFilterChips(),
+              16.verticalSpace,
+              _buildCustomerSegmentedFilter(),
+              16.verticalSpace,
+            ],
+          ),
+        ),
+
+        // Scrollable Area (Only the customer items list + A-Z alphabet scroller)
         Expanded(
           child: Stack(
             children: [
               SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.fromLTRB(20.w, 6.h, 24.w, 20.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Search Bar
-                    _buildCustomerSearchBar(),
-                    14.verticalSpace,
-
-                    // Filter Chips: Tags, On my route
-                    _buildCustomerFilterChips(),
-                    16.verticalSpace,
-
-                    // Segmented Filter: All | Active | Inactive
-                    _buildCustomerSegmentedFilter(),
-                    16.verticalSpace,
-
-                    // Customer Cards List
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(20.r),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x08102A50),
-                            blurRadius: 10,
-                            offset: Offset(0, 2),
-                          ),
+                padding: EdgeInsets.fromLTRB(20.w, 0, 24.w, 16.h),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(20.r),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x08102A50),
+                        blurRadius: 10,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: List.generate(filtered.length, (index) {
+                      final item = filtered[index];
+                      return Column(
+                        children: [
+                          _buildCustomerCardRow(item),
+                          if (index != filtered.length - 1)
+                            const Divider(
+                              height: 1,
+                              thickness: 1,
+                              color: Color(0xFFF0F3F6),
+                            ),
                         ],
-                      ),
-                      child: Column(
-                        children: List.generate(filtered.length, (index) {
-                          final item = filtered[index];
-                          return Column(
-                            children: [
-                              _buildCustomerCardRow(item),
-                              if (index != filtered.length - 1)
-                                const Divider(
-                                  height: 1,
-                                  thickness: 1,
-                                  color: Color(0xFFF0F3F6),
-                                ),
-                            ],
-                          );
-                        }),
-                      ),
-                    ),
-                    18.verticalSpace,
-
-                    // Info Banner for Inactive customers
-                    _buildInactiveCustomersBanner(),
-                  ],
+                      );
+                    }),
+                  ),
                 ),
               ),
 
               // Alphabetical A-Z Scroller on the right
               Positioned(
                 right: 4.w,
-                top: 70.h,
-                bottom: 20.h,
+                top: 0,
+                bottom: 16.h,
                 child: _buildAlphabetIndex(),
               ),
             ],
           ),
         ),
+
+        // Info Banner for Inactive customers (fixed at bottom, hidden on Active tab)
+        if (_customerStatusFilter != 1)
+          Padding(
+            padding: EdgeInsets.fromLTRB(20.w, 4.h, 20.w, 12.h),
+            child: _buildInactiveCustomersBanner(),
+          ),
       ],
     );
   }
 
   Widget _buildCustomersHeaderBar() {
+    final int count = _customerStatusFilter == 1
+        ? 4
+        : _customerStatusFilter == 2
+            ? 1
+            : _customers.length;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
       child: Row(
@@ -847,9 +867,9 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
             ),
           ),
 
-          // Title: Customers (7)
+          // Title: Customers (7 / 4 / 1)
           Text(
-            'Customers (${_customers.length})',
+            'Customers ($count)',
             style: TextStyle(
               fontFamily: AppTypography.poppinsFont,
               fontSize: 17.sp,
@@ -1102,10 +1122,14 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
                 borderRadius: BorderRadius.circular(14.r),
               ),
               child: Center(
-                child: Icon(
-                  Icons.person_outline_rounded,
-                  size: 22.w,
-                  color: AppColors.primaryBlue,
+                child: SvgPicture.asset(
+                  AppAssets.icProfile,
+                  width: 22.w,
+                  height: 22.w,
+                  colorFilter: const ColorFilter.mode(
+                    AppColors.primaryBlue,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
             ),
@@ -1199,6 +1223,10 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
   }
 
   Widget _buildInactiveCustomersBanner() {
+    final String text = _customerStatusFilter == 2
+        ? 'Inactive customers stay on the list so their pool history is never lost.'
+        : 'Inactive customers stay on the list. The office keeps them for re-marketing, and you may still be asked to quote one.';
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
@@ -1207,7 +1235,7 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
         borderRadius: BorderRadius.circular(16.r),
       ),
       child: Text(
-        'Inactive customers stay on the list. The office keeps them for re-marketing, and you may still be asked to quote one.',
+        text,
         style: TextStyle(
           fontFamily: AppTypography.poppinsFont,
           fontSize: 12.5.sp,
@@ -1309,8 +1337,10 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
                     }),
                   ),
                 ),
-                32.verticalSpace,
-                _buildNewWorkOrderButton(),
+                if (_workOrdersTab == 0) ...[
+                  32.verticalSpace,
+                  _buildNewWorkOrderButton(),
+                ],
               ],
             ),
           ),

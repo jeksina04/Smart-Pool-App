@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_skeleton/util/app_assets.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
 
@@ -7,11 +9,14 @@ enum WorkOrderStatus {
   open,
   urgent,
   approved,
+  done,
 }
 
 enum WorkOrderIconType {
   wrench,
+  repair,
   warning,
+  checkmark,
 }
 
 class WorkOrderItemModel {
@@ -100,24 +105,38 @@ class WorkOrderItemRow extends StatelessWidget {
 
   Widget _buildIcon() {
     return Container(
-      width: 42.w,
-      height: 42.w,
+      width: 44.w,
+      height: 44.w,
       decoration: BoxDecoration(
-        color: const Color(0xFFE9F1FE),
-        borderRadius: BorderRadius.circular(12.r),
+        color: const Color(0xFFEFF4FE),
+        borderRadius: BorderRadius.circular(14.r),
       ),
       child: Center(
-        child: item.iconType == WorkOrderIconType.warning
-            ? Icon(
-                Icons.warning_amber_rounded,
-                size: 22.w,
-                color: AppColors.primaryBlue,
+        child: item.iconType == WorkOrderIconType.checkmark
+            ? SvgPicture.asset(
+                AppAssets.icCheck,
+                width: 20.w,
+                height: 20.w,
+                colorFilter: const ColorFilter.mode(
+                  Color(0xFF1668D6),
+                  BlendMode.srcIn,
+                ),
               )
-            : Icon(
-                Icons.build_outlined,
-                size: 20.w,
-                color: AppColors.primaryBlue,
-              ),
+            : item.iconType == WorkOrderIconType.warning
+                ? Icon(
+                    Icons.warning_amber_rounded,
+                    size: 22.w,
+                    color: AppColors.primaryBlue,
+                  )
+                : SvgPicture.asset(
+                    AppAssets.icRepair,
+                    width: 20.w,
+                    height: 20.w,
+                    colorFilter: const ColorFilter.mode(
+                      Color(0xFF1668D6),
+                      BlendMode.srcIn,
+                    ),
+                  ),
       ),
     );
   }
@@ -142,6 +161,11 @@ class WorkOrderItemRow extends StatelessWidget {
         text = 'Approved';
         bgColor = const Color(0xFFE6F7EF);
         textColor = const Color(0xFF157A4C);
+        break;
+      case WorkOrderStatus.done:
+        text = 'Done';
+        bgColor = const Color(0xFFE4F6ED);
+        textColor = const Color(0xFF1B8755);
         break;
     }
 

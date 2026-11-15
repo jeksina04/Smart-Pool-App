@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_skeleton/util/app_assets.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
 
@@ -31,23 +33,12 @@ class TechnicianMenuHeader extends StatelessWidget {
           /// Top Row: SP Logo + SMART POOL Title + Close button
           Row(
             children: [
-              Container(
-                width: 24.w,
-                height: 24.w,
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(5.r),
-                ),
-                child: Center(
-                  child: Text(
-                    'SP',
-                    style: TextStyle(
-                      fontFamily: AppTypography.poppinsFont,
-                      fontSize: 11.sp,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.primaryBlue,
-                    ),
-                  ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(5.r),
+                child: SvgPicture.asset(
+                  AppAssets.icSpLogo,
+                  width: 24.w,
+                  height: 24.w,
                 ),
               ),
               8.horizontalSpace,
@@ -108,10 +99,14 @@ class TechnicianMenuHeader extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Center(
-                  child: Icon(
-                    Icons.person_outline_rounded,
-                    size: 28.w,
-                    color: AppColors.white,
+                  child: SvgPicture.asset(
+                    AppAssets.icProfile,
+                    width: 24.w,
+                    height: 24.w,
+                    colorFilter: const ColorFilter.mode(
+                      AppColors.white,
+                      BlendMode.srcIn,
+                    ),
                   ),
                 ),
               ),

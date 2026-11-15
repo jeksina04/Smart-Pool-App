@@ -4,7 +4,6 @@ import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
 
 import 'widgets/new_work_order_header_bar.dart';
-import 'widgets/quote_first_toggle_card.dart';
 import 'widgets/selectable_field_tile.dart';
 
 /// Screen for creating a "New work order"
@@ -19,13 +18,10 @@ class _NewWorkOrderScreenState extends State<NewWorkOrderScreen> {
   String? _selectedCustomer;
   String? _selectedWorkType;
   final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _roughPriceController = TextEditingController();
-  bool _needsQuoteFirst = true;
 
   @override
   void dispose() {
     _descriptionController.dispose();
-    _roughPriceController.dispose();
     super.dispose();
   }
 
@@ -121,81 +117,11 @@ class _NewWorkOrderScreenState extends State<NewWorkOrderScreen> {
                     ),
                     18.verticalSpace,
 
-                    /// 4. Rough price input
-                    Text(
-                      'Rough price',
-                      style: TextStyle(
-                        fontFamily: AppTypography.poppinsFont,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.darkNavy,
-                      ),
-                    ),
-                    8.verticalSpace,
-                    Container(
-                      width: double.infinity,
-                      height: 54.h,
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(22.r),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x08102A50),
-                            blurRadius: 8,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.credit_card_outlined,
-                            size: 20.w,
-                            color: const Color(0xFF9AA5B5),
-                          ),
-                          12.horizontalSpace,
-                          Expanded(
-                            child: TextField(
-                              controller: _roughPriceController,
-                              style: TextStyle(
-                                fontFamily: AppTypography.poppinsFont,
-                                fontSize: 14.sp,
-                                color: AppColors.darkNavy,
-                              ),
-                              decoration: InputDecoration(
-                                hintText: 'Leave blank if the office should quote it',
-                                hintStyle: TextStyle(
-                                  fontFamily: AppTypography.poppinsFont,
-                                  fontSize: 13.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: const Color(0xFF9AA5B5),
-                                ),
-                                border: InputBorder.none,
-                                isDense: true,
-                                contentPadding: EdgeInsets.zero,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    18.verticalSpace,
-
-                    /// 5. Needs a quote first toggle card
-                    QuoteFirstToggleCard(
-                      value: _needsQuoteFirst,
-                      onChanged: (val) {
-                        setState(() => _needsQuoteFirst = val);
-                      },
-                    ),
-                    18.verticalSpace,
-
-                    /// 6. Info banner callout
+                    /// 4. Info banner callout
                     _buildInfoBanner(),
                     24.verticalSpace,
 
-                    /// 7. Primary Action Button: "Send to office"
+                    /// 5. Primary Action Button: "Send to office"
                     _buildSendToOfficeButton(),
                     16.verticalSpace,
                   ],

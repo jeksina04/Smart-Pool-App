@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_skeleton/util/app_assets.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
 
@@ -176,10 +178,14 @@ class _SyncStatusScreenState extends State<SyncStatusScreen> {
       ),
       child: Row(
         children: [
-          Icon(
-            Icons.cloud_off_outlined,
-            size: 18.w,
-            color: const Color(0xFFD32F2F),
+          SvgPicture.asset(
+            AppAssets.icOffline,
+            width: 18.w,
+            height: 18.w,
+            colorFilter: const ColorFilter.mode(
+              Color(0xFFD32F2F),
+              BlendMode.srcIn,
+            ),
           ),
           8.horizontalSpace,
           Text(
@@ -321,10 +327,14 @@ class _SyncStatusScreenState extends State<SyncStatusScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.sync_rounded,
-              size: 20.w,
-              color: AppColors.white,
+            SvgPicture.asset(
+              AppAssets.icSync,
+              width: 18.w,
+              height: 18.w,
+              colorFilter: const ColorFilter.mode(
+                AppColors.white,
+                BlendMode.srcIn,
+              ),
             ),
             8.horizontalSpace,
             Text(

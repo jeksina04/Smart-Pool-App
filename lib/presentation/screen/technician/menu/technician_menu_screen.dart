@@ -101,10 +101,14 @@ class TechnicianMenuScreen extends StatelessWidget {
                     _buildDivider(),
 
                     TechnicianMenuItem(
-                      icon: Icon(
-                        Icons.shopping_cart_outlined,
-                        size: 19.w,
-                        color: AppColors.primaryBlue,
+                      icon: SvgPicture.asset(
+                        AppAssets.icShoppingList,
+                        width: 18.w,
+                        height: 18.w,
+                        colorFilter: const ColorFilter.mode(
+                          AppColors.primaryBlue,
+                          BlendMode.srcIn,
+                        ),
                       ),
                       title: 'Shopping List',
                       badgeText: '5',
@@ -132,10 +136,14 @@ class TechnicianMenuScreen extends StatelessWidget {
                     _buildDivider(),
 
                     TechnicianMenuItem(
-                      icon: Icon(
-                        Icons.person_outline_rounded,
-                        size: 19.w,
-                        color: AppColors.primaryBlue,
+                      icon: SvgPicture.asset(
+                        AppAssets.icProfile,
+                        width: 18.w,
+                        height: 18.w,
+                        colorFilter: const ColorFilter.mode(
+                          AppColors.primaryBlue,
+                          BlendMode.srcIn,
+                        ),
                       ),
                       title: 'Customers',
                       onTap: () {
@@ -149,10 +157,14 @@ class TechnicianMenuScreen extends StatelessWidget {
                     _buildDivider(),
 
                     TechnicianMenuItem(
-                      icon: Icon(
-                        Icons.sync_rounded,
-                        size: 20.w,
-                        color: AppColors.primaryBlue,
+                      icon: SvgPicture.asset(
+                        AppAssets.icSync,
+                        width: 18.w,
+                        height: 18.w,
+                        colorFilter: const ColorFilter.mode(
+                          AppColors.primaryBlue,
+                          BlendMode.srcIn,
+                        ),
                       ),
                       title: 'Sync Status',
                       badgeText: '3',
@@ -231,10 +243,14 @@ class TechnicianMenuScreen extends StatelessWidget {
                     _buildDivider(),
 
                     TechnicianMenuItem(
-                      icon: Icon(
-                        Icons.bookmark_border_rounded,
-                        size: 20.w,
-                        color: AppColors.primaryBlue,
+                      icon: SvgPicture.asset(
+                        AppAssets.icLegalDocuments,
+                        width: 18.w,
+                        height: 18.w,
+                        colorFilter: const ColorFilter.mode(
+                          AppColors.primaryBlue,
+                          BlendMode.srcIn,
+                        ),
                       ),
                       title: 'Legal & Terms',
                       onTap: () {},

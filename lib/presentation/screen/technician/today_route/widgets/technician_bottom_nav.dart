@@ -57,10 +57,14 @@ class TechnicianBottomNav extends StatelessWidget {
               _buildItem(
                 index: 2,
                 label: 'Customers',
-                iconWidget: Icon(
-                  Icons.person_outline_rounded,
-                  size: 24.w,
-                  color: currentIndex == 2 ? AppColors.primaryBlue : AppColors.textGrey,
+                iconWidget: SvgPicture.asset(
+                  AppAssets.icProfile,
+                  width: 22.w,
+                  height: 22.w,
+                  colorFilter: ColorFilter.mode(
+                    currentIndex == 2 ? AppColors.primaryBlue : AppColors.textGrey,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
               _buildItem(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_skeleton/util/app_assets.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
 
@@ -35,17 +37,21 @@ class ServiceHistoryItemRow extends StatelessWidget {
           children: [
             /// Soft blue rounded container with blue checkmark
             Container(
-              width: 40.w,
-              height: 40.w,
+              width: 44.w,
+              height: 44.w,
               decoration: BoxDecoration(
-                color: const Color(0xFFE9F1FE),
-                borderRadius: BorderRadius.circular(12.r),
+                color: const Color(0xFFEFF4FE),
+                borderRadius: BorderRadius.circular(14.r),
               ),
               child: Center(
-                child: Icon(
-                  Icons.check_rounded,
-                  size: 20.w,
-                  color: AppColors.primaryBlue,
+                child: SvgPicture.asset(
+                  AppAssets.icCheck,
+                  width: 20.w,
+                  height: 20.w,
+                  colorFilter: const ColorFilter.mode(
+                    Color(0xFF1668D6),
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
             ),

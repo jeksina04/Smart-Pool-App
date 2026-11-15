@@ -35,6 +35,7 @@ abstract class AppAssets {
 
   /// Services screen specific icons
   static const String icWrench = 'assets/drawables/ic_wrench.svg';
+  static const String icRepair = 'assets/drawables/ic_repair.svg';
   static const String icShoppingBag = 'assets/drawables/ic_shopping_bag.svg';
   static const String icWaterDrop = 'assets/drawables/ic_water_drop.svg';
   static const String icAdd = 'assets/drawables/ic_add.svg';
@@ -56,4 +57,10 @@ abstract class AppAssets {
   static const String icRoute = 'assets/drawables/ic_route.svg';
   static const String icSend = 'assets/drawables/ic_send.svg';
   static const String icClose = 'assets/drawables/ic_close.svg';
+  static const String icSpLogo = 'assets/drawables/ic_sp_logo.svg';
+  static const String icShoppingList = 'assets/drawables/ic_shopping_list.svg';
+  static const String icProfile = 'assets/drawables/ic_profile.svg';
+  static const String icSync = 'assets/drawables/ic_sync.svg';
+  static const String icOffline = 'assets/drawables/ic_offline.svg';
+  static const String icClock = 'assets/drawables/ic_clock.svg';
 }

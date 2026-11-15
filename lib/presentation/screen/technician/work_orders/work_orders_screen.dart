@@ -29,7 +29,7 @@ class _WorkOrdersScreenState extends State<WorkOrdersScreen> {
       title: 'Filter clean · A. Keys',
       subtitle: 'WO #1042 · due Fri',
       status: WorkOrderStatus.open,
-      iconType: WorkOrderIconType.wrench,
+      iconType: WorkOrderIconType.repair,
     ),
     WorkOrderItemModel(
       title: 'Repair callback · Roth',
@@ -41,22 +41,34 @@ class _WorkOrdersScreenState extends State<WorkOrdersScreen> {
       title: 'Pump replace · Hull',
       subtitle: 'WO #1035 · parts ordered',
       status: WorkOrderStatus.approved,
-      iconType: WorkOrderIconType.wrench,
+      iconType: WorkOrderIconType.repair,
     ),
   ];
 
   final List<WorkOrderItemModel> _doneWorkOrders = const [
     WorkOrderItemModel(
-      title: 'Salt cell inspect · Garcia',
-      subtitle: 'WO #1031 · completed yesterday',
-      status: WorkOrderStatus.approved,
-      iconType: WorkOrderIconType.wrench,
+      title: 'Salt cell service · A. Keys',
+      subtitle: 'WO #1031 · completed Fri 1 Aug',
+      status: WorkOrderStatus.done,
+      iconType: WorkOrderIconType.checkmark,
     ),
     WorkOrderItemModel(
-      title: 'Heater sensor fix · Miller',
-      subtitle: 'WO #1028 · completed Mon',
-      status: WorkOrderStatus.approved,
-      iconType: WorkOrderIconType.wrench,
+      title: 'Heater ignitor · Pike',
+      subtitle: 'WO #1027 · completed Wed 30 Jul',
+      status: WorkOrderStatus.done,
+      iconType: WorkOrderIconType.checkmark,
+    ),
+    WorkOrderItemModel(
+      title: 'Green pool recovery · Diaz',
+      subtitle: 'WO #1022 · completed Mon 28 Jul',
+      status: WorkOrderStatus.done,
+      iconType: WorkOrderIconType.checkmark,
+    ),
+    WorkOrderItemModel(
+      title: 'Filter deep clean · Shannon',
+      subtitle: 'WO #1018 · completed Thu 24 Jul',
+      status: WorkOrderStatus.done,
+      iconType: WorkOrderIconType.checkmark,
     ),
   ];
 
@@ -163,10 +175,10 @@ class _WorkOrdersScreenState extends State<WorkOrdersScreen> {
                         }),
                       ),
                     ),
-                    32.verticalSpace,
-
-                    /// Primary "+ New Work Order" pill button
-                    _buildNewWorkOrderButton(),
+                    if (_selectedTab == 0) ...[
+                      32.verticalSpace,
+                      _buildNewWorkOrderButton(),
+                    ],
                   ],
                 ),
               ),

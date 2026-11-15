@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_skeleton/util/app_assets.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
 
@@ -89,13 +91,32 @@ class SyncItemRow extends StatelessWidget {
   }
 
   Widget _buildIcon() {
+    if (item.iconType == SyncItemIconType.cloud) {
+      return Container(
+        width: 40.w,
+        height: 40.w,
+        decoration: BoxDecoration(
+          color: const Color(0xFFE9F1FE),
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        child: Center(
+          child: SvgPicture.asset(
+            AppAssets.icOffline,
+            width: 20.w,
+            height: 20.w,
+            colorFilter: const ColorFilter.mode(
+              AppColors.primaryBlue,
+              BlendMode.srcIn,
+            ),
+          ),
+        ),
+      );
+    }
+
     IconData iconData;
     switch (item.iconType) {
       case SyncItemIconType.camera:
         iconData = Icons.camera_alt_outlined;
-        break;
-      case SyncItemIconType.cloud:
-        iconData = Icons.cloud_outlined;
         break;
       case SyncItemIconType.document:
       default:

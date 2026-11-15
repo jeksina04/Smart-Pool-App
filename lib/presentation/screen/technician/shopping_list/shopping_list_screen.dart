@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_skeleton/util/app_assets.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
 
@@ -201,10 +203,14 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
                               borderRadius: BorderRadius.circular(10.r),
                             ),
                             child: Center(
-                              child: Icon(
-                                Icons.build_outlined,
-                                size: 18.w,
-                                color: AppColors.primaryBlue,
+                              child: SvgPicture.asset(
+                                AppAssets.icRepair,
+                                width: 18.w,
+                                height: 18.w,
+                                colorFilter: const ColorFilter.mode(
+                                  AppColors.primaryBlue,
+                                  BlendMode.srcIn,
+                                ),
                               ),
                             ),
                           ),
@@ -228,7 +234,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
                     /// Read-only price note pill banner
                     Container(
                       width: double.infinity,
-                      padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
+                      padding: EdgeInsets.symmetric(horizontal: 14.w),
                       decoration: BoxDecoration(
                         color: const Color(0xFFEBF2FD),
                         borderRadius: BorderRadius.circular(12.r),
@@ -236,10 +242,14 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(
-                            Icons.lock_outline_rounded,
-                            size: 15.w,
-                            color: const Color(0xFF1B6BD8),
+                          SvgPicture.asset(
+                            AppAssets.icLock,
+                            width: 76.w,
+                            height: 76.w,
+                            colorFilter: const ColorFilter.mode(
+                              Color(0xFF1B6BD8),
+                              BlendMode.srcIn,
+                            ),
                           ),
                           8.horizontalSpace,
                           Expanded(

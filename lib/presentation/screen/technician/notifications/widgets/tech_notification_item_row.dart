@@ -130,17 +130,25 @@ class TechNotificationItemRow extends StatelessWidget {
         );
         break;
       case TechNotificationIconType.person:
-        iconWidget = Icon(
-          Icons.person_outline_rounded,
-          size: 20.w,
-          color: AppColors.primaryBlue,
+        iconWidget = SvgPicture.asset(
+          AppAssets.icProfile,
+          width: 18.w,
+          height: 18.w,
+          colorFilter: const ColorFilter.mode(
+            AppColors.primaryBlue,
+            BlendMode.srcIn,
+          ),
         );
         break;
       case TechNotificationIconType.sync:
-        iconWidget = Icon(
-          Icons.sync_rounded,
-          size: 20.w,
-          color: AppColors.primaryBlue,
+        iconWidget = SvgPicture.asset(
+          AppAssets.icSync,
+          width: 18.w,
+          height: 18.w,
+          colorFilter: const ColorFilter.mode(
+            AppColors.primaryBlue,
+            BlendMode.srcIn,
+          ),
         );
         break;
     }
