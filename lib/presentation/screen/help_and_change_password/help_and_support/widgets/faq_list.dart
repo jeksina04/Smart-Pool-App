@@ -76,7 +76,7 @@ class FAQList extends StatelessWidget {
         break;
 
       case 2:
-        // --> Navigate to terms and conditions page;
+        Navigator.pushNamed(context, Routes.termsAndConditions);
         break;
 
       case 3:

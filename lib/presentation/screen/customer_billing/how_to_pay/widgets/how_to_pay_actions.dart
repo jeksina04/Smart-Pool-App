@@ -37,7 +37,7 @@ class HowToPayActions extends StatelessWidget {
       width: double.infinity,
       height: 56.h,
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(28.r),
           boxShadow: [
             BoxShadow(

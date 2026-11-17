@@ -10,6 +10,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../util/app_assets.dart';
 import '../../../../util/app_typography.dart';
+import '../../../service/navigation.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -99,7 +100,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     SettingItem(
                         icon: AppAssets.icChangePassword,
                         title: context.getString('change_password'),
-                        onTap: () {})
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.changePassword);
+                        })
                   ]),
 
                   16.verticalSpace,

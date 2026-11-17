@@ -62,7 +62,7 @@ class InvoiceAttachment extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.r)),
                 child: SvgPicture.asset(AppAssets.icDocument,
                     colorFilter:
-                        const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+                        const ColorFilter.mode(AppColors.white, BlendMode.srcIn)),
               ),
               12.horizontalSpace,
               Column(

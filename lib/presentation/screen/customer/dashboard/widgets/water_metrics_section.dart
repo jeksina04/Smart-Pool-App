@@ -84,12 +84,12 @@ class WaterMetricsSection extends StatelessWidget {
               padding: EdgeInsets.all(12.w),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.white.withOpacity(.35)),
+                border: Border.all(color: AppColors.white.withOpacity(.35)),
               ),
               child: SvgPicture.asset(
                 isNewUser ? AppAssets.icFlask : AppAssets.icHeart,
                 colorFilter: const ColorFilter.mode(
-                    Colors.white, BlendMode.srcIn),
+                    AppColors.white, BlendMode.srcIn),
               ),
             ),
           ),

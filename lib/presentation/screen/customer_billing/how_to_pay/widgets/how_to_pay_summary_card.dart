@@ -15,7 +15,7 @@ class HowToPaySummaryCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(color: AppColors.cardBorder),
           boxShadow: [

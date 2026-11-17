@@ -13,7 +13,7 @@ class InvoiceDetailSummaryCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.fromLTRB(16.w, 8.h, 8.w, 8.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(

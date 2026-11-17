@@ -22,7 +22,7 @@ class YourReferralsSection extends StatelessWidget {
         8.verticalSpace,
         Container(
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.white,
               borderRadius: BorderRadius.circular(16.r),
               boxShadow: [
                 BoxShadow(

@@ -2,7 +2,6 @@ import 'package:ez_localization/ez_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hive/hive.dart';
 
 import '../../../../../util/app_assets.dart';
 import '../../../../../util/app_colors.dart';
@@ -18,7 +17,7 @@ class ReferralCodeCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(24.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
@@ -58,7 +57,7 @@ class ReferralCodeCard extends StatelessWidget {
                 children: [
                   SvgPicture.asset(AppAssets.icSend,
                       colorFilter: const ColorFilter.mode(
-                          Colors.white, BlendMode.srcIn)),
+                          AppColors.white, BlendMode.srcIn)),
                   8.horizontalSpace,
                   Text(context.getString('share_my_link'),
                       style: AppTypography.signInButton),

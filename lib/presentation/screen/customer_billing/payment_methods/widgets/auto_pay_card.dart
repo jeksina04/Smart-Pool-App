@@ -20,7 +20,7 @@ class _AutoPayCardState extends State<AutoPayCard> {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
@@ -46,7 +46,7 @@ class _AutoPayCardState extends State<AutoPayCard> {
           ),
           Switch.adaptive(
             value: _isAutoPayEnabled,
-            activeColor: Colors.white,
+            activeColor: AppColors.white,
             activeTrackColor: AppColors.primaryBlue,
             onChanged: (value) => setState(() => _isAutoPayEnabled = value),
           ),

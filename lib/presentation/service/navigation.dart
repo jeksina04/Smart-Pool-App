@@ -234,7 +234,7 @@ Route? onGenerateRoute(RouteSettings settings) {
     case Routes.helpAndSupport:
       page = const HelpAndSupportPage();
       break;
-    case Routes.changePassword: // --> Navigation from Customer Settings
+    case Routes.changePassword:
       page = const ChangePasswordPage();
       break;
   }

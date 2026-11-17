@@ -14,7 +14,7 @@ class HowToPayNoticeCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(

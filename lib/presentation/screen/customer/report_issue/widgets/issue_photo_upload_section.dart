@@ -27,7 +27,7 @@ class IssuePhotoUploadSection extends StatelessWidget {
             ),
           ),
           alignment: Alignment.center,
-          child: const Text("pool", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          child: const Text("pool", style: TextStyle(color: AppColors.white, fontWeight: FontWeight.bold)),
         ),
         12.horizontalSpace,
 
