@@ -341,5 +341,9 @@
   "premium_plan": "Weekly + filter cleans + priority",
   "full_service": "Full-service",
   "full_service_plan": "Everything + equipment cover",
-  "my_plan_notice": "Plan prices exclude card fees. Paying by card adds {cardFee}; bank transfer adds {bankFee}; cheque, Zelle and cash add nothing. Debit cards are never charged a card fee. The exact total is shown before you confirm."
+  "my_plan_notice": "Plan prices exclude card fees. Paying by card adds {cardFee}; bank transfer adds {bankFee}; cheque, Zelle and cash add nothing. Debit cards are never charged a card fee. The exact total is shown before you confirm.",
+  "receipt": "Receipt",
+  "receipts_email_notice": "Receipts are also emailed when a payment goes through. For older invoices, ask the office.",
+  "paid_status_badge": "{price} paid",
+  "paid_payment_fee_notice": "Amounts shown exclude card fees. Paying by card adds {cardFee}; bank transfer adds {bankFee}; cheque, Zelle and cash add nothing. Debit cards are never charged a card fee. The exact total is shown before you confirm."
 }
