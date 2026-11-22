@@ -11,6 +11,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../util/app_assets.dart';
 import '../../../../util/app_colors.dart';
 import '../../../../util/app_typography.dart';
+import '../../../service/navigation.dart';
 
 class ServiceCompanyPage extends StatefulWidget {
   const ServiceCompanyPage({super.key});
@@ -115,7 +116,13 @@ class _ServiceCompanyPageState extends State<ServiceCompanyPage> {
         ],
       ),
       child: InkWell(
-        onTap: () {}, // --> Trigger Problem with this Company? button logic
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            Routes.problemWithCompany,
+            arguments: 'NSP Pool & Spa Services',
+          );
+        }, // --> Trigger Problem with this Company? button logic
         borderRadius: BorderRadius.circular(28.r),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

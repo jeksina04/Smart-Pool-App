@@ -2,6 +2,7 @@ import 'package:ez_localization/ez_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_skeleton/presentation/screen/customer/request_service/widgets/photo_upload_section.dart';
+import 'package:flutter_skeleton/presentation/screen/customer/request_service/widgets/service_type_bottom_sheet.dart';
 import 'package:flutter_skeleton/util/app_assets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -9,8 +10,33 @@ import '../../../../../util/app_colors.dart';
 import '../../../../../util/app_typography.dart';
 import '../../dashboard/dashboard_page.dart';
 
-class ServiceRequestForm extends StatelessWidget {
+class ServiceRequestForm extends StatefulWidget {
   const ServiceRequestForm({super.key});
+
+  @override
+  State<ServiceRequestForm> createState() => _ServiceRequestFormState();
+}
+
+class _ServiceRequestFormState extends State<ServiceRequestForm> {
+  String _selectedServiceType = 'Routine clean';
+
+  void _showServiceTypeSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return ServiceTypeBottomSheet(
+          selectedServiceType: _selectedServiceType,
+          onServiceTypeSelected: (serviceType) {
+            setState(() {
+              _selectedServiceType = serviceType;
+            });
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +73,28 @@ class ServiceRequestForm extends StatelessWidget {
   }
 
   Widget _buildDropdownField(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-      decoration: _inputDecoration(),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(""), // --> Selected value
-          Icon(Icons.chevron_right, color: AppColors.textGrey,),
-        ],
+    return GestureDetector(
+      onTap: () => _showServiceTypeSheet(context),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+        decoration: _inputDecoration(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              _selectedServiceType,
+              style: AppTypography.inputText.copyWith(
+                fontWeight: FontWeight.w600,
+                color: AppColors.darkNavy,
+              ),
+            ),
+            Icon(
+              Icons.chevron_right,
+              color: AppColors.textGrey,
+              size: 20.sp,
+            ),
+          ],
+        ),
       ),
     );
   }

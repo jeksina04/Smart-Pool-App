@@ -126,7 +126,7 @@ class CompanyInfoCard extends StatelessWidget {
           width: 16.w,
           height: 16.h,
           colorFilter: ColorFilter.mode(
-            isPrimary ? Colors.white : AppColors.darkNavy,
+            isPrimary ? AppColors.white : AppColors.darkNavy,
             BlendMode.srcIn,
           ),
         ),

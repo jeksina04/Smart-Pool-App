@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+
 import '../../../../../util/app_assets.dart';
 import '../../../../../util/app_colors.dart';
 import '../../../../../util/app_typography.dart';
+import '../../../../service/navigation.dart';
 
 class ComingUpServiceItem extends StatelessWidget {
   final String date;
@@ -25,12 +27,18 @@ class ComingUpServiceItem extends StatelessWidget {
           color: AppColors.infoBannerBg,
           borderRadius: BorderRadius.circular(12.r),
         ),
-        child: SvgPicture.asset( AppAssets.icCalendar,),
+        child: SvgPicture.asset(AppAssets.icCalendar,),
       ),
       title: Text(date, style: AppTypography.sectionHeader),
       subtitle: Text(description, style: AppTypography.infoLabel),
       trailing: SvgPicture.asset(AppAssets.icChevronRight),
-      onTap: () {}, // --> Handle tap
+      onTap: () {
+        Navigator.pushNamed(context, Routes.upcomingVisit, arguments: {
+          'dateTitle': date.split('·').first.trim(),
+          'fullDateTime': date,
+          'plannedTitle': description,
+        });
+      },
     );
   }
 }

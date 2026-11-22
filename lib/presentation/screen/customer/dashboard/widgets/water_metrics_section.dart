@@ -84,12 +84,12 @@ class WaterMetricsSection extends StatelessWidget {
               padding: EdgeInsets.all(12.w),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.white.withOpacity(.35)),
+                border: Border.all(color: AppColors.white.withOpacity(.35)),
               ),
               child: SvgPicture.asset(
                 isNewUser ? AppAssets.icFlask : AppAssets.icHeart,
                 colorFilter: const ColorFilter.mode(
-                    Colors.white, BlendMode.srcIn),
+                    AppColors.white, BlendMode.srcIn),
               ),
             ),
           ),
@@ -108,7 +108,7 @@ class WaterMetricsSection extends StatelessWidget {
     final title = context.getString(key);
     return isNewUser
         ? _pendingMetric(context, title)
-        : _readingMetric(context, title, value, data, unit: unit);
+        : _readingMetric(context, title, value, data, metricKey: key, unit: unit);
   }
 
   Widget _pendingMetric(BuildContext context, String title) => Container(
@@ -158,14 +158,15 @@ class WaterMetricsSection extends StatelessWidget {
   );
 
   Widget _readingMetric(
-      BuildContext context,
-      String title,
-      String value,
-      List<double> data, {
-        String? unit,
-      }) =>
+    BuildContext context,
+    String title,
+    String value,
+    List<double> data, {
+    required String metricKey,
+    String? unit,
+  }) =>
       GestureDetector(
-        onTap: () => Navigator.pushNamed(context, Routes.waterTest),
+        onTap: () => Navigator.pushNamed(context, Routes.waterTest, arguments: {'firstMetric': metricKey}),
         child: Container(
           height: 108.h,
           width: double.infinity,

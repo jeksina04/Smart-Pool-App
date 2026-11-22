@@ -34,7 +34,7 @@ class SupportProfileSection extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: AppColors.profileActive,
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 2),
+                  border: Border.all(color: AppColors.white, width: 2),
                 ),
               ),
             )

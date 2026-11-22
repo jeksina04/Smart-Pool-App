@@ -45,7 +45,7 @@ class PhotoViewerHeader extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(10.w),
       decoration: const BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(

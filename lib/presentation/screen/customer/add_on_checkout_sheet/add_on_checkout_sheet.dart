@@ -23,7 +23,13 @@ class _AddOnCheckoutSheetState extends State<AddOnCheckoutSheet> {
     return Container(
       decoration: BoxDecoration(
           color: AppColors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24.r))),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+          boxShadow: [
+            BoxShadow(
+                color: AppColors.cardShadow,
+                blurRadius: 40,
+                offset: Offset(0, 16))
+          ]),
       padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 0),
       child: SafeArea(
         top: false,

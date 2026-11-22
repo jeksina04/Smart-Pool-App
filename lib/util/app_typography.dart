@@ -639,4 +639,20 @@ abstract class AppTypography {
     color: AppColors.photoInfoText,
   );
 
+  /// Technician Name Initials text: 30sp, weight 700, color #FFFFFF
+  static TextStyle get technicianInitials => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 30.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.white,
+  );
+
+  /// Technician Name text: 19sp, weight 700, color #0F2A3F
+  static TextStyle get technicianName => TextStyle(
+    fontFamily: poppinsFont,
+    fontSize: 19.sp,
+    fontWeight: FontWeight.w700,
+    color: AppColors.darkNavy,
+  );
+
 }

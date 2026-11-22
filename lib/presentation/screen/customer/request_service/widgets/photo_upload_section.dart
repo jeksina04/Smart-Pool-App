@@ -29,7 +29,7 @@ class PhotoUploadSection extends StatelessWidget {
           alignment: Alignment.center,
           child: const Text("photo",
               style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  TextStyle(color: AppColors.white, fontWeight: FontWeight.bold)),
         ),
         12.horizontalSpace,
 

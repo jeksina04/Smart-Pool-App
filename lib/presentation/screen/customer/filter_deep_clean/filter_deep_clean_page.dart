@@ -1,10 +1,10 @@
 import 'package:ez_localization/ez_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_skeleton/presentation/screen/customer/add_on_detail/widgets/add_info_banner.dart';
-import 'package:flutter_skeleton/presentation/screen/customer/add_on_detail/widgets/add_on_header.dart';
-import 'package:flutter_skeleton/presentation/screen/customer/add_on_detail/widgets/good_to_know_section.dart';
-import 'package:flutter_skeleton/presentation/screen/customer/add_on_detail/widgets/included_section.dart';
+import 'package:flutter_skeleton/presentation/screen/customer/filter_deep_clean/widgets/add_info_banner.dart';
+import 'package:flutter_skeleton/presentation/screen/customer/filter_deep_clean/widgets/add_on_header.dart';
+import 'package:flutter_skeleton/presentation/screen/customer/filter_deep_clean/widgets/good_to_know_section.dart';
+import 'package:flutter_skeleton/presentation/screen/customer/filter_deep_clean/widgets/included_section.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,14 +12,14 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../util/app_assets.dart';
 import '../add_on_checkout_sheet/add_on_checkout_sheet.dart';
 
-class AddOnDetailPage extends StatefulWidget {
-  const AddOnDetailPage({super.key});
+class FilterDeepCleanPage extends StatefulWidget {
+  const FilterDeepCleanPage({super.key});
 
   @override
-  State<AddOnDetailPage> createState() => _AddOnDetailPageState();
+  State<FilterDeepCleanPage> createState() => _FilterDeepCleanPageState();
 }
 
-class _AddOnDetailPageState extends State<AddOnDetailPage> {
+class _FilterDeepCleanPageState extends State<FilterDeepCleanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
