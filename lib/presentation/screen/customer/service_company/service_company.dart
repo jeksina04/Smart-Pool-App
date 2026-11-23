@@ -117,8 +117,12 @@ class _ServiceCompanyPageState extends State<ServiceCompanyPage> {
       ),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, Routes.helpAndSupport);
-        },
+          Navigator.pushNamed(
+            context,
+            Routes.problemWithCompany,
+            arguments: 'NSP Pool & Spa Services',
+          );
+        }, // --> Trigger Problem with this Company? button logic
         borderRadius: BorderRadius.circular(28.r),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

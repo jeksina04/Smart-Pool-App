@@ -3,20 +3,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_skeleton/presentation/screen/customer_settings_legal/legal_and_documents/legal_and_documents.dart';
 import 'package:flutter_skeleton/presentation/screen/customer_settings_legal/terms_and_conditions/terms_and_conditions.dart';
 import 'package:flutter_skeleton/presentation/screen/help_and_change_password/change_password/change_password.dart';
+import 'package:flutter_skeleton/presentation/screen/customer/filter_deep_clean/filter_deep_clean_page.dart';
 import 'package:flutter_skeleton/presentation/screen/login/login_page.dart';
 import 'package:flutter_skeleton/presentation/screen/register/register_page.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../domain/interactor/interactor.dart';
-import '../screen/customer/add_on_detail/add_on_detail_page.dart';
 import '../screen/customer/approve_quote/approve_quote_page.dart';
 import '../screen/customer/dashboard/dashboard_page.dart';
+import '../screen/customer/equipment_inspection/equipment_inspection_page.dart';
+import '../screen/customer/green_pool_recovery/green_pool_recovery_page.dart';
 import '../screen/customer/history/history_page.dart';
+import '../screen/customer/licence_insurance/licence_insurance_page.dart';
 import '../screen/customer/notifications/notifications_page.dart';
 import '../screen/customer/photo_viewer/photo_viewer_page.dart';
 import '../screen/customer/pool_care_support/pool_care_support_page.dart';
 import '../screen/customer/pool_equipment/pool_equipment_page.dart';
 import '../screen/customer/pool_health/pool_health_page.dart';
+import '../screen/customer/problem_with_company/problem_with_company_page.dart';
 import '../screen/customer/profile/profile_page.dart';
 import '../screen/customer/rate_technician/rate_technician_page.dart';
 import '../screen/customer/report_issue/report_issue_page.dart';
@@ -26,6 +30,8 @@ import '../screen/customer/service_company/service_company.dart';
 import '../screen/customer/service_paused/service_paused_page.dart';
 import '../screen/customer/services/services_page.dart';
 import '../screen/customer/switch_comapny/switch_company_page.dart';
+import '../screen/customer/technician_profile/technician_profile_page.dart';
+import '../screen/customer/upcoming_visit/upcoming_visit_page.dart';
 import '../screen/customer/visit_detail/visit_detail_page.dart';
 import '../screen/customer/water_test/water_test_page.dart';
 import '../screen/customer_billing/how_to_pay/how_to_pay_page.dart';
@@ -86,6 +92,13 @@ class Routes {
   static const String legalAndDocuments = 'legal_and_documents';
   static const String helpAndSupport = 'help_and_support';
   static const String changePassword = 'change_password';
+  static const String addOnDetail = 'filter_deep_clean';
+  static const String greenPoolRecovery = 'green_pool_recovery';
+  static const String problemWithCompany = 'problem_with_company';
+  static const String equipmentInspection = 'equipment_inspection';
+  static const String upcomingVisit = 'upcoming_visit';
+  static const String technicianProfile = 'technician_profile';
+  static const String licenceInsurance = 'licence_insurance';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -146,7 +159,12 @@ Route? onGenerateRoute(RouteSettings settings) {
       page = const PoolHealthPage();
       break;
     case Routes.waterTest:
-      page = const WaterTestPage();
+      final args = settings.arguments;
+      page = WaterTestPage(
+        firstMetric: args is Map<String, dynamic>
+            ? args['firstMetric'] ?? 'ph_level'
+            : 'ph_level',
+      );
       break;
     case Routes.requestService:
       page = const RequestServicePage();
@@ -197,7 +215,61 @@ Route? onGenerateRoute(RouteSettings settings) {
       page = const MyPoolEquipmentPage();
       break;
     case Routes.addOnDetail:
-      page = const AddOnDetailPage();
+      page = const FilterDeepCleanPage();
+      break;
+    case Routes.greenPoolRecovery:
+      page = const GreenPoolRecoveryPage();
+      break;
+    case Routes.problemWithCompany:
+      final companyName = settings.arguments as String;
+      page = ProblemWithCompanyPage(
+        companyName: companyName
+      );
+      break;
+    case Routes.equipmentInspection:
+      page = const EquipmentInspectionPage();
+      break;
+    case Routes.upcomingVisit:
+      final args = settings.arguments as Map<String, dynamic>?;
+      page = UpcomingVisitPage(
+        dateTitle: args?['dateTitle'] as String?,
+        fullDateTime: args?['fullDateTime'] as String?,
+        plannedTitle: args?['plannedTitle'] as String?,
+        plannedFrequency: args?['plannedFrequency'] as String?,
+        plannedDescription: args?['plannedDescription'] as String?,
+        technicianName: args?['technicianName'] as String?,
+        technicianRole: args?['technicianRole'] as String?,
+        vehicleName: args?['vehicleName'] as String?,
+        vehicleInstruction: args?['vehicleInstruction'] as String?,
+      );
+      break;
+    case Routes.technicianProfile:
+      final args = settings.arguments as Map<String, dynamic>?;
+      page = TechnicianProfilePage(
+        name: args?['name'] as String?,
+        role: args?['role'] as String?,
+        experience: args?['experience'] as String?,
+        visitsCount: args?['visitsCount'] as String?,
+        lastVisitDate: args?['lastVisitDate'] as String?,
+        vehicleInfo: args?['vehicleInfo'] as String?,
+        coverName: args?['coverName'] as String?,
+        coverSubtitle: args?['coverSubtitle'] as String?,
+        companyName: args?['companyName'] as String?,
+      );
+      break;
+    case Routes.licenceInsurance:
+      final args = settings.arguments as Map<String, dynamic>?;
+      page = LicenceInsurancePage(
+        licenceNumber: args?['licenceNumber'] as String?,
+        licenceType: args?['licenceType'] as String?,
+        companyName: args?['companyName'] as String?,
+        issuedBy: args?['issuedBy'] as String?,
+        expiresDate: args?['expiresDate'] as String?,
+        status: args?['status'] as String?,
+        generalLiability: args?['generalLiability'] as String?,
+        workersComp: args?['workersComp'] as String?,
+        tdlrUrl: args?['tdlrUrl'] as String?,
+      );
       break;
     case Routes.invoices:
       page = const InvoicesPage();
