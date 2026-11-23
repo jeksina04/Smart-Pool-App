@@ -1,6 +1,5 @@
 import 'package:ez_localization/ez_localization.dart';
 import 'package:flutter/material.dart';
-import '../../../../../util/app_colors.dart';
 import '../../../../../util/app_typography.dart';
 
 class CheckoutFeeDisclaimer extends StatelessWidget {

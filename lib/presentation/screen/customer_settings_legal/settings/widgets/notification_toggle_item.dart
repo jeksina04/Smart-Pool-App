@@ -38,7 +38,7 @@ class NotificationToggleItem extends StatelessWidget {
           ),
           Switch.adaptive(
             value: value,
-            activeColor: Colors.white,
+            activeColor: AppColors.white,
             activeTrackColor: AppColors.primaryBlue,
             onChanged: onChanged),
         ],

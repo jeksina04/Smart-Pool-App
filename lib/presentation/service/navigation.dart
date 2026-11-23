@@ -79,7 +79,6 @@ class Routes {
   static const String switchCompany = 'switch_company';
   static const String rateTechnician = 'rate_technician';
   static const String poolEquipment = 'pool_equipment';
-  static const String addOnDetail = 'add_on_detail';
   static const String invoices = 'invoices';
   static const String invoiceDetail = 'invoice_detail';
   static const String howToPay = 'how_to_pay';
