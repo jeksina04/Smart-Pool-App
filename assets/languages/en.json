@@ -452,5 +452,9 @@
   "workers_compensation": "Workers' compensation",
   "licence_disclaimer_notice": "Supplied by {company} and shown as given. Smart Pool does not verify it. You can check the licence on the TDLR website.",
   "check_on_tdlr": "Check on TDLR",
-  "download_certificate_of_insurance": "Download certificate of insurance"
+  "download_certificate_of_insurance": "Download certificate of insurance",
+  "receipt": "Receipt",
+  "receipts_email_notice": "Receipts are also emailed when a payment goes through. For older invoices, ask the office.",
+  "paid_status_badge": "{price} paid",
+  "paid_payment_fee_notice": "Amounts shown exclude card fees. Paying by card adds {cardFee}; bank transfer adds {bankFee}; cheque, Zelle and cash add nothing. Debit cards are never charged a card fee. The exact total is shown before you confirm."
 }

@@ -32,7 +32,7 @@ class PaymentMethodListCard extends StatelessWidget {
           const Divider(height: 1, color: AppColors.cardBorder),
           PaymentMethodTile(
             title: context.getString('visa', {'visa_number': '•••• 6411'}),
-            subtitle: context.getString('expires', {'date': '04/29'}),
+            subtitle: context.getString('day_expires', {'date': '04/29'}),
             showChevron: true,
             onTap: () {}, // --> Handle tap
           ),

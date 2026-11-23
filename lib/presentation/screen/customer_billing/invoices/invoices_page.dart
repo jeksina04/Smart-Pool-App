@@ -1,6 +1,9 @@
 import 'package:ez_localization/ez_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_skeleton/presentation/screen/customer_billing/invoices/widgets/invoice_paid_fee_disclaimer.dart';
+import 'package:flutter_skeleton/presentation/screen/customer_billing/invoices/widgets/invoice_paid_list.dart';
+import 'package:flutter_skeleton/presentation/screen/customer_billing/invoices/widgets/invoice_receipts_notice_card.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../util/app_assets.dart';
@@ -11,47 +14,72 @@ import 'widgets/invoice_list.dart';
 import 'widgets/invoice_tab_selector.dart';
 
 class InvoicesPage extends StatefulWidget {
-  const InvoicesPage({super.key});
+  final int initialTabIndex;
+  final List<Map<String, dynamic>>? dueInvoices;
+  final List<Map<String, dynamic>>? paidInvoices;
+
+  const InvoicesPage({
+    super.key,
+    this.initialTabIndex = 0,
+    this.dueInvoices,
+    this.paidInvoices,
+  });
 
   @override
   State<InvoicesPage> createState() => _InvoicesPageState();
 }
 
 class _InvoicesPageState extends State<InvoicesPage> {
-  int _selectedTabIndex = 0; // 0 for Due, 1 for Paid
+  late int _selectedTabIndex; // 0 for Due, 1 for Paid
+  late List<Map<String, dynamic>> _dueInvoices;
+  late List<Map<String, dynamic>> _paidInvoices;
 
-  // --> Replace with actual data
-  final List<Map<String, dynamic>> _dueInvoices = [
-    {
-      "id": "#3431",
-      "month": "August",
-      "desc": "Weekly cleaning \$135 + salt \$18",
-      "amount": "\$154.49",
-      "isDue": true
-    }
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _selectedTabIndex = widget.initialTabIndex;
+  }
 
-  final List<Map<String, dynamic>> _paidInvoices = [
-    {
-      "id": "#3406",
-      "month": "July",
-      "desc": "Paid 2 Jul",
-      "amount": "\$135",
-      "isDue": false
-    },
-    {
-      "id": "#3379",
-      "month": "June",
-      "desc": "Paid 2 Jun",
-      "amount": "\$135",
-      "isDue": false
-    }
-  ];
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _dueInvoices = widget.dueInvoices ??
+        [
+          {
+            "id": "#3431",
+            "month": "August",
+            "desc": "Weekly cleaning \$135 + salt \$18",
+            "amount": "\$154.49",
+            "isDue": true,
+          }
+        ];
+
+    _paidInvoices = widget.paidInvoices ??
+        [
+          {
+            "id": "#3406",
+            "month": "July",
+            "paidDate": "2 Jul",
+            "paymentMethod": "Visa •••• 6411",
+            "summary": "Weekly cleaning · \$135.00",
+            "amount": "\$135",
+            "isDue": false,
+          },
+          {
+            "id": "#3379",
+            "month": "June",
+            "paidDate": "2 Jun",
+            "paymentMethod": "Bank transfer (ACH)",
+            "summary": "Weekly cleaning · \$135.00",
+            "amount": "\$135",
+            "isDue": false,
+          },
+        ];
+  }
 
   @override
   Widget build(BuildContext context) {
-    final currentInvoices = _selectedTabIndex == 0 ? _dueInvoices : _paidInvoices;
-
     return Scaffold(
       backgroundColor: AppColors.dashboardBg,
       body: SafeArea(
@@ -104,17 +132,29 @@ class _InvoicesPageState extends State<InvoicesPage> {
                     ),
                     16.verticalSpace,
 
-                    // Invoice List
-                    InvoiceList(items: currentInvoices),
-                    16.verticalSpace,
-
-                    // Footer
-                    if (_selectedTabIndex == 0)
-                      InvoiceFooter(
+                    /// Active Tab View Content
+                    if (_selectedTabIndex == 0) ...[
+                      /// Due Tab Content
+                      InvoiceList(items: _dueInvoices),
+                      16.verticalSpace,
+                      if (_dueInvoices.isNotEmpty)
+                        InvoiceFooter(
                           totalDue: _dueAmount,
-                          invoice: _dueInvoices.first
-                      ),
-                    16.verticalSpace,
+                          invoice: _dueInvoices.first,
+                        ),
+                    ] else ...[
+                      /// Paid Tab Content (CA17b)
+                      InvoicePaidList(items: _paidInvoices),
+                      8.verticalSpace,
+
+                      /// Payment Fee Disclaimer
+                      const InvoicePaidFeeDisclaimer(),
+                      8.verticalSpace,
+
+                      /// Receipts Notice Card
+                      const InvoiceReceiptsNoticeCard(),
+                      8.verticalSpace,
+                    ],
                   ],
                 ),
               ),
