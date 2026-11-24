@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_skeleton/presentation/screen/technician/menu/technician_menu_screen.dart';
 import 'package:flutter_skeleton/presentation/screen/technician/today_route/today_route_screen.dart';
+import 'package:flutter_skeleton/presentation/screen/technician/today_route/widgets/optimise_route_bottom_sheet.dart';
 import 'package:flutter_skeleton/presentation/screen/technician/today_route/widgets/route_header_bar.dart';
 import 'package:flutter_skeleton/presentation/screen/technician/today_route/widgets/route_progress_card.dart';
 import 'package:flutter_skeleton/presentation/screen/technician/today_route/widgets/route_stop_item.dart';
@@ -49,6 +50,7 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
     StopItemModel(
       stopNumber: 1,
       customerName: 'Kaiden Roth',
+      address: '14 Oak Lane',
       type: StopType.routine,
       time: '8:00',
       distance: '2.1 mi',
@@ -57,6 +59,7 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
     StopItemModel(
       stopNumber: 2,
       customerName: 'Alicia Keys',
+      address: '26 Marina Way',
       type: StopType.routine,
       time: '9:30',
       distance: '4.4 mi',
@@ -65,6 +68,7 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
     StopItemModel(
       stopNumber: 3,
       customerName: 'Clay Shannon',
+      address: '74 Ridge Rd',
       type: StopType.repair,
       time: '11:00',
       distance: '6.2 mi',
@@ -73,6 +77,7 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
     StopItemModel(
       stopNumber: 4,
       customerName: 'Quinn Hull',
+      address: '12 Palm Ct',
       type: StopType.serviceCall,
       time: '12:30',
       distance: '3.8 mi',
@@ -81,6 +86,7 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
     StopItemModel(
       stopNumber: 5,
       customerName: 'Marta Diaz',
+      address: '88 Lakeview Dr',
       type: StopType.routine,
       time: '13:45',
       distance: '5.0 mi',
@@ -89,6 +95,7 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
     StopItemModel(
       stopNumber: 6,
       customerName: 'Owen Pike',
+      address: '501 Canyon Pines',
       type: StopType.repair,
       time: '15:00',
       distance: '7.4 mi',
@@ -316,7 +323,9 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        OptimiseRouteBottomSheet.show(context);
+                      },
                       borderRadius: BorderRadius.circular(8.r),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
@@ -372,10 +381,10 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
                             stop: stop,
                             onTap: () {
                               Navigator.of(context).pushNamed(
-                                Routes.techVisitDetail,
+                                Routes.stopDetail,
                                 arguments: {
-                                  'visitDate': 'Today',
-                                  'technicianName': stop.customerName,
+                                  'customerName': stop.customerName,
+                                  'address': stop.address,
                                 },
                               );
                             },
@@ -391,12 +400,23 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
                     }),
                   ),
                 ),
-                20.verticalSpace,
-                _buildRunningLateButton(),
-                14.verticalSpace,
-                _buildStartRouteButton(),
               ],
             ),
+          ),
+        ),
+        // Bottom Fixed Container: Tell the office & Start route button
+        Container(
+          padding: EdgeInsets.fromLTRB(20.w, 10.h, 20.w, 12.h),
+          decoration: const BoxDecoration(
+            color: Color(0xFFF7FAFC),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildRunningLateButton(),
+              12.verticalSpace,
+              _buildStartRouteButton(),
+            ],
           ),
         ),
       ],

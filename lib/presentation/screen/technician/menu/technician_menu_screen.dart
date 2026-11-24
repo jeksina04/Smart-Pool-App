@@ -217,10 +217,14 @@ class TechnicianMenuScreen extends StatelessWidget {
                     _buildDivider(),
 
                     TechnicianMenuItem(
-                      icon: Icon(
-                        Icons.access_time_rounded,
-                        size: 19.w,
-                        color: AppColors.primaryBlue,
+                      icon: SvgPicture.asset(
+                        AppAssets.icClock,
+                        width: 19.w,
+                        height: 19.w,
+                        colorFilter: const ColorFilter.mode(
+                          AppColors.primaryBlue,
+                          BlendMode.srcIn,
+                        ),
                       ),
                       title: 'My day',
                       subtitle: 'Start and end your day,\nhours, breaks',

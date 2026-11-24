@@ -6,12 +6,14 @@ import 'package:flutter_skeleton/util/app_typography.dart';
 /// Top header bar for Work Orders with hamburger menu, screen title, and add button (+)
 class WorkOrdersHeaderBar extends StatelessWidget {
   final VoidCallback onMenuTap;
+  final VoidCallback? onBack;
   final VoidCallback? onAddTap;
   final String title;
 
   const WorkOrdersHeaderBar({
     super.key,
     required this.onMenuTap,
+    this.onBack,
     this.onAddTap,
     this.title = 'Work orders',
   });
@@ -23,9 +25,9 @@ class WorkOrdersHeaderBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          /// 3-line hamburger menu button
+          /// Leading button: Back button if onBack != null, else hamburger menu
           InkWell(
-            onTap: onMenuTap,
+            onTap: onBack ?? onMenuTap,
             borderRadius: BorderRadius.circular(20.r),
             child: Container(
               width: 40.w,
@@ -43,8 +45,10 @@ class WorkOrdersHeaderBar extends StatelessWidget {
               ),
               child: Center(
                 child: Icon(
-                  Icons.menu_rounded,
-                  size: 22.w,
+                  onBack != null
+                      ? Icons.arrow_back_ios_new_rounded
+                      : Icons.menu_rounded,
+                  size: onBack != null ? 18.w : 22.w,
                   color: AppColors.darkNavy,
                 ),
               ),

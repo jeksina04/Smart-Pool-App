@@ -18,6 +18,7 @@ enum StopStatus {
 class StopItemModel {
   final int stopNumber;
   final String customerName;
+  final String address;
   final StopType type;
   final String time;
   final String distance;
@@ -26,6 +27,7 @@ class StopItemModel {
   const StopItemModel({
     required this.stopNumber,
     required this.customerName,
+    this.address = '26 Marina Way',
     required this.type,
     required this.time,
     required this.distance,

@@ -6,10 +6,12 @@ import 'package:flutter_skeleton/util/app_typography.dart';
 /// Top header bar for "My day" screen with circular back button and centered title
 class MyDayHeaderBar extends StatelessWidget {
   final VoidCallback? onBack;
+  final String title;
 
   const MyDayHeaderBar({
     super.key,
     this.onBack,
+    this.title = 'My day',
   });
 
   @override
@@ -49,7 +51,7 @@ class MyDayHeaderBar extends StatelessWidget {
 
           // Centered Title
           Text(
-            'My day',
+            title,
             style: TextStyle(
               fontFamily: AppTypography.poppinsFont,
               fontSize: 17.sp,

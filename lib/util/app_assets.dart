@@ -63,4 +63,7 @@ abstract class AppAssets {
   static const String icSync = 'assets/drawables/ic_sync.svg';
   static const String icOffline = 'assets/drawables/ic_offline.svg';
   static const String icClock = 'assets/drawables/ic_clock.svg';
+  static const String icInstall = 'assets/drawables/ic_install.svg';
+  static const String icAiRecommendation = 'assets/drawables/ic_ai_recommendation.svg';
+  static const String icDrop = 'assets/drawables/ic_drop.svg';
 }

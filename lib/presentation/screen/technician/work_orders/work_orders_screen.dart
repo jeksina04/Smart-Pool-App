@@ -96,6 +96,14 @@ class _WorkOrdersScreenState extends State<WorkOrdersScreen> {
         width: 290.w,
         child: TechnicianMenuScreen(
           onClose: _closeDrawer,
+          onNavigateToTab: (index) {
+            _closeDrawer();
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              Routes.todayRoute,
+              (route) => false,
+              arguments: index,
+            );
+          },
           onLogout: () {
             // Handle logout
           },
@@ -104,21 +112,26 @@ class _WorkOrdersScreenState extends State<WorkOrdersScreen> {
       bottomNavigationBar: TechnicianBottomNav(
         currentIndex: _currentBottomNavIndex,
         onTap: (index) {
-          if (index == 0) {
-            Navigator.of(context).popUntil((route) => route.isFirst);
-          } else if (index == 3) {
+          if (index == 3) {
             setState(() => _currentBottomNavIndex = 3);
           } else {
-            setState(() => _currentBottomNavIndex = index);
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              Routes.todayRoute,
+              (route) => false,
+              arguments: index,
+            );
           }
         },
       ),
       body: SafeArea(
         child: Column(
           children: [
-            /// Header bar with 3-line hamburger menu, title, and + button
+            /// Header bar with back button (if canPop), title, and + button
             WorkOrdersHeaderBar(
               onMenuTap: _openDrawer,
+              onBack: Navigator.of(context).canPop()
+                  ? () => Navigator.of(context).pop()
+                  : null,
               onAddTap: () {
                 Navigator.of(context).pushNamed(Routes.newWorkOrder);
               },

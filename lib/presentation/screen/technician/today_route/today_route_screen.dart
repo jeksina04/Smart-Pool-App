@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_skeleton/util/app_assets.dart';
 import 'package:flutter_skeleton/presentation/service/navigation.dart';
 
+import 'widgets/optimise_route_bottom_sheet.dart';
 import 'widgets/route_header_bar.dart';
 import 'widgets/route_progress_card.dart';
 import 'widgets/route_stop_item.dart';
@@ -29,6 +30,7 @@ class _TodayRouteScreenState extends State<TodayRouteScreen> {
     StopItemModel(
       stopNumber: 1,
       customerName: 'Kaiden Roth',
+      address: '14 Oak Lane',
       type: StopType.routine,
       time: '8:00',
       distance: '2.1 mi',
@@ -37,6 +39,7 @@ class _TodayRouteScreenState extends State<TodayRouteScreen> {
     StopItemModel(
       stopNumber: 2,
       customerName: 'Alicia Keys',
+      address: '26 Marina Way',
       type: StopType.routine,
       time: '9:30',
       distance: '4.4 mi',
@@ -45,6 +48,7 @@ class _TodayRouteScreenState extends State<TodayRouteScreen> {
     StopItemModel(
       stopNumber: 3,
       customerName: 'Clay Shannon',
+      address: '74 Ridge Rd',
       type: StopType.repair,
       time: '11:00',
       distance: '6.2 mi',
@@ -53,6 +57,7 @@ class _TodayRouteScreenState extends State<TodayRouteScreen> {
     StopItemModel(
       stopNumber: 4,
       customerName: 'Quinn Hull',
+      address: '12 Palm Ct',
       type: StopType.serviceCall,
       time: '12:30',
       distance: '3.8 mi',
@@ -61,6 +66,7 @@ class _TodayRouteScreenState extends State<TodayRouteScreen> {
     StopItemModel(
       stopNumber: 5,
       customerName: 'Marta Diaz',
+      address: '88 Lakeview Dr',
       type: StopType.routine,
       time: '13:45',
       distance: '5.0 mi',
@@ -69,6 +75,7 @@ class _TodayRouteScreenState extends State<TodayRouteScreen> {
     StopItemModel(
       stopNumber: 6,
       customerName: 'Owen Pike',
+      address: '501 Canyon Pines',
       type: StopType.repair,
       time: '15:00',
       distance: '7.4 mi',
@@ -156,7 +163,7 @@ class _TodayRouteScreenState extends State<TodayRouteScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            // Route optimize action
+                            OptimiseRouteBottomSheet.show(context);
                           },
                           borderRadius: BorderRadius.circular(8.r),
                           child: Padding(
@@ -214,7 +221,13 @@ class _TodayRouteScreenState extends State<TodayRouteScreen> {
                               RouteStopItem(
                                 stop: stop,
                                 onTap: () {
-                                  // Navigate to stop detail / visit view
+                                  Navigator.of(context).pushNamed(
+                                    Routes.stopDetail,
+                                    arguments: {
+                                      'customerName': stop.customerName,
+                                      'address': stop.address,
+                                    },
+                                  );
                                 },
                               ),
                               if (index != _stops.length - 1)
@@ -228,16 +241,24 @@ class _TodayRouteScreenState extends State<TodayRouteScreen> {
                         }),
                       ),
                     ),
-                    20.verticalSpace,
-
-                    /// "Tell the office I am running late" pill button
-                    _buildRunningLateButton(),
-                    14.verticalSpace,
-
-                    /// Primary "Start Route" Action Button
-                    _buildStartRouteButton(),
                   ],
                 ),
+              ),
+            ),
+
+            /// Fixed bottom container: "Tell the office" + "Start route"
+            Container(
+              padding: EdgeInsets.fromLTRB(20.w, 10.h, 20.w, 12.h),
+              decoration: const BoxDecoration(
+                color: Color(0xFFF7FAFC),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _buildRunningLateButton(),
+                  12.verticalSpace,
+                  _buildStartRouteButton(),
+                ],
               ),
             ),
           ],

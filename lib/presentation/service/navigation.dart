@@ -38,6 +38,10 @@ import '../screen/technician/change_password/change_password_screen.dart';
 import '../screen/technician/customer_detail/customer_detail_screen.dart';
 import '../screen/technician/dashboard/technician_dashboard_screen.dart';
 import '../screen/technician/menu/technician_menu_screen.dart';
+import '../screen/technician/my_day/end_of_day_screen.dart';
+import '../screen/technician/my_day/flagged_for_office_screen.dart';
+import '../screen/technician/my_day/items_used_today_screen.dart';
+import '../screen/technician/my_day/my_day_break_screen.dart';
 import '../screen/technician/my_day/my_day_screen.dart';
 import '../screen/technician/new_work_order/new_work_order_screen.dart';
 import '../screen/technician/notifications/technician_notifications_screen.dart';
@@ -46,6 +50,20 @@ import '../screen/technician/service_history/service_history_screen.dart';
 import '../screen/technician/settings/technician_settings_screen.dart';
 import '../screen/technician/shopping_list/shopping_list_screen.dart';
 import '../screen/technician/sync_status/sync_status_screen.dart';
+import '../screen/technician/today_route/stop_detail_info_screen.dart';
+import '../screen/technician/today_route/tech_add_equipment_screen.dart';
+import '../screen/technician/today_route/tech_ai_photo_check_screen.dart';
+import '../screen/technician/today_route/tech_ai_recommendation_screen.dart';
+import '../screen/technician/today_route/tech_checklist_screen.dart';
+import '../screen/technician/today_route/tech_complete_job_screen.dart';
+import '../screen/technician/today_route/tech_customer_sign_off_screen.dart';
+import '../screen/technician/today_route/tech_equipment_detail_screen.dart';
+import '../screen/technician/today_route/tech_on_your_truck_screen.dart';
+import '../screen/technician/today_route/tech_photos_video_screen.dart';
+import '../screen/technician/today_route/tech_pool_health_screen.dart';
+import '../screen/technician/today_route/tech_stop_briefing_screen.dart';
+import '../screen/technician/today_route/tech_water_readings_screen.dart';
+import '../screen/technician/today_route/tech_work_order_detail_screen.dart';
 import '../screen/technician/today_route/today_route_screen.dart';
 import '../screen/technician/visit_detail/tech_visit_detail_screen.dart';
 import '../screen/technician/work_orders/work_orders_screen.dart';
@@ -94,6 +112,24 @@ class Routes {
   static const String techCustomerDetail = 'tech_customer_detail';
   static const String addCustomer = 'add_customer';
   static const String myDay = 'my_day';
+  static const String myDayBreak = 'my_day_break';
+  static const String endOfDay = 'end_of_day';
+  static const String flaggedForOffice = 'flagged_for_office';
+  static const String itemsUsedToday = 'items_used_today';
+  static const String stopDetail = 'stop_detail';
+  static const String techPoolHealth = 'tech_pool_health';
+  static const String techEquipmentDetail = 'tech_equipment_detail';
+  static const String techAddEquipment = 'tech_add_equipment';
+  static const String techStopBriefing = 'tech_stop_briefing';
+  static const String techWorkOrderDetail = 'tech_work_order_detail';
+  static const String techChecklist = 'tech_checklist';
+  static const String techWaterReadings = 'tech_water_readings';
+  static const String techAiRecommendation = 'tech_ai_recommendation';
+  static const String techPhotosVideo = 'tech_photos_video';
+  static const String techAiPhotoCheck = 'tech_ai_photo_check';
+  static const String techCustomerSignOff = 'tech_customer_sign_off';
+  static const String techCompleteJob = 'tech_complete_job';
+  static const String techOnYourTruck = 'tech_on_your_truck';
 }
 
 Route? onGenerateRoute(RouteSettings settings) {
@@ -281,6 +317,132 @@ Route? onGenerateRoute(RouteSettings settings) {
       break;
     case Routes.myDay:
       page = const MyDayScreen();
+      break;
+    case Routes.myDayBreak:
+      page = const MyDayBreakScreen();
+      break;
+    case Routes.endOfDay:
+      page = const EndOfDayScreen();
+      break;
+    case Routes.flaggedForOffice:
+      page = const FlaggedForOfficeScreen();
+      break;
+    case Routes.itemsUsedToday:
+      page = const ItemsUsedTodayScreen();
+      break;
+    case Routes.stopDetail:
+      final args = settings.arguments as Map<String, dynamic>?;
+      page = StopDetailInfoScreen(
+        customerName: args?['customerName'] ?? 'Alicia Keys',
+        address: args?['address'] ?? '26 Marina Way',
+      );
+    case Routes.techPoolHealth:
+      final args = settings.arguments as Map<String, dynamic>?;
+      page = TechPoolHealthScreen(
+        overallScore: args?['overallScore'] ?? 92,
+        equipmentScore: args?['equipmentScore'] ?? 96,
+        chemistryScore: args?['chemistryScore'] ?? 100,
+        cleanlinessScore: args?['cleanlinessScore'] ?? 88,
+        riskLevel: args?['riskLevel'] ?? 'Low',
+        whyThisScore: args?['whyThisScore'] ??
+            'Chemistry has been in range for 6 straight visits. Cleanliness dropped after heavy leaf fall on 21 Jul. Salt cell is 14 months old — watch for output drop.',
+      );
+      break;
+    case Routes.techEquipmentDetail:
+      final args = settings.arguments as Map<String, dynamic>?;
+      page = TechEquipmentDetailScreen(
+        title: args?['title'] ?? 'Salt cell',
+        makeModel: args?['makeModel'] ?? 'Hayward T-Cell-15',
+        serial: args?['serial'] ?? 'TC15-88213',
+        fittedDate: args?['fittedDate'] ?? '14 Mar 2025',
+        warranty: args?['warranty'] ?? 'Until Mar 2028',
+        condition: args?['condition'] ?? 'Watch',
+        conditionBgColor: args?['conditionBgColor'] ?? const Color(0xFFFEF3E2),
+        conditionTextColor:
+            args?['conditionTextColor'] ?? const Color(0xFFB57008),
+        history: args?['history'] ??
+            const [
+              EquipmentHistoryItem(
+                iconType: EquipmentHistoryIconType.check,
+                title: 'Output checked',
+                subtitle: '28 Jul · reading 2.9 ppm',
+                author: 'Ray',
+              ),
+              EquipmentHistoryItem(
+                iconType: EquipmentHistoryIconType.wrench,
+                title: 'Cleaned',
+                subtitle: '14 Jun · scale build-up removed',
+                author: 'Dan',
+              ),
+              EquipmentHistoryItem(
+                iconType: EquipmentHistoryIconType.plus,
+                title: 'Fitted',
+                subtitle: '14 Mar 2025',
+                author: 'Ray',
+              ),
+            ],
+        adviceNotice: args?['adviceNotice'] ??
+            '14 months old. Cell output drops noticeably after about 3 years — worth quoting a replacement before next season.',
+      );
+      break;
+    case Routes.techAddEquipment:
+      page = const TechAddEquipmentScreen();
+      break;
+    case Routes.techStopBriefing:
+      final args = settings.arguments as Map<String, dynamic>?;
+      page = TechStopBriefingScreen(
+        customerName: args?['customerName'] ?? 'Alicia Keys',
+        gateCode: args?['gateCode'] ?? '#1324',
+        dogStatus: args?['dogStatus'] ?? 'dog in the garden',
+      );
+      break;
+    case Routes.techWorkOrderDetail:
+      final args = settings.arguments as Map<String, dynamic>?;
+      page = TechWorkOrderDetailScreen(
+        orderNumber: args?['orderNumber'] ?? 'WO #1042',
+        type: args?['type'] ?? 'Repair',
+        status: args?['status'] ?? 'Approved',
+        dueDate: args?['dueDate'] ?? 'Fri 8 Aug',
+        scopeOfWork: args?['scopeOfWork'] ??
+            'Strip and deep-clean the cartridge filter, replace both O-rings, pressure test, and log the pressure reading before and after.',
+        customerNote: args?['customerNote'] ??
+            '"Pressure gauge has been reading high since the storm."',
+        partsCount: args?['partsCount'] ?? 2,
+      );
+      break;
+    case Routes.techChecklist:
+      final args = settings.arguments as Map<String, dynamic>?;
+      page = TechChecklistScreen(
+        title: args?['title'] ?? 'Checklist',
+      );
+      break;
+    case Routes.techWaterReadings:
+      page = const TechWaterReadingsScreen();
+      break;
+    case Routes.techAiRecommendation:
+      page = const TechAiRecommendationScreen();
+      break;
+    case Routes.techPhotosVideo:
+      page = const TechPhotosVideoScreen();
+      break;
+    case Routes.techAiPhotoCheck:
+      page = const TechAiPhotoCheckScreen();
+      break;
+    case Routes.techCustomerSignOff:
+      page = const TechCustomerSignOffScreen();
+      break;
+    case Routes.techCompleteJob:
+      final args = settings.arguments as Map<String, dynamic>?;
+      page = TechCompleteJobScreen(
+        customerName: args?['customerName'] ?? 'Alicia',
+      );
+      break;
+    case Routes.techOnYourTruck:
+      final args = settings.arguments as Map<String, dynamic>?;
+      page = TechOnYourTruckScreen(
+        customerName: args?['customerName'] ?? 'Alicia Keys',
+        address: args?['address'] ?? '26 Marina Way',
+      );
       break;
   }
 

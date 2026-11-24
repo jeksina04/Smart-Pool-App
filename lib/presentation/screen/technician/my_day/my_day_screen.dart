@@ -1,23 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_skeleton/util/app_assets.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
 
+import 'end_of_day_screen.dart';
+import 'my_day_break_screen.dart';
 import 'widgets/my_day_header_bar.dart';
 
 /// Screen: "My day"
 /// Tracking technician hours, travel, customer site tasks, breaks, and state location.
 class MyDayScreen extends StatefulWidget {
-  const MyDayScreen({super.key});
+  final bool initialDayStarted;
+
+  const MyDayScreen({
+    super.key,
+    this.initialDayStarted = false,
+  });
 
   @override
   State<MyDayScreen> createState() => _MyDayScreenState();
 }
 
 class _MyDayScreenState extends State<MyDayScreen> {
-  bool _isDayStarted = false;
+  late bool _isDayStarted;
   String _workState = '–';
   String _crossedStateLine = 'No';
+
+  @override
+  void initState() {
+    super.initState();
+    _isDayStarted = widget.initialDayStarted;
+    if (_isDayStarted) {
+      _workState = 'Arizona (AZ)';
+    }
+  }
 
   // Sample timeline entries for "Today"
   final List<Map<String, dynamic>> _todayEvents = [
@@ -82,13 +100,13 @@ class _MyDayScreenState extends State<MyDayScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // 1. Status Card ("Not started" / "Your day starts when you leave the office")
+                    // 1. Status Card ("On the clock since 6:54 am" or "Not started")
                     _buildDayStatusCard(),
                     16.verticalSpace,
 
                     // 2. Primary "Start my day" / "End my day" button
                     _buildStartDayButton(),
-                    8.verticalSpace,
+                    10.verticalSpace,
 
                     // Subtitle under start button
                     Text(
@@ -162,81 +180,121 @@ class _MyDayScreenState extends State<MyDayScreen> {
       child: Column(
         children: [
           Text(
-            _isDayStarted ? 'In progress' : 'Not started',
+            _isDayStarted ? 'On the clock since' : 'Not started',
             style: TextStyle(
               fontFamily: AppTypography.poppinsFont,
-              fontSize: 14.sp,
+              fontSize: 13.5.sp,
               fontWeight: FontWeight.w500,
               color: AppColors.textGrey,
             ),
           ),
-          10.verticalSpace,
-          Container(
-            width: 24.w,
-            height: 4.h,
-            decoration: BoxDecoration(
-              color: AppColors.darkNavy,
-              borderRadius: BorderRadius.circular(2.r),
+          8.verticalSpace,
+          if (_isDayStarted) ...[
+            Text(
+              '6:54 am',
+              style: TextStyle(
+                fontFamily: AppTypography.poppinsFont,
+                fontSize: 28.sp,
+                fontWeight: FontWeight.w800,
+                color: AppColors.darkNavy,
+                height: 1.2,
+              ),
             ),
-          ),
-          12.verticalSpace,
-          Text(
-            _isDayStarted
-                ? 'Your day is currently active'
-                : 'Your day starts when you leave the office',
-            style: TextStyle(
-              fontFamily: AppTypography.poppinsFont,
-              fontSize: 13.sp,
-              fontWeight: FontWeight.w400,
-              color: AppColors.textGrey,
+            8.verticalSpace,
+            Text(
+              '9h 18m paid today · 32h 40m this week',
+              style: TextStyle(
+                fontFamily: AppTypography.poppinsFont,
+                fontSize: 12.5.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.textGrey,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
+          ] else ...[
+            Container(
+              width: 24.w,
+              height: 4.h,
+              decoration: BoxDecoration(
+                color: AppColors.darkNavy,
+                borderRadius: BorderRadius.circular(2.r),
+              ),
+            ),
+            12.verticalSpace,
+            Text(
+              'Your day starts when you leave the office',
+              style: TextStyle(
+                fontFamily: AppTypography.poppinsFont,
+                fontSize: 13.sp,
+                fontWeight: FontWeight.w400,
+                color: AppColors.textGrey,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ],
       ),
     );
   }
 
   Widget _buildStartDayButton() {
-    return SizedBox(
+    final isEndDay = _isDayStarted;
+    return Container(
       width: double.infinity,
       height: 52.h,
-      child: ElevatedButton(
-        onPressed: () {
-          setState(() {
-            _isDayStarted = !_isDayStarted;
-            if (_isDayStarted) {
-              _workState = 'Texas (TX)';
-            }
-          });
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primaryBlue,
-          foregroundColor: AppColors.white,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(26.r),
+      decoration: BoxDecoration(
+        color: isEndDay ? AppColors.white : AppColors.primaryBlue,
+        borderRadius: BorderRadius.circular(26.r),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x0A102A50),
+            blurRadius: 10,
+            offset: Offset(0, 2),
           ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.access_time_rounded,
-              size: 20.w,
-              color: AppColors.white,
-            ),
-            10.horizontalSpace,
-            Text(
-              _isDayStarted ? 'End my day' : 'Start my day',
-              style: TextStyle(
-                fontFamily: AppTypography.poppinsFont,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w700,
-                color: AppColors.white,
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            if (_isDayStarted) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const EndOfDayScreen(),
+                ),
+              );
+            } else {
+              setState(() {
+                _isDayStarted = true;
+                _workState = 'Arizona (AZ)';
+              });
+            }
+          },
+          borderRadius: BorderRadius.circular(26.r),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                AppAssets.icClock,
+                width: 18.w,
+                height: 18.w,
+                colorFilter: ColorFilter.mode(
+                  isEndDay ? AppColors.darkNavy : AppColors.white,
+                  BlendMode.srcIn,
+                ),
               ),
-            ),
-          ],
+              10.horizontalSpace,
+              Text(
+                isEndDay ? 'End my day' : 'Start my day',
+                style: TextStyle(
+                  fontFamily: AppTypography.poppinsFont,
+                  fontSize: 15.5.sp,
+                  fontWeight: FontWeight.w700,
+                  color: isEndDay ? AppColors.darkNavy : AppColors.white,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -248,7 +306,7 @@ class _MyDayScreenState extends State<MyDayScreen> {
         // Paid today
         Expanded(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
             decoration: BoxDecoration(
               color: AppColors.white,
               borderRadius: BorderRadius.circular(20.r),
@@ -273,21 +331,21 @@ class _MyDayScreenState extends State<MyDayScreen> {
                     color: AppColors.textGrey,
                   ),
                 ),
-                2.verticalSpace,
+                4.verticalSpace,
                 FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
-                    _isDayStarted ? '1.8 h' : '0.0 h',
+                    _isDayStarted ? '9.3 h' : '0.0 h',
                     style: TextStyle(
                       fontFamily: AppTypography.poppinsFont,
-                      fontSize: 22.sp,
+                      fontSize: 24.sp,
                       fontWeight: FontWeight.w800,
                       color: AppColors.darkNavy,
                       height: 1.15,
                     ),
                   ),
                 ),
-                2.verticalSpace,
+                4.verticalSpace,
                 Text(
                   'whole day',
                   style: TextStyle(
@@ -305,7 +363,7 @@ class _MyDayScreenState extends State<MyDayScreen> {
         // On customer sites
         Expanded(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
             decoration: BoxDecoration(
               color: AppColors.white,
               borderRadius: BorderRadius.circular(20.r),
@@ -332,21 +390,21 @@ class _MyDayScreenState extends State<MyDayScreen> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                2.verticalSpace,
+                4.verticalSpace,
                 FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(
-                    _isDayStarted ? '0.6 h' : '0.0 h',
+                    _isDayStarted ? '7.4 h' : '0.0 h',
                     style: TextStyle(
                       fontFamily: AppTypography.poppinsFont,
-                      fontSize: 22.sp,
+                      fontSize: 24.sp,
                       fontWeight: FontWeight.w800,
                       color: AppColors.darkNavy,
                       height: 1.15,
                     ),
                   ),
                 ),
-                2.verticalSpace,
+                4.verticalSpace,
                 Text(
                   'tasks only',
                   style: TextStyle(
@@ -577,7 +635,9 @@ class _MyDayScreenState extends State<MyDayScreen> {
                         ),
                         3.verticalSpace,
                         Text(
-                          'set when you start your day',
+                          _isDayStarted
+                              ? 'Arizona (AZ) · from today\'s stops'
+                              : 'set when you start your day',
                           style: TextStyle(
                             fontFamily: AppTypography.poppinsFont,
                             fontSize: 12.sp,
@@ -587,16 +647,25 @@ class _MyDayScreenState extends State<MyDayScreen> {
                       ],
                     ),
                   ),
-                  Text(
-                    _workState,
-                    style: TextStyle(
-                      fontFamily: AppTypography.poppinsFont,
-                      fontSize: 14.sp,
-                      color: AppColors.darkNavy,
-                      fontWeight: FontWeight.w600,
+                  10.horizontalSpace,
+                  // State badge tag (e.g. AZ)
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE2F6EC),
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: Text(
+                      'AZ',
+                      style: TextStyle(
+                        fontFamily: AppTypography.poppinsFont,
+                        fontSize: 11.5.sp,
+                        fontWeight: FontWeight.w700,
+                        color: const Color(0xFF0F7645),
+                      ),
                     ),
                   ),
-                  8.horizontalSpace,
+                  6.horizontalSpace,
                   Icon(
                     Icons.chevron_right_rounded,
                     size: 20.w,
@@ -661,16 +730,17 @@ class _MyDayScreenState extends State<MyDayScreen> {
                       ],
                     ),
                   ),
+                  10.horizontalSpace,
                   Text(
                     _crossedStateLine,
                     style: TextStyle(
                       fontFamily: AppTypography.poppinsFont,
-                      fontSize: 13.5.sp,
-                      color: AppColors.darkNavy,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 13.sp,
+                      color: AppColors.textGrey,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                  8.horizontalSpace,
+                  6.horizontalSpace,
                   Icon(
                     Icons.chevron_right_rounded,
                     size: 20.w,
@@ -704,16 +774,24 @@ class _MyDayScreenState extends State<MyDayScreen> {
         color: Colors.transparent,
         child: InkWell(
           onTap: () {
-            // Start a break action
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const MyDayBreakScreen(),
+              ),
+            );
           },
           borderRadius: BorderRadius.circular(26.r),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.access_time_rounded,
-                size: 20.w,
-                color: AppColors.darkNavy,
+              SvgPicture.asset(
+                AppAssets.icClock,
+                width: 18.w,
+                height: 18.w,
+                colorFilter: const ColorFilter.mode(
+                  AppColors.darkNavy,
+                  BlendMode.srcIn,
+                ),
               ),
               10.horizontalSpace,
               Text(
