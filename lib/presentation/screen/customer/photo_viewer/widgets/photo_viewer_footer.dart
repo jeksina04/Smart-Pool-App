@@ -47,7 +47,7 @@ class PhotoViewerFooter extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
           decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(22.r),
+              color: AppColors.white, borderRadius: BorderRadius.circular(22.r),
             boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8, offset: Offset(0, 2))]
           ),
           child: Text(label, style: AppTypography.photoViewerBtn),

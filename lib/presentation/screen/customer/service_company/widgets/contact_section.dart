@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../util/app_assets.dart';
 import '../../../../../util/app_colors.dart';
+import '../../../../service/navigation.dart';
 import 'company_list_item.dart';
 
 class ContactSection extends StatelessWidget {
@@ -14,7 +15,7 @@ class ContactSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8)],
+        boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 8, offset: Offset(0, 2))],
       ),
       child: Column(
         children: [
@@ -37,6 +38,24 @@ class ContactSection extends StatelessWidget {
             title: context.getString('licence_label', {'number': '#TX-PC-40218'}),
             subtitle: context.getString('licence_subtitle'),
             isLast: true,
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                Routes.licenceInsurance,
+                arguments: {
+                  // --> Replace with dynamic data
+                  'licenceNumber': '#TX-PC-40218',
+                  'licenceType': 'Residential pool contractor',
+                  'companyName': 'NSP Pool & Spa Services',
+                  'issuedBy': 'Texas TDLR',
+                  'expiresDate': '31 Mar 2027',
+                  'status': 'Current',
+                  'generalLiability': 'Hiscox · \$1,000,000 per occurrence · expires 30 Sep 2027',
+                  'workersComp': 'Texas Mutual · expires 30 Sep 2027',
+                  'tdlrUrl': 'https://www.tdlr.texas.gov',
+                },
+              );
+            },
           ),
         ],
       ),

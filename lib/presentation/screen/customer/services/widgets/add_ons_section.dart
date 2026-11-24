@@ -100,7 +100,10 @@ class AddOnsSection extends StatelessWidget {
               Navigator.pushNamed(context, Routes.addOnDetail);
             }
             else if (title == context.getString('green_pool_recovery')) {
-              Navigator.pushNamed(context, Routes.addOnDetail);
+              Navigator.pushNamed(context, Routes.greenPoolRecovery);
+            }
+            else if (title == context.getString('equipment_inspection')) {
+              Navigator.pushNamed(context, Routes.equipmentInspection);
             }
           }
       ),

@@ -11,7 +11,8 @@ import '../../../../util/app_colors.dart';
 import '../../../../util/app_typography.dart';
 
 class WaterTestPage extends StatefulWidget {
-  const WaterTestPage({super.key});
+  final String firstMetric;
+  const WaterTestPage({super.key, this.firstMetric = 'ph_level'});
 
   @override
   State<WaterTestPage> createState() => _WaterTestPageState();
@@ -71,23 +72,44 @@ class _WaterTestPageState extends State<WaterTestPage> {
 
                       8.verticalSpace,
 
-                      /// pH History Chart
-                      ReadingChartCard(
-                        title: context.getString('ph_last_8_weeks'),
-                        lineColor: AppColors.statusGreen,
-                        // --> Replace with actual pH data
-                        dataPoints: const [7.2, 7.4, 7.3, 7.6, 7.5, 7.2, 7.1, 7.2],
-                      ),
+                      /// Selected Metric Chart First
+                      if (widget.firstMetric == 'chlorine_level') ...[
+                        ReadingChartCard(
+                          title: context.getString('chlorine_last_8_weeks'),
+                          lineColor: AppColors.primaryBlue,
+                          dataPoints: const [
+                            1.5, 1.2, 1.8, 2.0, 1.5, 1.4, 1.6, 1.5,
+                          ],
+                        ),
 
-                      8.verticalSpace,
+                        8.verticalSpace,
 
-                      /// Chlorine History Chart
-                      ReadingChartCard(
-                        title: context.getString('chlorine_last_8_weeks'),
-                        lineColor: AppColors.primaryBlue,
-                        // --> Replace with actual chlorine data
-                        dataPoints: const [1.5, 1.2, 1.8, 2.0, 1.5, 1.4, 1.6, 1.5],
-                      ),
+                        ReadingChartCard(
+                          title: context.getString('ph_last_8_weeks'),
+                          lineColor: AppColors.statusGreen,
+                          dataPoints: const [
+                            7.2, 7.4, 7.3, 7.6, 7.5, 7.2, 7.1, 7.2,
+                          ],
+                        ),
+                      ] else ...[
+                        ReadingChartCard(
+                          title: context.getString('ph_last_8_weeks'),
+                          lineColor: AppColors.statusGreen,
+                          dataPoints: const [
+                            7.2, 7.4, 7.3, 7.6, 7.5, 7.2, 7.1, 7.2,
+                          ],
+                        ),
+
+                        8.verticalSpace,
+
+                        ReadingChartCard(
+                          title: context.getString('chlorine_last_8_weeks'),
+                          lineColor: AppColors.primaryBlue,
+                          dataPoints: const [
+                            1.5, 1.2, 1.8, 2.0, 1.5, 1.4, 1.6, 1.5,
+                          ],
+                        ),
+                      ],
 
                       16.verticalSpace,
 

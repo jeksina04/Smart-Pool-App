@@ -9,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../util/app_colors.dart';
 import '../../../../util/app_typography.dart';
 import '../../../../util/app_assets.dart';
+import '../../../service/navigation.dart';
 
 class AddOnCheckoutSheet extends StatefulWidget {
   const AddOnCheckoutSheet({super.key});
@@ -23,7 +24,13 @@ class _AddOnCheckoutSheetState extends State<AddOnCheckoutSheet> {
     return Container(
       decoration: BoxDecoration(
           color: AppColors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24.r))),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+          boxShadow: [
+            BoxShadow(
+                color: AppColors.cardShadow,
+                blurRadius: 40,
+                offset: Offset(0, 16))
+          ]),
       padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 0),
       child: SafeArea(
         top: false,
@@ -122,7 +129,13 @@ class _AddOnCheckoutSheetState extends State<AddOnCheckoutSheet> {
               width: double.infinity,
               height: 56.h,
               child: ElevatedButton(
-                onPressed: () {}, // --> Navigate to payment screen
+                onPressed: () {
+                  Navigator.pushNamed(context, Routes.dashboard,
+                    arguments: {
+                      'index': 1,
+                      'showSupport': true,
+                    },);
+                },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryBlue,
                     shape: RoundedRectangleBorder(

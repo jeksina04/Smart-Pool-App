@@ -113,7 +113,9 @@ class _ServicePausedPageState extends State<ServicePausedPage> {
                             icon: AppAssets.icCreditCard,
                             title: context.getString('pay_outstanding_invoice'),
                             badgeText: context.getString('items_due', {'count': '1'}), // --> Replace with user invoice count
-                            onTap: () {} // --> Navigate to invoices/billing page
+                            onTap: () {
+                              Navigator.pushNamed(context, Routes.invoices);
+                            }
                           ),
                           ServicePauseActionItem(
                             icon: AppAssets.icPhone,

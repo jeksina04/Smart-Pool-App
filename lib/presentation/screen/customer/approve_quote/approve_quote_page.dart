@@ -21,7 +21,7 @@ class ApproveQuotePage extends StatefulWidget {
 }
 
 class _ApproveQuotePageState extends State<ApproveQuotePage> {
-  int _selectedTabIndex = 1; // Default to "Green pool recovery" based on your image
+  int _selectedTabIndex = 1; // Default to "Green pool recovery"
 
   // --> Replace with actual quotes data
   final List<Map<String, dynamic>> _quotes = [

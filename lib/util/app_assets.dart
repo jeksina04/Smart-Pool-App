@@ -66,4 +66,11 @@ abstract class AppAssets {
   static const String icInstall = 'assets/drawables/ic_install.svg';
   static const String icAiRecommendation = 'assets/drawables/ic_ai_recommendation.svg';
   static const String icDrop = 'assets/drawables/ic_drop.svg';
+
+  static const String icTransfer = 'assets/drawables/ic_transfer.svg';
+  static const String icChangePassword = 'assets/drawables/ic_change_password.svg';
+  static const String icPrivacyPolicy = 'assets/drawables/ic_privacy_policy.svg';
+  static const String icDelete = 'assets/drawables/ic_delete.svg';
+  static const String icVisibility = 'assets/drawables/ic_visibility.svg';
+  static const String icVisibilityOff = 'assets/drawables/ic_visibility_off.svg';
 }
