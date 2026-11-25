@@ -202,7 +202,7 @@ class _NewWorkOrderScreenState extends State<NewWorkOrderScreen> {
           ),
         ),
         child: Text(
-          'Send to office',
+          'Create work order',
           style: TextStyle(
             fontFamily: AppTypography.poppinsFont,
             fontSize: 16.sp,

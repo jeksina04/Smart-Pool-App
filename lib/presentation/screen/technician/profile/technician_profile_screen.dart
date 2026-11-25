@@ -1,12 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_skeleton/presentation/service/navigation.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'widgets/tech_profile_header_bar.dart';
 
 /// Screen: "My profile" for technician
-class TechnicianProfileScreen extends StatelessWidget {
+class TechnicianProfileScreen extends StatefulWidget {
   final String technicianName;
   final String roleWithId;
   final String employmentSince;
@@ -33,16 +37,182 @@ class TechnicianProfileScreen extends StatelessWidget {
   });
 
   @override
+  State<TechnicianProfileScreen> createState() =>
+      _TechnicianProfileScreenState();
+}
+
+class _TechnicianProfileScreenState extends State<TechnicianProfileScreen> {
+  late String _technicianName;
+  File? _profileImageFile;
+  final ImagePicker _imagePicker = ImagePicker();
+
+  @override
+  void initState() {
+    super.initState();
+    _technicianName = widget.technicianName;
+  }
+
+  Future<void> _navigateToEditProfile() async {
+    final result = await Navigator.of(context).pushNamed(
+      Routes.technicianEditProfile,
+      arguments: {
+        'name': _technicianName,
+      },
+    );
+
+    if (result is String && result.isNotEmpty && mounted) {
+      setState(() {
+        _technicianName = result;
+      });
+    }
+  }
+
+  String _getInitials(String name) {
+    final parts = name.trim().split(RegExp(r'\s+'));
+    if (parts.isEmpty || parts[0].isEmpty) return 'RD';
+    if (parts.length == 1) return parts[0][0].toUpperCase();
+    return '${parts[0][0]}${parts[1][0]}'.toUpperCase();
+  }
+
+  void _showPhotoSourceBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        return Container(
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+          ),
+          padding: EdgeInsets.fromLTRB(
+            20.w,
+            16.h,
+            20.w,
+            24.h + MediaQuery.paddingOf(ctx).bottom,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40.w,
+                height: 4.h,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE2E8F0),
+                  borderRadius: BorderRadius.circular(2.r),
+                ),
+              ),
+              18.verticalSpace,
+              Text(
+                'Change Profile Photo',
+                style: TextStyle(
+                  fontFamily: AppTypography.poppinsFont,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.darkNavy,
+                ),
+              ),
+              20.verticalSpace,
+              ListTile(
+                leading: Container(
+                  width: 44.w,
+                  height: 44.w,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE9F1FE),
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Icon(
+                    Icons.camera_alt_outlined,
+                    color: AppColors.primaryBlue,
+                    size: 22.w,
+                  ),
+                ),
+                title: Text(
+                  'Camera',
+                  style: TextStyle(
+                    fontFamily: AppTypography.poppinsFont,
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.darkNavy,
+                  ),
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14.r),
+                ),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _pickPhoto(ImageSource.camera);
+                },
+              ),
+              8.verticalSpace,
+              ListTile(
+                leading: Container(
+                  width: 44.w,
+                  height: 44.w,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE9F1FE),
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Icon(
+                    Icons.photo_library_outlined,
+                    color: AppColors.primaryBlue,
+                    size: 22.w,
+                  ),
+                ),
+                title: Text(
+                  'Gallery',
+                  style: TextStyle(
+                    fontFamily: AppTypography.poppinsFont,
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.darkNavy,
+                  ),
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14.r),
+                ),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _pickPhoto(ImageSource.gallery);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _pickPhoto(ImageSource source) async {
+    try {
+      final XFile? photo = await _imagePicker.pickImage(
+        source: source,
+        imageQuality: 85,
+        maxWidth: 1080,
+        maxHeight: 1080,
+      );
+
+      if (photo != null && mounted) {
+        setState(() {
+          _profileImageFile = File(photo.path);
+        });
+      }
+    } catch (e) {
+      debugPrint('Error picking photo: $e');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF7FAFC),
       body: SafeArea(
         child: Column(
           children: [
-            /// Header bar with back button and centered title
+            /// Header bar with back button, centered title, and edit button
             TechProfileHeaderBar(
               title: 'My profile',
               onBack: () => Navigator.of(context).maybePop(),
+              onEdit: _navigateToEditProfile,
             ),
 
             /// Scrollable content
@@ -64,15 +234,7 @@ class TechnicianProfileScreen extends StatelessWidget {
                     12.verticalSpace,
 
                     /// Customer review cards
-                    _buildCustomerReviewCard(
-                      quote: '“Always leaves the gate locked.”',
-                      authorDate: 'R. Alvarez · 3 Aug',
-                    ),
-                    12.verticalSpace,
-                    _buildCustomerReviewCard(
-                      quote: '“Explained what the cloudy water was.”',
-                      authorDate: 'O. Pike · 28 Jul',
-                    ),
+                    _buildCustomerReviewsCard(),
                     24.verticalSpace,
 
                     /// 3. "My vehicle" Section
@@ -131,29 +293,40 @@ class TechnicianProfileScreen extends StatelessWidget {
       child: Column(
         children: [
           /// Avatar Circle
-          Container(
-            width: 76.w,
-            height: 76.w,
-            decoration: const BoxDecoration(
-              color: AppColors.primaryBlue,
-              shape: BoxShape.circle,
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              'RD',
-              style: TextStyle(
-                fontFamily: AppTypography.poppinsFont,
-                fontSize: 26.sp,
-                fontWeight: FontWeight.w700,
-                color: AppColors.white,
+          GestureDetector(
+            onTap: _showPhotoSourceBottomSheet,
+            child: Container(
+              width: 76.w,
+              height: 76.w,
+              decoration: const BoxDecoration(
+                color: AppColors.primaryBlue,
+                shape: BoxShape.circle,
               ),
+              clipBehavior: Clip.antiAlias,
+              alignment: Alignment.center,
+              child: _profileImageFile != null
+                  ? Image.file(
+                      _profileImageFile!,
+                      width: 76.w,
+                      height: 76.w,
+                      fit: BoxFit.cover,
+                    )
+                  : Text(
+                      _getInitials(_technicianName),
+                      style: TextStyle(
+                        fontFamily: AppTypography.poppinsFont,
+                        fontSize: 26.sp,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.white,
+                      ),
+                    ),
             ),
           ),
           14.verticalSpace,
 
           /// Name
           Text(
-            technicianName,
+            _technicianName,
             style: TextStyle(
               fontFamily: AppTypography.poppinsFont,
               fontSize: 20.sp,
@@ -165,7 +338,7 @@ class TechnicianProfileScreen extends StatelessWidget {
 
           /// Role & Since Info
           Text(
-            '$roleWithId · $employmentSince',
+            '${widget.roleWithId} · ${widget.employmentSince}',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: AppTypography.poppinsFont,
@@ -193,9 +366,7 @@ class TechnicianProfileScreen extends StatelessWidget {
             child: Material(
               color: Colors.transparent,
               child: InkWell(
-                onTap: () {
-                  // Handle change photo
-                },
+                onTap: _showPhotoSourceBottomSheet,
                 borderRadius: BorderRadius.circular(20.r),
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
@@ -251,7 +422,7 @@ class TechnicianProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                rating,
+                widget.rating,
                 style: TextStyle(
                   fontFamily: AppTypography.poppinsFont,
                   fontSize: 28.sp,
@@ -275,7 +446,7 @@ class TechnicianProfileScreen extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                totalRatings,
+                widget.totalRatings,
                 style: TextStyle(
                   fontFamily: AppTypography.poppinsFont,
                   fontSize: 12.sp,
@@ -314,25 +485,47 @@ class TechnicianProfileScreen extends StatelessWidget {
     );
   }
 
-  /// Review item card
-  Widget _buildCustomerReviewCard({
-    required String quote,
-    required String authorDate,
-  }) {
+  /// Reviews card container with divider
+  Widget _buildCustomerReviewsCard() {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(20.r),
         boxShadow: const [
           BoxShadow(
             color: Color(0x08102A50),
-            blurRadius: 8,
+            blurRadius: 10,
             offset: Offset(0, 2),
           ),
         ],
       ),
+      child: Column(
+        children: [
+          _buildReviewRow(
+            quote: '“Always leaves the gate locked.”',
+            authorDate: 'R. Alvarez · 3 Aug',
+          ),
+          const Divider(
+            height: 1,
+            thickness: 1,
+            color: Color(0xFFF0F3F6),
+          ),
+          _buildReviewRow(
+            quote: '“Explained what the cloudy water was.”',
+            authorDate: 'O. Pike · 28 Jul',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildReviewRow({
+    required String quote,
+    required String authorDate,
+  }) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -428,7 +621,7 @@ class TechnicianProfileScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      vehicleName,
+                      widget.vehicleName,
                       style: TextStyle(
                         fontFamily: AppTypography.poppinsFont,
                         fontSize: 14.sp,
@@ -438,7 +631,7 @@ class TechnicianProfileScreen extends StatelessWidget {
                     ),
                     3.verticalSpace,
                     Text(
-                      vehiclePlate,
+                      widget.vehiclePlate,
                       style: TextStyle(
                         fontFamily: AppTypography.poppinsFont,
                         fontSize: 11.sp,
@@ -486,7 +679,7 @@ class TechnicianProfileScreen extends StatelessWidget {
         children: [
           _buildEmploymentRow(
             label: 'Pay type',
-            value: payType,
+            value: widget.payType,
           ),
           const Divider(
             height: 1,
@@ -495,7 +688,7 @@ class TechnicianProfileScreen extends StatelessWidget {
           ),
           _buildEmploymentRow(
             label: 'Skills & certifications',
-            value: skillsCertifications,
+            value: widget.skillsCertifications,
           ),
           const Divider(
             height: 1,
@@ -504,7 +697,7 @@ class TechnicianProfileScreen extends StatelessWidget {
           ),
           _buildEmploymentRow(
             label: "Workers' comp class",
-            value: workersCompClass,
+            value: widget.workersCompClass,
           ),
         ],
       ),

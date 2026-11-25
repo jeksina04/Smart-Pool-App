@@ -234,7 +234,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
                     /// Read-only price note pill banner
                     Container(
                       width: double.infinity,
-                      padding: EdgeInsets.symmetric(horizontal: 14.w),
+                      padding: EdgeInsets.all(14.w),
                       decoration: BoxDecoration(
                         color: const Color(0xFFEBF2FD),
                         borderRadius: BorderRadius.circular(12.r),
@@ -244,8 +244,8 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
                         children: [
                           SvgPicture.asset(
                             AppAssets.icLock,
-                            width: 76.w,
-                            height: 76.w,
+                            width: 15.w,
+                            height: 15.w,
                             colorFilter: const ColorFilter.mode(
                               Color(0xFF1B6BD8),
                               BlendMode.srcIn,

@@ -6,8 +6,6 @@ import 'package:flutter_skeleton/presentation/screen/customer_settings_legal/leg
 import 'package:flutter_skeleton/presentation/screen/customer_settings_legal/terms_and_conditions/terms_and_conditions.dart';
 import 'package:flutter_skeleton/presentation/screen/help_and_change_password/change_password/change_password.dart';
 import 'package:flutter_skeleton/presentation/screen/customer/filter_deep_clean/filter_deep_clean_page.dart';
-import 'package:flutter_skeleton/presentation/screen/login/login_page.dart';
-import 'package:flutter_skeleton/presentation/screen/register/register_page.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../domain/interactor/interactor.dart';
@@ -65,6 +63,7 @@ import '../screen/technician/my_day/my_day_break_screen.dart';
 import '../screen/technician/my_day/my_day_screen.dart';
 import '../screen/technician/new_work_order/new_work_order_screen.dart';
 import '../screen/technician/notifications/technician_notifications_screen.dart';
+import '../screen/technician/profile/technician_edit_profile_screen.dart';
 import '../screen/technician/profile/technician_profile_screen.dart';
 import '../screen/technician/service_history/service_history_screen.dart';
 import '../screen/technician/settings/technician_settings_screen.dart';
@@ -145,8 +144,9 @@ class Routes {
   static const String technicianNotifications = 'technician_notifications';
   static const String techVisitDetail = 'tech_visit_detail';
   static const String technicianSettings = 'technician_settings';
-  static const String technicianProfile = 'technician_profile';
-  static const String changePassword = 'change_password';
+  static const String technicianMyProfile = 'technician_my_profile';
+  static const String technicianEditProfile = 'technician_edit_profile';
+  // static const String changePassword = 'change_password';
   static const String techCustomerDetail = 'tech_customer_detail';
   static const String addCustomer = 'add_customer';
   static const String myDay = 'my_day';
@@ -429,8 +429,16 @@ Route? onGenerateRoute(RouteSettings settings) {
     case Routes.technicianSettings:
       page = const TechnicianSettingsScreen();
       break;
-    case Routes.technicianProfile:
+    case Routes.technicianMyProfile:
       page = const TechnicianProfileScreen();
+      break;
+    case Routes.technicianEditProfile:
+      final args = settings.arguments as Map<String, dynamic>?;
+      page = TechnicianEditProfileScreen(
+        initialName: args?['name'] ?? 'Ray Delgado',
+        initialMobile: args?['mobile'] ?? '(555) 014-8823',
+        initialEmail: args?['email'] ?? 'ray@nsppoolspa.com',
+      );
       break;
     case Routes.changePassword:
       page = const ChangePasswordScreen();
@@ -535,8 +543,14 @@ Route? onGenerateRoute(RouteSettings settings) {
       final args = settings.arguments as Map<String, dynamic>?;
       page = TechWorkOrderDetailScreen(
         orderNumber: args?['orderNumber'] ?? 'WO #1042',
+        customer: args?['customer'],
         type: args?['type'] ?? 'Repair',
+        priority: args?['priority'],
+        priorityBgColor: args?['priorityBgColor'] as Color?,
+        priorityTextColor: args?['priorityTextColor'] as Color?,
         status: args?['status'] ?? 'Approved',
+        statusBgColor: args?['statusBgColor'] as Color?,
+        statusTextColor: args?['statusTextColor'] as Color?,
         dueDate: args?['dueDate'] ?? 'Fri 8 Aug',
         scopeOfWork: args?['scopeOfWork'] ??
             'Strip and deep-clean the cartridge filter, replace both O-rings, pressure test, and log the pressure reading before and after.',

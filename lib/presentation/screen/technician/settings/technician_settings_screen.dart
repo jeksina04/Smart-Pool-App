@@ -50,7 +50,7 @@ class _TechnicianSettingsScreenState extends State<TechnicianSettingsScreen> {
                       name: 'Ray Delgado',
                       subtitle: 'Technician · ID 24 · ★ 4.8',
                       onTap: () {
-                        Navigator.of(context).pushNamed(Routes.technicianProfile);
+                        Navigator.of(context).pushNamed(Routes.technicianMyProfile);
                       },
                     ),
                     16.verticalSpace,

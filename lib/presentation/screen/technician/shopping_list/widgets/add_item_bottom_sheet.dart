@@ -43,12 +43,34 @@ class _AddItemBottomSheetState extends State<AddItemBottomSheet> {
   int _quantity = 1;
   bool _notBilled = false;
   int? _selectedIndex;
+  String _searchQuery = '';
 
   final List<CatalogProduct> _catalogProducts = const [
     CatalogProduct(title: 'Bag of salt 40lb', price: '\$18.00'),
     CatalogProduct(title: 'Chlorine tabs', price: '\$4.00'),
     CatalogProduct(title: 'DE powder', price: '\$22.00'),
   ];
+
+  List<CatalogProduct> get _filteredProducts {
+    if (_searchQuery.trim().isEmpty) {
+      return _catalogProducts;
+    }
+    return _catalogProducts
+        .where((p) =>
+            p.title.toLowerCase().contains(_searchQuery.trim().toLowerCase()))
+        .toList();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(() {
+      setState(() {
+        _searchQuery = _searchController.text;
+        _selectedIndex = null;
+      });
+    });
+  }
 
   @override
   void dispose() {
@@ -68,21 +90,28 @@ class _AddItemBottomSheetState extends State<AddItemBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    final filtered = _filteredProducts;
+
     return Container(
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.88,
+      ),
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),
       ),
-      padding: EdgeInsets.fromLTRB(
-        20.w,
-        12.h,
-        20.w,
-        MediaQuery.of(context).viewInsets.bottom + 24.h,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: EdgeInsets.only(bottom: bottomInset),
+          child: SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            padding: EdgeInsets.fromLTRB(20.w, 12.h, 20.w, 24.h),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
           /// Top Grey Drag Handle Pill
           Center(
             child: Container(
@@ -181,68 +210,87 @@ class _AddItemBottomSheetState extends State<AddItemBottomSheet> {
               borderRadius: BorderRadius.circular(18.r),
               border: Border.all(color: const Color(0xFFEFF2F6)),
             ),
-            child: Column(
-              children: List.generate(_catalogProducts.length, (index) {
-                final product = _catalogProducts[index];
-                final isSelected = _selectedIndex == index;
-
-                return Column(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          _selectedIndex = isSelected ? null : index;
-                        });
-                      },
-                      borderRadius: BorderRadius.vertical(
-                        top: index == 0 ? Radius.circular(18.r) : Radius.zero,
-                        bottom: index == _catalogProducts.length - 1
-                            ? Radius.circular(18.r)
-                            : Radius.zero,
-                      ),
-                      child: Container(
-                        color: isSelected
-                            ? AppColors.primaryBlue.withValues(alpha: 0.06)
-                            : Colors.transparent,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.w,
-                          vertical: 14.h,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              product.title,
-                              style: TextStyle(
-                                fontFamily: AppTypography.poppinsFont,
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.darkNavy,
-                              ),
-                            ),
-                            Text(
-                              product.price,
-                              style: TextStyle(
-                                fontFamily: AppTypography.poppinsFont,
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.darkNavy,
-                              ),
-                            ),
-                          ],
+            child: filtered.isEmpty
+                ? Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 20.h,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'No matching products in catalog.\nTap "Save" to add "${_searchController.text.trim()}".',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: AppTypography.poppinsFont,
+                          fontSize: 13.sp,
+                          color: const Color(0xFF7D8A99),
+                          height: 1.4,
                         ),
                       ),
                     ),
-                    if (index != _catalogProducts.length - 1)
-                      const Divider(
-                        height: 1,
-                        thickness: 1,
-                        color: Color(0xFFEFF2F6),
-                      ),
-                  ],
-                );
-              }),
-            ),
+                  )
+                : Column(
+                    children: List.generate(filtered.length, (index) {
+                      final product = filtered[index];
+                      final isSelected = _selectedIndex == index;
+
+                      return Column(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                _selectedIndex = isSelected ? null : index;
+                              });
+                            },
+                            borderRadius: BorderRadius.vertical(
+                              top: index == 0 ? Radius.circular(18.r) : Radius.zero,
+                              bottom: index == filtered.length - 1
+                                  ? Radius.circular(18.r)
+                                  : Radius.zero,
+                            ),
+                            child: Container(
+                              color: isSelected
+                                  ? AppColors.primaryBlue.withValues(alpha: 0.06)
+                                  : Colors.transparent,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16.w,
+                                vertical: 14.h,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    product.title,
+                                    style: TextStyle(
+                                      fontFamily: AppTypography.poppinsFont,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.darkNavy,
+                                    ),
+                                  ),
+                                  Text(
+                                    product.price,
+                                    style: TextStyle(
+                                      fontFamily: AppTypography.poppinsFont,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.darkNavy,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          if (index != filtered.length - 1)
+                            const Divider(
+                              height: 1,
+                              thickness: 1,
+                              color: Color(0xFFEFF2F6),
+                            ),
+                        ],
+                      );
+                    }),
+                  ),
           ),
           20.verticalSpace,
 
@@ -333,10 +381,17 @@ class _AddItemBottomSheetState extends State<AddItemBottomSheet> {
             height: 52.h,
             child: ElevatedButton(
               onPressed: () {
-                final selected = _selectedIndex != null ? _catalogProducts[_selectedIndex!] : null;
+                final selected = (_selectedIndex != null && _selectedIndex! < filtered.length)
+                    ? filtered[_selectedIndex!]
+                    : null;
+                final customTitle = _searchController.text.trim();
+                final title = selected?.title ??
+                    (customTitle.isNotEmpty ? customTitle : 'Custom Item');
+                final price = selected?.price ?? '\$0.00';
+
                 widget.onSave?.call(
-                  selected?.title ?? 'Custom Item',
-                  selected?.price ?? '\$0.00',
+                  title,
+                  price,
                   _quantity,
                   _notBilled,
                 );
@@ -363,7 +418,7 @@ class _AddItemBottomSheetState extends State<AddItemBottomSheet> {
           ),
         ],
       ),
-    );
+    ))));
   }
 
   Widget _buildCircleButton({

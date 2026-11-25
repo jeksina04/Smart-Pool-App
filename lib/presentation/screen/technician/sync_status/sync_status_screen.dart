@@ -79,8 +79,8 @@ class _SyncStatusScreenState extends State<SyncStatusScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    /// 1. Offline Banner Callout
-                    _buildOfflineBanner(),
+                    /// 1. Sync Status Banner Callout
+                    _buildSyncStatusBanner(),
                     16.verticalSpace,
 
                     /// 2. Pending Overview Card
@@ -168,33 +168,33 @@ class _SyncStatusScreenState extends State<SyncStatusScreen> {
     );
   }
 
-  Widget _buildOfflineBanner() {
+  Widget _buildSyncStatusBanner() {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFECEB),
+        color: const Color(0xFFE8F6ED),
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: Row(
         children: [
           SvgPicture.asset(
-            AppAssets.icOffline,
+            AppAssets.icCheck,
             width: 18.w,
             height: 18.w,
             colorFilter: const ColorFilter.mode(
-              Color(0xFFD32F2F),
+              Color(0xFF168A54),
               BlendMode.srcIn,
             ),
           ),
           8.horizontalSpace,
           Text(
-            'Offline · last sync 42m ago',
+            'All synced · just now',
             style: TextStyle(
               fontFamily: AppTypography.poppinsFont,
-              fontSize: 12.sp,
+              fontSize: 13.sp,
               fontWeight: FontWeight.w700,
-              color: const Color(0xFFD32F2F),
+              color: const Color(0xFF168A54),
             ),
           ),
         ],
@@ -314,6 +314,7 @@ class _SyncStatusScreenState extends State<SyncStatusScreen> {
       height: 52.h,
       child: ElevatedButton(
         onPressed: () {
+          Navigator.pop(context);
           // Trigger sync
         },
         style: ElevatedButton.styleFrom(
@@ -338,7 +339,7 @@ class _SyncStatusScreenState extends State<SyncStatusScreen> {
             ),
             8.horizontalSpace,
             Text(
-              'Sync Now',
+              'Up to date',
               style: TextStyle(
                 fontFamily: AppTypography.poppinsFont,
                 fontSize: 16.sp,

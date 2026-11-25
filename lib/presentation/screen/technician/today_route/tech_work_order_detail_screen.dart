@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter_skeleton/presentation/service/navigation.dart';
 import 'package:flutter_skeleton/util/app_assets.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
@@ -15,10 +17,16 @@ import 'package:flutter_skeleton/util/app_typography.dart';
 /// - Parts used Card: Shopping cart icon, "Parts used", "2 items" and chevron
 /// - Photo tiles: Existing photo thumbnail and empty dashed border photo upload container
 /// - Bottom Button: Full width "Mark Complete" blue button
-class TechWorkOrderDetailScreen extends StatelessWidget {
+class TechWorkOrderDetailScreen extends StatefulWidget {
   final String orderNumber;
+  final String? customer;
   final String type;
+  final String? priority;
+  final Color? priorityBgColor;
+  final Color? priorityTextColor;
   final String status;
+  final Color? statusBgColor;
+  final Color? statusTextColor;
   final String dueDate;
   final String scopeOfWork;
   final String customerNote;
@@ -27,14 +35,47 @@ class TechWorkOrderDetailScreen extends StatelessWidget {
   const TechWorkOrderDetailScreen({
     super.key,
     this.orderNumber = 'WO #1042',
+    this.customer,
     this.type = 'Repair',
+    this.priority,
+    this.priorityBgColor,
+    this.priorityTextColor,
     this.status = 'Approved',
+    this.statusBgColor,
+    this.statusTextColor,
     this.dueDate = 'Fri 8 Aug',
     this.scopeOfWork =
         'Strip and deep-clean the cartridge filter, replace both O-rings, pressure test, and log the pressure reading before and after.',
     this.customerNote = '"Pressure gauge has been reading high since the storm."',
     this.partsCount = 2,
   });
+
+  @override
+  State<TechWorkOrderDetailScreen> createState() => _TechWorkOrderDetailScreenState();
+}
+
+class _TechWorkOrderDetailScreenState extends State<TechWorkOrderDetailScreen> {
+  File? _capturedImageFile;
+  final ImagePicker _imagePicker = ImagePicker();
+
+  Future<void> _onCapturePhoto() async {
+    try {
+      final XFile? photo = await _imagePicker.pickImage(
+        source: ImageSource.camera,
+        imageQuality: 85,
+        maxWidth: 1920,
+        maxHeight: 1080,
+      );
+
+      if (photo != null) {
+        setState(() {
+          _capturedImageFile = File(photo.path);
+        });
+      }
+    } catch (e) {
+      debugPrint('Error capturing photo: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +163,7 @@ class TechWorkOrderDetailScreen extends StatelessWidget {
             ),
           ),
           Text(
-            orderNumber,
+            widget.orderNumber,
             style: TextStyle(
               fontFamily: AppTypography.poppinsFont,
               fontSize: 17.5.sp,
@@ -152,40 +193,78 @@ class TechWorkOrderDetailScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _buildRow('Type', type, isBoldValue: true),
-          14.verticalSpace,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Status',
-                style: TextStyle(
-                  fontFamily: AppTypography.poppinsFont,
-                  fontSize: 14.sp,
-                  color: const Color(0xFF7D8A99),
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEAF8F0),
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Text(
-                  status,
+          if (widget.customer != null) ...[
+            _buildRow('Customer', widget.customer!, isBoldValue: true),
+            14.verticalSpace,
+          ],
+          _buildRow('Type', widget.type, isBoldValue: true),
+          if (widget.priority != null) ...[
+            14.verticalSpace,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Priority',
                   style: TextStyle(
                     fontFamily: AppTypography.poppinsFont,
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w700,
-                    color: const Color(0xFF0F7645),
+                    fontSize: 14.sp,
+                    color: const Color(0xFF7D8A99),
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
-              ),
-            ],
-          ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                  decoration: BoxDecoration(
+                    color: widget.priorityBgColor ?? const Color(0xFFFFECEB),
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Text(
+                    widget.priority!,
+                    style: TextStyle(
+                      fontFamily: AppTypography.poppinsFont,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w700,
+                      color: widget.priorityTextColor ?? const Color(0xFFD63B30),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ] else ...[
+            14.verticalSpace,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Status',
+                  style: TextStyle(
+                    fontFamily: AppTypography.poppinsFont,
+                    fontSize: 14.sp,
+                    color: const Color(0xFF7D8A99),
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                  decoration: BoxDecoration(
+                    color: widget.statusBgColor ?? const Color(0xFFEAF8F0),
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Text(
+                    widget.status,
+                    style: TextStyle(
+                      fontFamily: AppTypography.poppinsFont,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w700,
+                      color: widget.statusTextColor ?? const Color(0xFF0F7645),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
           14.verticalSpace,
-          _buildRow('Due', dueDate, isBoldValue: true),
+          _buildRow('Due', widget.dueDate, isBoldValue: true),
         ],
       ),
     );
@@ -246,7 +325,7 @@ class TechWorkOrderDetailScreen extends StatelessWidget {
           ),
           10.verticalSpace,
           Text(
-            scopeOfWork,
+            widget.scopeOfWork,
             style: TextStyle(
               fontFamily: AppTypography.poppinsFont,
               fontSize: 13.5.sp,
@@ -288,7 +367,7 @@ class TechWorkOrderDetailScreen extends StatelessWidget {
           ),
           10.verticalSpace,
           Text(
-            customerNote,
+            widget.customerNote,
             style: TextStyle(
               fontFamily: AppTypography.poppinsFont,
               fontSize: 13.5.sp,
@@ -318,7 +397,9 @@ class TechWorkOrderDetailScreen extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).pushNamed(Routes.shoppingList);
+          },
           borderRadius: BorderRadius.circular(16.r),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
@@ -359,9 +440,9 @@ class TechWorkOrderDetailScreen extends StatelessWidget {
                   ),
                 ),
 
-                // Trailing: "2 items" + chevron
+                // Trailing: "1 item" / "2 items" + chevron
                 Text(
-                  '$partsCount items',
+                  widget.partsCount == 1 ? '1 item' : '${widget.partsCount} items',
                   style: TextStyle(
                     fontFamily: AppTypography.poppinsFont,
                     fontSize: 13.5.sp,
@@ -386,16 +467,20 @@ class TechWorkOrderDetailScreen extends StatelessWidget {
   Widget _buildPhotoTilesRow() {
     return Row(
       children: [
-        // Left Tile: Captured photo placeholder
+        // Left Tile: Captured photo or placeholder
         Expanded(
           child: Container(
             height: 96.h,
+            clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF9BBDF9), Color(0xFF679EF5)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              gradient: _capturedImageFile == null
+                  ? const LinearGradient(
+                      colors: [Color(0xFF9BBDF9), Color(0xFF679EF5)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    )
+                  : null,
+              color: _capturedImageFile != null ? AppColors.white : null,
               borderRadius: BorderRadius.circular(16.r),
               boxShadow: const [
                 BoxShadow(
@@ -405,25 +490,32 @@ class TechWorkOrderDetailScreen extends StatelessWidget {
                 ),
               ],
             ),
-            child: Center(
-              child: Text(
-                'photo',
-                style: TextStyle(
-                  fontFamily: AppTypography.poppinsFont,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.white,
-                ),
-              ),
-            ),
+            child: _capturedImageFile != null
+                ? Image.file(
+                    _capturedImageFile!,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
+                  )
+                : Center(
+                    child: Text(
+                      'photo',
+                      style: TextStyle(
+                        fontFamily: AppTypography.poppinsFont,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.white,
+                      ),
+                    ),
+                  ),
           ),
         ),
         16.horizontalSpace,
 
-        // Right Tile: Dashed/Bordered Add Photo button
+        // Right Tile: Dashed/Bordered Camera button to capture photo
         Expanded(
           child: InkWell(
-            onTap: () {},
+            onTap: _onCapturePhoto,
             borderRadius: BorderRadius.circular(16.r),
             child: Container(
               height: 96.h,
@@ -456,7 +548,7 @@ class TechWorkOrderDetailScreen extends StatelessWidget {
       height: 52.h,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.of(context).pushNamed(Routes.techChecklist);
+          Navigator.of(context).maybePop();
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primaryBlue,

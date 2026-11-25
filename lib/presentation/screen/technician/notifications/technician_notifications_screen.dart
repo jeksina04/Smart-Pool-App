@@ -84,7 +84,7 @@ class _TechnicianNotificationsScreenState
                               TechNotificationItemRow(
                                 item: item,
                                 onTap: () {
-                                  // Navigate to related notification action
+                                  Navigator.of(context).maybePop();
                                 },
                               ),
                               if (index != _notifications.length - 1)

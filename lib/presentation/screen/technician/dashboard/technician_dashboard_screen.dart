@@ -1344,7 +1344,9 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
                         children: [
                           WorkOrderItemRow(
                             item: item,
-                            onTap: () {},
+                            onTap: () {
+                              _navigateToWorkOrderDetail(item);
+                            },
                           ),
                           if (index != activeOrders.length - 1)
                             const Divider(
@@ -1413,6 +1415,113 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showCompletedReadOnlySnackBar() {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: const Color(0xFF1E2837),
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.r),
+        ),
+        margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 16.h),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+        content: Text(
+          'Completed work orders are read-only.',
+          style: TextStyle(
+            fontFamily: AppTypography.poppinsFont,
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w500,
+            color: AppColors.white,
+          ),
+        ),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  void _navigateToWorkOrderDetail(WorkOrderItemModel item) {
+    if (_workOrdersTab == 1 || item.status == WorkOrderStatus.done) {
+      _showCompletedReadOnlySnackBar();
+      return;
+    }
+
+    if (item.subtitle.contains('WO #1039') || item.title.contains('Roth')) {
+      Navigator.of(context).pushNamed(
+        Routes.techWorkOrderDetail,
+        arguments: {
+          'orderNumber': 'WO #1039',
+          'customer': 'Kaiden Roth',
+          'type': 'Repair callback',
+          'priority': 'Urgent',
+          'priorityBgColor': const Color(0xFFFFECEB),
+          'priorityTextColor': const Color(0xFFD63B30),
+          'dueDate': 'Today · Mon 4 Aug',
+          'scopeOfWork':
+              'Pump seal is weeping after last week’s service. Replace the shaft seal, run the pump 15 minutes and check for leaks.',
+          'customerNote':
+              '"There’s a puddle under the pump again this morning."',
+          'partsCount': 1,
+        },
+      );
+      return;
+    }
+
+    if (item.subtitle.contains('WO #1035') || item.title.contains('Hull')) {
+      Navigator.of(context).pushNamed(
+        Routes.techWorkOrderDetail,
+        arguments: {
+          'orderNumber': 'WO #1035',
+          'customer': 'Quinn Hull',
+          'type': 'Pump replace',
+          'status': 'Approved',
+          'dueDate': 'Thu 7 Aug',
+          'scopeOfWork':
+              'Disconnect faulty pump motor, mount new variable-speed pump, re-plumb suction/discharge lines, and commission timer cycle.',
+          'customerNote':
+              '"Motor makes a loud screeching noise when it kicks on."',
+          'partsCount': 2,
+        },
+      );
+      return;
+    }
+
+    if (item.subtitle.contains('WO #1031')) {
+      Navigator.of(context).pushNamed(
+        Routes.techWorkOrderDetail,
+        arguments: {
+          'orderNumber': 'WO #1031',
+          'customer': 'Alicia Keys',
+          'type': 'Salt cell service',
+          'status': 'Completed',
+          'dueDate': 'Fri 1 Aug',
+          'scopeOfWork':
+              'Inspect and acid wash titanium cell plates, check salinity sensor calibration, and clear low salt warning on control panel.',
+          'customerNote': '"Check cell light has been flashing for three days."',
+          'partsCount': 1,
+        },
+      );
+      return;
+    }
+
+    Navigator.of(context).pushNamed(
+      Routes.techWorkOrderDetail,
+      arguments: {
+        'orderNumber': 'WO #1042',
+        'customer': 'Alicia Keys',
+        'type': 'Filter clean',
+        'status': 'Approved',
+        'dueDate': 'Fri 8 Aug',
+        'scopeOfWork':
+            'Strip and deep-clean the cartridge filter, replace both O-rings, pressure test, and log the pressure reading before and after.',
+        'customerNote':
+            '"Pressure gauge has been reading high since the storm."',
+        'partsCount': 2,
+      },
     );
   }
 }
