@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_skeleton/data/storage/storage.dart';
 import 'package:flutter_skeleton/presentation/service/navigation.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
+import 'package:get_it/get_it.dart';
 
 import 'widgets/location_settings_card.dart';
 import 'widgets/settings_tile_row.dart';
@@ -387,8 +389,12 @@ class _TechnicianSettingsScreenState extends State<TechnicianSettingsScreen> {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {
-            // Logout logic
+          onTap: () async {
+            await GetIt.I<StorageService>().clear();
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              Routes.login,
+              (route) => false,
+            );
           },
           borderRadius: BorderRadius.circular(24.r),
           child: Row(

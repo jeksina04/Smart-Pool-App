@@ -14,8 +14,8 @@ class InitPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(360, 690),
-      // builder: (context, child) => SplashPage(),
-      builder: (context, child) => const TechnicianDashboardScreen(),
+      builder: (context, child) => SplashPage(),
+      // builder: (context, child) => const TechnicianDashboardScreen(),
     );
   }
 }

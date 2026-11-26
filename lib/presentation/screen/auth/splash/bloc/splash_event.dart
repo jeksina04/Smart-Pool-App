@@ -1,3 +1,11 @@
 abstract class SplashEvent {}
 
-class StartTimerEvent implements SplashEvent {}
+class InitAppConfigEvent extends SplashEvent {
+  final String platform;
+  final String version;
+
+  InitAppConfigEvent({
+    this.platform = 'android',
+    this.version = '1.0.0',
+  });
+}

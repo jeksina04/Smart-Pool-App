@@ -21,7 +21,14 @@ mixin class ApiCaller {
         if (e.response?.data is Map && e.response?.data['message'] != null) {
           message = e.response?.data['message'].toString() ?? message;
         } else if (e.response?.data is Map && e.response?.data['error'] != null) {
-          message = e.response?.data['error'].toString() ?? message;
+          final errObj = e.response?.data['error'];
+          if (errObj is Map && errObj['message'] != null) {
+            message = errObj['message'].toString();
+          } else if (errObj is String) {
+            message = errObj;
+          } else {
+            message = errObj.toString();
+          }
         } else if (e.message != null && e.message!.isNotEmpty) {
           message = e.message!;
         } else {

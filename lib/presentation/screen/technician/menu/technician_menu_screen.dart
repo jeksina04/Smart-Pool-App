@@ -5,7 +5,9 @@ import 'package:flutter_skeleton/util/app_typography.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_skeleton/util/app_assets.dart';
 
+import 'package:flutter_skeleton/data/storage/storage.dart';
 import 'package:flutter_skeleton/presentation/service/navigation.dart';
+import 'package:get_it/get_it.dart';
 
 import 'widgets/technician_menu_header.dart';
 import 'widgets/technician_menu_item.dart';
@@ -325,7 +327,17 @@ class TechnicianMenuScreen extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: onLogout ?? () {},
+          onTap: () async {
+            if (onLogout != null) {
+              onLogout!();
+            } else {
+              await GetIt.I<StorageService>().clear();
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                Routes.login,
+                (route) => false,
+              );
+            }
+          },
           borderRadius: BorderRadius.circular(24.r),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

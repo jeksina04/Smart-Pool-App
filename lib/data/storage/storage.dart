@@ -6,6 +6,7 @@ import 'package:hive/hive.dart';
 import '../api/api_service.dart';
 import 'storage_constants.dart';
 import '../../domain/model/login_model.dart';
+import '../../domain/model/app_config_model.dart';
 
 class StorageService {
   final _box = Hive.box(box);
@@ -52,6 +53,24 @@ class StorageService {
       _box.delete(userInfoKey);
     } else {
       _box.put(userInfoKey, json.encode(loginModel.toJson()));
+    }
+  }
+
+  AppConfigResModel? get appConfig {
+    final raw = _box.get(appConfigKey);
+    if (raw == null) return null;
+    try {
+      return AppConfigResModel.fromJson(json.decode(raw));
+    } catch (_) {
+      return null;
+    }
+  }
+
+  set appConfig(AppConfigResModel? config) {
+    if (config == null) {
+      _box.delete(appConfigKey);
+    } else {
+      _box.put(appConfigKey, json.encode(config.toJson()));
     }
   }
 

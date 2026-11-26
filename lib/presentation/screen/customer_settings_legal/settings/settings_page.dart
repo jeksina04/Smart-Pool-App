@@ -11,6 +11,8 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../util/app_assets.dart';
 import '../../../../util/app_typography.dart';
 import '../../../service/navigation.dart';
+import '../../../../data/storage/storage.dart';
+import 'package:get_it/get_it.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -176,7 +178,15 @@ class _SettingsPageState extends State<SettingsPage> {
         ],
       ),
       child: InkWell(
-        onTap: () {}, // --> Trigger logout logic
+        onTap: () async {
+          await GetIt.I<StorageService>().clear();
+          if (context.mounted) {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              Routes.login,
+              (route) => false,
+            );
+          }
+        },
         borderRadius: BorderRadius.circular(28.r),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

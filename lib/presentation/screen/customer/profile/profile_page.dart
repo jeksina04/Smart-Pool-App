@@ -9,6 +9,8 @@ import 'widgets/profile_list_section.dart';
 import 'widgets/profile_list_item.dart';
 import '../../../../util/app_assets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
+import '../../../../data/storage/storage.dart';
 
 /// The main Profile Screen displaying user information and settings categories.
 class ProfilePage extends StatefulWidget {
@@ -172,7 +174,15 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
       child: InkWell(
-        onTap: () {}, // --> Trigger logout logic
+        onTap: () async {
+          await GetIt.I<StorageService>().clear();
+          if (context.mounted) {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              Routes.login,
+              (route) => false,
+            );
+          }
+        },
         borderRadius: BorderRadius.circular(28.r),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

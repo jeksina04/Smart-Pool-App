@@ -599,7 +599,12 @@ class TechStopBriefingScreen extends StatelessWidget {
       height: 52.h,
       child: ElevatedButton(
         onPressed: () {
-          // Navigator.of(context).maybePop();
+          Navigator.of(context).pushNamed(
+            Routes.techChecklist,
+            arguments: {
+              'title': 'Checklist',
+            },
+          );
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primaryBlue,

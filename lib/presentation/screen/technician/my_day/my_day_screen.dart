@@ -8,6 +8,7 @@ import 'package:flutter_skeleton/util/app_typography.dart';
 import 'end_of_day_screen.dart';
 import 'my_day_break_screen.dart';
 import 'widgets/my_day_header_bar.dart';
+import 'package:flutter_skeleton/presentation/service/navigation.dart';
 
 /// Screen: "My day"
 /// Tracking technician hours, travel, customer site tasks, breaks, and state location.
@@ -499,77 +500,98 @@ class _MyDayScreenState extends State<MyDayScreen> {
       child: Column(
         children: List.generate(_todayEvents.length, (index) {
           final item = _todayEvents[index];
+          final isClickable = item['title'] == 'Alicia Keys';
           return Column(
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-                child: Row(
-                  children: [
-                    // Icon Box
-                    Container(
-                      width: 40.w,
-                      height: 40.w,
-                      decoration: BoxDecoration(
-                        color: item['iconBg'] as Color,
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          item['icon'] as IconData,
-                          size: 20.w,
-                          color: item['iconColor'] as Color,
+              InkWell(
+                onTap: isClickable
+                    ? () {
+                        Navigator.of(context).pushNamed(
+                          Routes.stopDetail,
+                          arguments: {
+                            'customerName': 'Alicia Keys',
+                            'address': '26 Marina Way',
+                            'initialTab': 0, // Info tab (with Pool tab toggle)
+                          },
+                        );
+                      }
+                    : null,
+                borderRadius: BorderRadius.vertical(
+                  top: index == 0 ? Radius.circular(20.r) : Radius.zero,
+                  bottom: index == _todayEvents.length - 1
+                      ? Radius.circular(20.r)
+                      : Radius.zero,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+                  child: Row(
+                    children: [
+                      // Icon Box
+                      Container(
+                        width: 40.w,
+                        height: 40.w,
+                        decoration: BoxDecoration(
+                          color: item['iconBg'] as Color,
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            item['icon'] as IconData,
+                            size: 20.w,
+                            color: item['iconColor'] as Color,
+                          ),
                         ),
                       ),
-                    ),
-                    14.horizontalSpace,
+                      14.horizontalSpace,
 
-                    // Title & Subtitle
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            item['title'] as String,
-                            style: TextStyle(
-                              fontFamily: AppTypography.poppinsFont,
-                              fontSize: 14.5.sp,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.darkNavy,
+                      // Title & Subtitle
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item['title'] as String,
+                              style: TextStyle(
+                                fontFamily: AppTypography.poppinsFont,
+                                fontSize: 14.5.sp,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.darkNavy,
+                              ),
                             ),
-                          ),
-                          3.verticalSpace,
-                          Text(
-                            item['subtitle'] as String,
-                            style: TextStyle(
-                              fontFamily: AppTypography.poppinsFont,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.textGrey,
+                            3.verticalSpace,
+                            Text(
+                              item['subtitle'] as String,
+                              style: TextStyle(
+                                fontFamily: AppTypography.poppinsFont,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.textGrey,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    10.horizontalSpace,
-
-                    // Tag Badge
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
-                      decoration: BoxDecoration(
-                        color: item['tagBg'] as Color,
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: Text(
-                        item['tagText'] as String,
-                        style: TextStyle(
-                          fontFamily: AppTypography.poppinsFont,
-                          fontSize: 11.5.sp,
-                          fontWeight: FontWeight.w700,
-                          color: item['tagTextColor'] as Color,
+                          ],
                         ),
                       ),
-                    ),
-                  ],
+                      10.horizontalSpace,
+
+                      // Tag Badge
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                        decoration: BoxDecoration(
+                          color: item['tagBg'] as Color,
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        child: Text(
+                          item['tagText'] as String,
+                          style: TextStyle(
+                            fontFamily: AppTypography.poppinsFont,
+                            fontSize: 11.5.sp,
+                            fontWeight: FontWeight.w700,
+                            color: item['tagTextColor'] as Color,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               if (index != _todayEvents.length - 1)

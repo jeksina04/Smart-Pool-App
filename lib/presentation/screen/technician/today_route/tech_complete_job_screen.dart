@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_skeleton/presentation/service/navigation.dart';
 import 'package:flutter_skeleton/util/app_assets.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
@@ -196,6 +197,12 @@ class _TechCompleteJobScreenState extends State<TechCompleteJobScreen> {
             badgeBgColor: const Color(0xFFE2F6EC),
             badgeTextColor: const Color(0xFF0F7645),
             isTopRounded: true,
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                Routes.techChecklist,
+                arguments: {'title': 'Checklist'},
+              );
+            },
           ),
           _buildDivider(),
 
@@ -214,6 +221,9 @@ class _TechCompleteJobScreenState extends State<TechCompleteJobScreen> {
             badgeText: 'Recorded',
             badgeBgColor: const Color(0xFFE2F6EC),
             badgeTextColor: const Color(0xFF0F7645),
+            onTap: () {
+              Navigator.of(context).pushNamed(Routes.techWaterReadings);
+            },
           ),
           _buildDivider(),
 
@@ -228,6 +238,9 @@ class _TechCompleteJobScreenState extends State<TechCompleteJobScreen> {
             badgeText: '3 taken',
             badgeBgColor: const Color(0xFFE2F6EC),
             badgeTextColor: const Color(0xFF0F7645),
+            onTap: () {
+              Navigator.of(context).pushNamed(Routes.techPhotosVideo);
+            },
           ),
           _buildDivider(),
 
@@ -247,6 +260,9 @@ class _TechCompleteJobScreenState extends State<TechCompleteJobScreen> {
             badgeBgColor: const Color(0xFFE2F6EC),
             badgeTextColor: const Color(0xFF0F7645),
             isBottomRounded: true,
+            onTap: () {
+              Navigator.of(context).pushNamed(Routes.techCustomerSignOff);
+            },
           ),
         ],
       ),
@@ -261,54 +277,65 @@ class _TechCompleteJobScreenState extends State<TechCompleteJobScreen> {
     required Color badgeTextColor,
     bool isTopRounded = false,
     bool isBottomRounded = false,
+    VoidCallback? onTap,
   }) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-      child: Row(
-        children: [
-          // Icon container
-          Container(
-            width: 42.w,
-            height: 42.w,
-            decoration: BoxDecoration(
-              color: const Color(0xFFEDF4FE),
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            child: Center(child: icon),
-          ),
-          14.horizontalSpace,
-
-          // Title
-          Expanded(
-            child: Text(
-              title,
-              style: TextStyle(
-                fontFamily: AppTypography.poppinsFont,
-                fontSize: 15.sp,
-                fontWeight: FontWeight.w700,
-                color: AppColors.darkNavy,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.vertical(
+          top: isTopRounded ? Radius.circular(18.r) : Radius.zero,
+          bottom: isBottomRounded ? Radius.circular(18.r) : Radius.zero,
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+          child: Row(
+            children: [
+              // Icon container
+              Container(
+                width: 42.w,
+                height: 42.w,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFEDF4FE),
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+                child: Center(child: icon),
               ),
-            ),
-          ),
+              14.horizontalSpace,
 
-          // Status Badge
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
-            decoration: BoxDecoration(
-              color: badgeBgColor,
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            child: Text(
-              badgeText,
-              style: TextStyle(
-                fontFamily: AppTypography.poppinsFont,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w700,
-                color: badgeTextColor,
+              // Title
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontFamily: AppTypography.poppinsFont,
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.darkNavy,
+                  ),
+                ),
               ),
-            ),
+
+              // Status Badge
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                decoration: BoxDecoration(
+                  color: badgeBgColor,
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+                child: Text(
+                  badgeText,
+                  style: TextStyle(
+                    fontFamily: AppTypography.poppinsFont,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w700,
+                    color: badgeTextColor,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

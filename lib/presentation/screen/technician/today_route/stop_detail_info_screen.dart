@@ -5,6 +5,7 @@ import 'package:flutter_skeleton/presentation/service/navigation.dart';
 import 'package:flutter_skeleton/util/app_assets.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
+import 'widgets/stop_detail_options_bottom_sheet.dart';
 
 /// Screen: "T · Stop detail — Info ★"
 /// Displays Stop details with Info / Pool toggle, address, access warning,
@@ -19,6 +20,7 @@ class StopDetailInfoScreen extends StatefulWidget {
   final int healthScore;
   final int itemsNeededCount;
   final int workOrdersCount;
+  final int initialTab;
 
   const StopDetailInfoScreen({
     super.key,
@@ -32,6 +34,7 @@ class StopDetailInfoScreen extends StatefulWidget {
     this.healthScore = 92,
     this.itemsNeededCount = 2,
     this.workOrdersCount = 1,
+    this.initialTab = 0,
   });
 
   @override
@@ -39,7 +42,13 @@ class StopDetailInfoScreen extends StatefulWidget {
 }
 
 class _StopDetailInfoScreenState extends State<StopDetailInfoScreen> {
-  int _selectedTab = 0; // 0 for Info, 1 for Pool
+  late int _selectedTab; // 0 for Info, 1 for Pool
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedTab = widget.initialTab;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -193,7 +202,21 @@ class _StopDetailInfoScreenState extends State<StopDetailInfoScreen> {
 
           // 3-dots More Menu Button
           InkWell(
-            onTap: () {},
+            onTap: () {
+              StopDetailOptionsBottomSheet.show(
+                context,
+                customerName: widget.customerName,
+                onSkipStop: () {
+                  // handle skip stop action
+                },
+                onMessageOffice: () {
+                  // handle message office action
+                },
+                onReassignStop: () {
+                  // handle reassign stop action
+                },
+              );
+            },
             borderRadius: BorderRadius.circular(20.r),
             child: Container(
               width: 40.w,
@@ -713,7 +736,21 @@ class _StopDetailInfoScreenState extends State<StopDetailInfoScreen> {
             badgeColor: const Color(0xFFE2EDFE),
             badgeTextColor: AppColors.primaryBlue,
             onTap: () {
-              Navigator.of(context).pushNamed(Routes.workOrders);
+              Navigator.of(context).pushNamed(
+                Routes.techWorkOrderDetail,
+                arguments: {
+                  'orderNumber': 'WO #1042',
+                  'customer': widget.customerName,
+                  'type': 'Repair',
+                  'status': 'Approved',
+                  'dueDate': 'Fri 8 Aug',
+                  'scopeOfWork':
+                      'Strip and deep-clean the cartridge filter, replace both O-rings, pressure test, and log the pressure reading before and after.',
+                  'customerNote':
+                      '"Pressure gauge has been reading high since the storm."',
+                  'partsCount': 2,
+                },
+              );
             },
           ),
         ],

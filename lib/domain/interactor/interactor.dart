@@ -1,3 +1,4 @@
+import 'app_config_interactor.dart';
 import 'login_interactor.dart';
 import 'otp_interactor.dart';
 import 'register_interactor.dart';
@@ -8,6 +9,7 @@ class Interactor {
   final VerifyOtp verifyOtp;
   final RegisterUser register;
   final ResetPassword resetPassword;
+  final GetAppConfig getAppConfig;
 
   Interactor(
     this.login, {
@@ -15,5 +17,6 @@ class Interactor {
     required this.verifyOtp,
     required this.register,
     required this.resetPassword,
+    required this.getAppConfig,
   });
 }

@@ -47,8 +47,29 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onSignInPressed(BuildContext context, UiState state) {
-    _navigation.pushReplacement(Routes.technicianDashboard);
+    final email = _userIdController.text.trim();
+    final password = _passwordController.text.trim();
+
+    // If both email and password are provided and terms are accepted, proceed with API login
+    if (email.isNotEmpty && password.isNotEmpty && state.isTermsAccepted) {
+      context.read<LoginBloc>().add(
+            UserLoginEvent(
+              email,
+              password,
+              role: state.role,
+            ),
+          );
+      return;
+    }
+
+    // Direct role-based navigation: Customer flow by default, Technician dashboard if technician selected
+    if (state.role == UserRole.technician) {
+      _navigation.pushReplacement(Routes.technicianDashboard);
+    } else {
+      _navigation.pushReplacement(Routes.dashboard);
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {

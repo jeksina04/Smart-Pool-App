@@ -320,7 +320,18 @@ class _TodayRouteScreenState extends State<TodayRouteScreen> {
       height: 54.h,
       child: ElevatedButton(
         onPressed: () {
-          // Start route action
+          final nextStop = _stops.firstWhere(
+            (s) => s.status == StopStatus.next,
+            orElse: () => _stops[1],
+          );
+          Navigator.of(context).pushNamed(
+            Routes.stopDetail,
+            arguments: {
+              'customerName': nextStop.customerName,
+              'address': nextStop.address,
+              'initialTab': 0, // Info & Pool screen
+            },
+          );
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primaryBlue,

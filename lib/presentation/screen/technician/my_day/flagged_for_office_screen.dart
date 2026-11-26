@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_skeleton/presentation/service/navigation.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
 
@@ -43,7 +44,7 @@ class FlaggedForOfficeScreen extends StatelessWidget {
                     14.verticalSpace,
 
                     // Flagged Item Card
-                    _buildFlaggedCard(),
+                    _buildFlaggedCard(context),
                     18.verticalSpace,
 
                     // Bottom info text
@@ -71,10 +72,9 @@ class FlaggedForOfficeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFlaggedCard() {
+  Widget _buildFlaggedCard(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(20.r),
@@ -86,91 +86,113 @@ class FlaggedForOfficeScreen extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header Row: Customer Name & Address + "Flagged" pill badge
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Column(
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(20.r),
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context).pushNamed(
+              Routes.techCustomerDetail,
+              arguments: {
+                'name': 'Kaiden Roth',
+                'address': '14 Oak Lane',
+                'frequency': 'weekly',
+                'healthScore': 88,
+                'nextVisit': 'Mon',
+                'workOrdersCount': 1,
+                'shoppingItemsCount': 1,
+              },
+            );
+          },
+          borderRadius: BorderRadius.circular(20.r),
+          child: Padding(
+            padding: EdgeInsets.all(16.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header Row: Customer Name & Address + "Flagged" pill badge
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Kaiden Roth',
-                      style: TextStyle(
-                        fontFamily: AppTypography.poppinsFont,
-                        fontSize: 15.5.sp,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.darkNavy,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Kaiden Roth',
+                            style: TextStyle(
+                              fontFamily: AppTypography.poppinsFont,
+                              fontSize: 15.5.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.darkNavy,
+                            ),
+                          ),
+                          3.verticalSpace,
+                          Text(
+                            '8:00 am · 14 Oak Lane',
+                            style: TextStyle(
+                              fontFamily: AppTypography.poppinsFont,
+                              fontSize: 12.5.sp,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textGrey,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    3.verticalSpace,
-                    Text(
-                      '8:00 am · 14 Oak Lane',
-                      style: TextStyle(
-                        fontFamily: AppTypography.poppinsFont,
-                        fontSize: 12.5.sp,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.textGrey,
+                    10.horizontalSpace,
+
+                    // Flagged Badge (Light orange/amber pill)
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFEF3E2),
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      child: Text(
+                        'Flagged',
+                        style: TextStyle(
+                          fontFamily: AppTypography.poppinsFont,
+                          fontSize: 11.5.sp,
+                          fontWeight: FontWeight.w700,
+                          color: const Color(0xFFB57008),
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-              10.horizontalSpace,
+                14.verticalSpace,
 
-              // Flagged Badge (Light orange/amber pill)
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFEF3E2),
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Text(
-                  'Flagged',
-                  style: TextStyle(
-                    fontFamily: AppTypography.poppinsFont,
-                    fontSize: 11.5.sp,
-                    fontWeight: FontWeight.w700,
-                    color: const Color(0xFFB57008),
+                // Photo Preview Container with Blue Gradient
+                Container(
+                  width: double.infinity,
+                  height: 140.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16.r),
+                    gradient: const RadialGradient(
+                      center: Alignment.center,
+                      radius: 0.9,
+                      colors: [
+                        Color(0xFF90B9EA),
+                        Color(0xFF6B9ED9),
+                      ],
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'photo',
+                      style: TextStyle(
+                        fontFamily: AppTypography.poppinsFont,
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.white,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          14.verticalSpace,
-
-          // Photo Preview Container with Blue Gradient
-          Container(
-            width: double.infinity,
-            height: 140.h,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16.r),
-              gradient: const RadialGradient(
-                center: Alignment.center,
-                radius: 0.9,
-                colors: [
-                  Color(0xFF90B9EA),
-                  Color(0xFF6B9ED9),
-                ],
-              ),
-            ),
-            child: Center(
-              child: Text(
-                'photo',
-                style: TextStyle(
-                  fontFamily: AppTypography.poppinsFont,
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.white,
-                ),
-              ),
-            ),
-          ),
-          14.verticalSpace,
+                14.verticalSpace,
 
           // Issue Description with bold leading text
           RichText(
@@ -196,6 +218,6 @@ class FlaggedForOfficeScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ))));
   }
 }

@@ -10,11 +10,13 @@ import 'package:flutter_skeleton/presentation/screen/technician/today_route/widg
 import 'package:flutter_skeleton/presentation/screen/technician/work_orders/widgets/work_order_item_row.dart';
 import 'package:flutter_skeleton/presentation/screen/technician/work_orders/widgets/work_orders_header_bar.dart';
 import 'package:flutter_skeleton/presentation/screen/technician/work_orders/widgets/work_orders_tab_selector.dart';
+import 'package:flutter_skeleton/data/storage/storage.dart';
 import 'package:flutter_skeleton/presentation/service/navigation.dart';
 import 'package:flutter_skeleton/util/app_assets.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 
 /// Common Dashboard Screen for Technician with unified bottom navigation
 /// Tabs:
@@ -259,8 +261,13 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
             _closeDrawer();
             _switchTab(index);
           },
-          onLogout: () {
-            // Handle logout
+          onLogout: () async {
+            _closeDrawer();
+            await GetIt.I<StorageService>().clear();
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              Routes.login,
+              (route) => false,
+            );
           },
         ),
       ),
@@ -473,7 +480,21 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
       width: double.infinity,
       height: 54.h,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          // Open the first/next stop (Alicia Keys Info & Pool screen)
+          final nextStop = _stops.firstWhere(
+            (s) => s.status == StopStatus.next,
+            orElse: () => _stops[1], // Alicia Keys
+          );
+          Navigator.of(context).pushNamed(
+            Routes.stopDetail,
+            arguments: {
+              'customerName': nextStop.customerName,
+              'address': nextStop.address,
+              'initialTab': 0, // Info & Pool screen
+            },
+          );
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primaryBlue,
           foregroundColor: AppColors.white,
@@ -788,52 +809,40 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
           ),
         ),
 
-        // Scrollable Area (Only the customer items list + A-Z alphabet scroller)
+        // Scrollable Area (Customer items list)
         Expanded(
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: EdgeInsets.fromLTRB(20.w, 0, 24.w, 16.h),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(20.r),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x08102A50),
-                        blurRadius: 10,
-                        offset: Offset(0, 2),
-                      ),
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 16.h),
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(20.r),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x08102A50),
+                    blurRadius: 10,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: List.generate(filtered.length, (index) {
+                  final item = filtered[index];
+                  return Column(
+                    children: [
+                      _buildCustomerCardRow(item),
+                      if (index != filtered.length - 1)
+                        const Divider(
+                          height: 1,
+                          thickness: 1,
+                          color: Color(0xFFF0F3F6),
+                        ),
                     ],
-                  ),
-                  child: Column(
-                    children: List.generate(filtered.length, (index) {
-                      final item = filtered[index];
-                      return Column(
-                        children: [
-                          _buildCustomerCardRow(item),
-                          if (index != filtered.length - 1)
-                            const Divider(
-                              height: 1,
-                              thickness: 1,
-                              color: Color(0xFFF0F3F6),
-                            ),
-                        ],
-                      );
-                    }),
-                  ),
-                ),
+                  );
+                }),
               ),
-
-              // Alphabetical A-Z Scroller on the right
-              Positioned(
-                right: 4.w,
-                top: 0,
-                bottom: 16.h,
-                child: _buildAlphabetIndex(),
-              ),
-            ],
+            ),
           ),
         ),
 
@@ -1113,20 +1122,22 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
     }
 
     return InkWell(
-      onTap: () {
-        Navigator.of(context).pushNamed(
-          Routes.techCustomerDetail,
-          arguments: {
-            'name': item['name'],
-            'address': item['address'],
-            'frequency': item['frequency'],
-            'healthScore': score,
-            'nextVisit': 'Mon',
-            'workOrdersCount': 1,
-            'shoppingItemsCount': 2,
-          },
-        );
-      },
+      onTap: isInactive
+          ? null
+          : () {
+              Navigator.of(context).pushNamed(
+                Routes.techCustomerDetail,
+                arguments: {
+                  'name': item['name'],
+                  'address': item['address'],
+                  'frequency': item['frequency'],
+                  'healthScore': score,
+                  'nextVisit': 'Mon',
+                  'workOrdersCount': 1,
+                  'shoppingItemsCount': 2,
+                },
+              );
+            },
       borderRadius: BorderRadius.circular(16.r),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
@@ -1230,12 +1241,13 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
             ),
             8.horizontalSpace,
 
-            // Trailing Chevron
-            Icon(
-              Icons.chevron_right_rounded,
-              size: 20.w,
-              color: const Color(0xFF9AA5B5),
-            ),
+            // Trailing Chevron (hidden if inactive)
+            if (!isInactive)
+              Icon(
+                Icons.chevron_right_rounded,
+                size: 20.w,
+                color: const Color(0xFF9AA5B5),
+              ),
           ],
         ),
       ),

@@ -478,7 +478,9 @@ Route? onGenerateRoute(RouteSettings settings) {
       page = StopDetailInfoScreen(
         customerName: args?['customerName'] ?? 'Alicia Keys',
         address: args?['address'] ?? '26 Marina Way',
+        initialTab: args?['initialTab'] ?? 0,
       );
+      break;
     case Routes.techPoolHealth:
       final args = settings.arguments as Map<String, dynamic>?;
       page = TechPoolHealthScreen(
@@ -614,6 +616,12 @@ class NavigationService {
   Future<dynamic> pushReplacement(String routeName, {Object? arguments}) =>
       navigatorKey.currentState!
           .pushReplacementNamed(routeName, arguments: arguments);
+
+  Future<dynamic> pushNamedAndRemoveUntil(String routeName,
+          {Object? arguments}) =>
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
+          routeName, (Route<dynamic> route) => false,
+          arguments: arguments);
 
   void pop([Object? result]) => navigatorKey.currentState!.pop(result);
 }

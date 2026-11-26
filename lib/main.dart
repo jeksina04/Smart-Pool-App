@@ -2,8 +2,11 @@ import 'package:ez_localization/ez_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_skeleton/data/api/api_service.dart';
 import 'package:flutter_skeleton/data/storage/storage.dart';
+import 'package:flutter_skeleton/domain/interactor/app_config_interactor.dart';
 import 'package:flutter_skeleton/domain/interactor/interactor.dart';
+import 'package:flutter_skeleton/domain/repo/app_config_repo.dart';
 import 'package:flutter_skeleton/presentation/screen/auth/login/data_source/login_data_source_impl.dart';
+import 'package:flutter_skeleton/presentation/screen/auth/splash/data_source/app_config_data_source_impl.dart';
 import 'package:flutter_skeleton/presentation/service/date_time.dart';
 import 'package:flutter_skeleton/presentation/service/location.dart';
 import 'package:flutter_skeleton/presentation/service/misc.dart';
@@ -73,17 +76,21 @@ void registerDi() {
   final verifyOtp = VerifyOtp(otpRepo);
   final registerUser = RegisterUser(RegisterRepo(RegisterDataSourceImpl()));
   final resetPassword = ResetPassword(otpRepo);
+  final appConfig = GetAppConfig(AppConfigRepo(AppConfigDataSourceImpl()));
 
   getIt.registerSingleton<Login>(login);
   getIt.registerSingleton<SendOtp>(sendOtp);
   getIt.registerSingleton<VerifyOtp>(verifyOtp);
   getIt.registerSingleton<RegisterUser>(registerUser);
   getIt.registerSingleton<ResetPassword>(resetPassword);
+  getIt.registerSingleton<GetAppConfig>(appConfig);
 
-  getIt.registerLazySingleton<Interactor>(() => Interactor(login,
-      sendOtp: sendOtp,
-      verifyOtp: verifyOtp,
-      register: registerUser,
-      resetPassword: resetPassword)
-  );
+  getIt.registerLazySingleton<Interactor>(() => Interactor(
+        login,
+        sendOtp: sendOtp,
+        verifyOtp: verifyOtp,
+        register: registerUser,
+        resetPassword: resetPassword,
+        getAppConfig: appConfig,
+      ));
 }

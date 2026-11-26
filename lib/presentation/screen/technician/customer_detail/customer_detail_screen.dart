@@ -302,7 +302,14 @@ class CustomerDetailScreen extends StatelessWidget {
             iconColor: AppColors.primaryBlue,
             title: 'Pool & equipment',
             onTap: () {
-              Navigator.of(context).pushNamed(Routes.poolEquipment);
+              Navigator.of(context).pushNamed(
+                Routes.stopDetail,
+                arguments: {
+                  'customerName': name,
+                  'address': address,
+                  'initialTab': 1, // Opens the Pool & Equipment tab
+                },
+              );
             },
           ),
           const Divider(height: 1, thickness: 1, color: Color(0xFFF0F3F6)),

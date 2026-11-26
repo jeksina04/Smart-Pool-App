@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter_skeleton/presentation/service/navigation.dart';
 import 'package:flutter_skeleton/util/app_assets.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
@@ -24,6 +26,66 @@ class TechPhotosVideoScreen extends StatefulWidget {
 }
 
 class _TechPhotosVideoScreenState extends State<TechPhotosVideoScreen> {
+  final ImagePicker _imagePicker = ImagePicker();
+  final List<Map<String, dynamic>> _recordedVideos = [
+    {
+      'title': 'Before · 12s',
+      'size': '3.8 MB · no audio',
+      'badge': 'Office only',
+      'transfer': 'Wi-Fi only',
+      'action': 'Send now',
+    },
+  ];
+
+  Future<void> _recordVideo() async {
+    try {
+      final XFile? video = await _imagePicker.pickVideo(
+        source: ImageSource.camera,
+        maxDuration: const Duration(seconds: 15),
+      );
+
+      if (video != null) {
+        final file = File(video.path);
+        int fileSizeBytes = 0;
+        if (await file.exists()) {
+          fileSizeBytes = await file.length();
+        }
+        final double mb = fileSizeBytes > 0
+            ? (fileSizeBytes / (1024 * 1024))
+            : 3.5;
+        final sizeText = '${mb.toStringAsFixed(1)} MB · no audio';
+
+        setState(() {
+          _recordedVideos.add({
+            'title': 'Video ${_recordedVideos.length + 1} · 15s',
+            'size': sizeText,
+            'badge': 'Office only',
+            'transfer': 'Wi-Fi only',
+            'action': 'Send now',
+            'path': video.path,
+          });
+        });
+      }
+    } catch (e) {
+      debugPrint('Error recording video: $e');
+    }
+  }
+
+  Future<void> _takePhoto() async {
+    try {
+      final XFile? photo = await _imagePicker.pickImage(
+        source: ImageSource.camera,
+        imageQuality: 85,
+        maxWidth: 1920,
+        maxHeight: 1080,
+      );
+      if (photo != null) {
+        // photo captured
+      }
+    } catch (e) {
+      debugPrint('Error taking photo: $e');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,9 +123,9 @@ class _TechPhotosVideoScreenState extends State<TechPhotosVideoScreen> {
                     _buildUploadQueueBanner(),
                     20.verticalSpace,
 
-                    // "Videos (1/2)" Section
+                    // "Videos" Section Header with dynamic count
                     Text(
-                      'Videos (1/2)',
+                      'Videos (${_recordedVideos.length}/2)',
                       style: TextStyle(
                         fontFamily: AppTypography.poppinsFont,
                         fontSize: 17.5.sp,
@@ -82,15 +144,21 @@ class _TechPhotosVideoScreenState extends State<TechPhotosVideoScreen> {
                     ),
                     12.verticalSpace,
 
-                    // Video item card
-                    _buildVideoItemCard(),
-                    20.verticalSpace,
+                    // Dynamic Video list items
+                    ...List.generate(_recordedVideos.length, (index) {
+                      final item = _recordedVideos[index];
+                      return Padding(
+                        padding: EdgeInsets.only(bottom: 12.h),
+                        child: _buildVideoItemCard(item),
+                      );
+                    }),
+                    8.verticalSpace,
 
-                    // Record Video Button
+                    // Record Video Button (Opens Camera up to 15s)
                     _buildActionButton(
                       icon: Icons.camera_alt_outlined,
                       label: 'Record Video',
-                      onTap: () {},
+                      onTap: _recordVideo,
                     ),
                     12.verticalSpace,
 
@@ -98,7 +166,7 @@ class _TechPhotosVideoScreenState extends State<TechPhotosVideoScreen> {
                     _buildActionButton(
                       icon: Icons.camera_alt_outlined,
                       label: 'Take Photo',
-                      onTap: () {},
+                      onTap: _takePhoto,
                     ),
                     16.verticalSpace,
 
@@ -277,7 +345,7 @@ class _TechPhotosVideoScreenState extends State<TechPhotosVideoScreen> {
     );
   }
 
-  Widget _buildVideoItemCard() {
+  Widget _buildVideoItemCard(Map<String, dynamic> item) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
@@ -307,7 +375,7 @@ class _TechPhotosVideoScreenState extends State<TechPhotosVideoScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Before · 12s',
+                      item['title'] as String? ?? 'Video',
                       style: TextStyle(
                         fontFamily: AppTypography.poppinsFont,
                         fontSize: 15.sp,
@@ -317,7 +385,7 @@ class _TechPhotosVideoScreenState extends State<TechPhotosVideoScreen> {
                     ),
                     2.verticalSpace,
                     Text(
-                      '3.8 MB · no audio',
+                      item['size'] as String? ?? 'no audio',
                       style: TextStyle(
                         fontFamily: AppTypography.poppinsFont,
                         fontSize: 12.sp,
@@ -334,7 +402,7 @@ class _TechPhotosVideoScreenState extends State<TechPhotosVideoScreen> {
                   borderRadius: BorderRadius.circular(12.r),
                 ),
                 child: Text(
-                  'Office only',
+                  item['badge'] as String? ?? 'Office only',
                   style: TextStyle(
                     fontFamily: AppTypography.poppinsFont,
                     fontSize: 11.5.sp,
@@ -350,7 +418,7 @@ class _TechPhotosVideoScreenState extends State<TechPhotosVideoScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Wi-Fi only',
+                item['transfer'] as String? ?? 'Wi-Fi only',
                 style: TextStyle(
                   fontFamily: AppTypography.poppinsFont,
                   fontSize: 12.sp,
@@ -358,7 +426,7 @@ class _TechPhotosVideoScreenState extends State<TechPhotosVideoScreen> {
                 ),
               ),
               Text(
-                'Send now',
+                item['action'] as String? ?? 'Send now',
                 style: TextStyle(
                   fontFamily: AppTypography.poppinsFont,
                   fontSize: 12.5.sp,
