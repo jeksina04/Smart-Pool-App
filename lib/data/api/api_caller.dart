@@ -4,6 +4,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
+import '../storage/storage.dart';
+import '../../presentation/service/navigation.dart';
 import 'api_service.dart';
 
 mixin class ApiCaller {
@@ -18,6 +20,7 @@ mixin class ApiCaller {
       }
     } catch (e) {
       if (e is DioException) {
+        final statusCode = e.response?.statusCode;
         if (e.response?.data is Map && e.response?.data['message'] != null) {
           message = e.response?.data['message'].toString() ?? message;
         } else if (e.response?.data is Map && e.response?.data['error'] != null) {
@@ -34,11 +37,35 @@ mixin class ApiCaller {
         } else {
           message = e.error?.toString() ?? "Something went wrong";
         }
+
+        // If unauthorized (401 or message contains UNAUTHORIZED), log out the app
+        final upperMsg = message.toUpperCase();
+        if (statusCode == 401 ||
+            upperMsg.contains('UNAUTHORIZED') ||
+            upperMsg.contains('TOKEN_EXPIRED') ||
+            upperMsg.contains('INVALID_TOKEN')) {
+          _handleUnauthorized();
+        }
       } else if (e is HttpException) {
         message = e.message;
+        final upperMsg = message.toUpperCase();
+        if (upperMsg.contains('UNAUTHORIZED') ||
+            upperMsg.contains('TOKEN_EXPIRED') ||
+            upperMsg.contains('INVALID_TOKEN')) {
+          _handleUnauthorized();
+        }
       }
       throw HttpException(message);
     }
+  }
+
+  void _handleUnauthorized() {
+    try {
+      final storage = GetIt.I.get<StorageService>();
+      storage.clear();
+      final nav = GetIt.I.get<NavigationService>();
+      nav.pushNamedAndRemoveUntil(Routes.login);
+    } catch (_) {}
   }
 
   Future<bool> _isInternetConnected() async {

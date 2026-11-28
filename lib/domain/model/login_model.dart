@@ -46,6 +46,8 @@ class LoginData {
   final String? uiNotice;
   final String? accessToken;
   final String? refreshToken;
+  final String? deviceId;
+  final String? techDeviceId;
   final PersonModel? person;
   final CompanyModel? company;
 
@@ -60,6 +62,8 @@ class LoginData {
     this.uiNotice,
     this.accessToken,
     this.refreshToken,
+    this.deviceId,
+    this.techDeviceId,
     this.person,
     this.company,
   });
@@ -83,6 +87,8 @@ class LoginData {
       uiNotice: json['uiNotice'] as String?,
       accessToken: json['accessToken'] as String?,
       refreshToken: json['refreshToken'] as String?,
+      deviceId: (json['deviceId'] ?? json['techDeviceId'] ?? json['tech_device_id'])?.toString(),
+      techDeviceId: (json['techDeviceId'] ?? json['tech_device_id'] ?? json['deviceId'])?.toString(),
       person: json['person'] != null ? PersonModel.fromJson(json['person']) : null,
       company: json['company'] != null ? CompanyModel.fromJson(json['company']) : null,
     );
@@ -102,6 +108,8 @@ class LoginData {
     if (uiNotice != null) map['uiNotice'] = uiNotice;
     if (accessToken != null) map['accessToken'] = accessToken;
     if (refreshToken != null) map['refreshToken'] = refreshToken;
+    if (deviceId != null) map['deviceId'] = deviceId;
+    if (techDeviceId != null) map['techDeviceId'] = techDeviceId;
     if (person != null) map['person'] = person!.toJson();
     if (company != null) map['company'] = company!.toJson();
     return map;

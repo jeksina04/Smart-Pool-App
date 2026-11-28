@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
+import 'package:flutter_skeleton/data/storage/storage.dart';
+import 'package:flutter_skeleton/domain/interactor/interactor.dart';
 import 'package:flutter_skeleton/util/app_assets.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
 import 'package:flutter_skeleton/util/app_typography.dart';
@@ -18,6 +21,32 @@ class SyncStatusScreen extends StatefulWidget {
 
 class _SyncStatusScreenState extends State<SyncStatusScreen> {
   bool _isPrimaryDevice = true;
+  bool _isSyncing = false;
+
+  Future<void> _pullLatestRoute() async {
+    setState(() => _isSyncing = true);
+    try {
+      final interactor = GetIt.I.get<Interactor>();
+      final res = await interactor.getTechnicianTodayRoutes.invoke();
+      if (res.data != null) {
+        final storage = GetIt.I.get<StorageService>();
+        storage.todayRoutes = res;
+        storage.isRouteUpdated = false;
+        final routes = res.data?.routes;
+        final todayRoute = (routes != null && routes.isNotEmpty)
+            ? routes.firstWhere((r) => r.isToday == true, orElse: () => routes.first)
+            : null;
+        if (todayRoute?.publishVersion != null) {
+          storage.cachedPublishVersion = todayRoute!.publishVersion!;
+        }
+      }
+    } catch (_) {
+    } finally {
+      if (mounted) {
+        setState(() => _isSyncing = false);
+      }
+    }
+  }
 
   final List<SyncItemModel> _syncJobs = const [
     SyncItemModel(
@@ -169,6 +198,88 @@ class _SyncStatusScreenState extends State<SyncStatusScreen> {
   }
 
   Widget _buildSyncStatusBanner() {
+    final storage = GetIt.I.get<StorageService>();
+    final isRouteUpdated = storage.isRouteUpdated;
+
+    if (isRouteUpdated) {
+      return Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
+        decoration: BoxDecoration(
+          color: const Color(0xFFFEF3E2),
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(
+            color: const Color(0xFFFCD34D),
+            width: 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              Icons.update_rounded,
+              size: 20.w,
+              color: const Color(0xFFB57008),
+            ),
+            8.horizontalSpace,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Route updated',
+                    style: TextStyle(
+                      fontFamily: AppTypography.poppinsFont,
+                      fontSize: 13.5.sp,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFFB57008),
+                    ),
+                  ),
+                  Text(
+                    'Customer unavailable or schedule re-planned on server.',
+                    style: TextStyle(
+                      fontFamily: AppTypography.poppinsFont,
+                      fontSize: 11.5.sp,
+                      color: const Color(0xFF7A4B04),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            8.horizontalSpace,
+            TextButton(
+              onPressed: _isSyncing ? null : _pullLatestRoute,
+              style: TextButton.styleFrom(
+                backgroundColor: const Color(0xFFB57008),
+                foregroundColor: AppColors.white,
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+              ),
+              child: _isSyncing
+                  ? SizedBox(
+                      width: 14.w,
+                      height: 14.w,
+                      child: const CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    )
+                  : Text(
+                      'Pull now',
+                      style: TextStyle(
+                        fontFamily: AppTypography.poppinsFont,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
+                    ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),

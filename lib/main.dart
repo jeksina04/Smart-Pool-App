@@ -19,11 +19,15 @@ import 'data/storage/storage_constants.dart';
 import 'domain/interactor/login_interactor.dart';
 import 'domain/interactor/otp_interactor.dart';
 import 'domain/interactor/register_interactor.dart';
+import 'domain/interactor/technician_badges_interactor.dart';
+import 'domain/interactor/technician_today_routes_interactor.dart';
 import 'domain/repo/login_repo.dart';
 import 'domain/repo/otp_repo.dart';
 import 'domain/repo/register_repo.dart';
+import 'domain/repo/technician_routes_repo.dart';
 import 'presentation/screen/auth/register/data_source/register_data_source_impl.dart';
 import 'presentation/screen/auth/verify/data_source/otp_data_source_impl.dart';
+import 'presentation/screen/technician/dashboard/data_source/technician_routes_data_source_impl.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +36,11 @@ void main() async {
   await Hive.openBox(box);
 
   registerDi();
+
+  final storage = GetIt.I<StorageService>();
+  if (storage.authToken.isNotEmpty) {
+    GetIt.I<ApiService>().setAuthToken(storage.authToken);
+  }
 
   runApp(EzLocalizationBuilder(
     delegate: EzLocalizationDelegate(
@@ -77,6 +86,9 @@ void registerDi() {
   final registerUser = RegisterUser(RegisterRepo(RegisterDataSourceImpl()));
   final resetPassword = ResetPassword(otpRepo);
   final appConfig = GetAppConfig(AppConfigRepo(AppConfigDataSourceImpl()));
+  final technicianRoutesRepo = TechnicianRoutesRepo(TechnicianRoutesDataSourceImpl());
+  final technicianTodayRoutes = GetTechnicianTodayRoutes(technicianRoutesRepo);
+  final technicianBadges = GetTechnicianBadges(technicianRoutesRepo);
 
   getIt.registerSingleton<Login>(login);
   getIt.registerSingleton<SendOtp>(sendOtp);
@@ -84,6 +96,8 @@ void registerDi() {
   getIt.registerSingleton<RegisterUser>(registerUser);
   getIt.registerSingleton<ResetPassword>(resetPassword);
   getIt.registerSingleton<GetAppConfig>(appConfig);
+  getIt.registerSingleton<GetTechnicianTodayRoutes>(technicianTodayRoutes);
+  getIt.registerSingleton<GetTechnicianBadges>(technicianBadges);
 
   getIt.registerLazySingleton<Interactor>(() => Interactor(
         login,
@@ -92,5 +106,7 @@ void registerDi() {
         register: registerUser,
         resetPassword: resetPassword,
         getAppConfig: appConfig,
+        getTechnicianTodayRoutes: technicianTodayRoutes,
+        getTechnicianBadges: technicianBadges,
       ));
 }

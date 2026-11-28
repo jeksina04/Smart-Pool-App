@@ -7,6 +7,8 @@ import '../api/api_service.dart';
 import 'storage_constants.dart';
 import '../../domain/model/login_model.dart';
 import '../../domain/model/app_config_model.dart';
+import '../../domain/model/technician_today_routes_model.dart';
+
 
 class StorageService {
   final _box = Hive.box(box);
@@ -74,7 +76,70 @@ class StorageService {
     }
   }
 
-  clear() async => await _box.clear();
+  String get userRole {
+    final role = _box.get(userRoleKey);
+    if (role != null && (role as String).isNotEmpty) return role;
+    return userInfo?.data?.role ?? "";
+  }
+
+  set userRole(String role) {
+    _box.put(userRoleKey, role);
+  }
+
+  String get techDeviceId {
+    final id = _box.get(techDeviceIdKey);
+    if (id != null && (id as String).isNotEmpty) return id;
+    return userInfo?.data?.techDeviceId ?? userInfo?.data?.deviceId ?? "";
+  }
+
+  set techDeviceId(String id) {
+    _box.put(techDeviceIdKey, id);
+  }
+
+  TechnicianTodayRoutesResModel? get todayRoutes {
+    final raw = _box.get(todayRoutesKey);
+    if (raw == null) return null;
+    try {
+      return TechnicianTodayRoutesResModel.fromJson(json.decode(raw));
+    } catch (_) {
+      return null;
+    }
+  }
+
+  set todayRoutes(TechnicianTodayRoutesResModel? model) {
+    if (model == null) {
+      _box.delete(todayRoutesKey);
+    } else {
+      _box.put(todayRoutesKey, json.encode(model.toJson()));
+    }
+  }
+
+  int? get cachedPublishVersion {
+    return _box.get(cachedPublishVersionKey) as int?;
+  }
+
+  set cachedPublishVersion(int? version) {
+    if (version == null) {
+      _box.delete(cachedPublishVersionKey);
+    } else {
+      _box.put(cachedPublishVersionKey, version);
+    }
+  }
+
+  bool get isRouteUpdated {
+    return _box.get(routeUpdatedFlagKey) ?? false;
+  }
+
+  set isRouteUpdated(bool updated) {
+    _box.put(routeUpdatedFlagKey, updated);
+  }
+
+  clear() async {
+    try {
+      GetIt.I.get<ApiService>().setAuthToken("");
+    } catch (_) {}
+    await _box.clear();
+  }
 
   remove(String key) async => await _box.delete(key);
 

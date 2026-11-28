@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
+import 'package:flutter_skeleton/data/storage/storage.dart';
 import 'package:flutter_skeleton/presentation/service/navigation.dart';
 import 'package:flutter_skeleton/util/app_assets.dart';
 import 'package:flutter_skeleton/util/app_colors.dart';
@@ -206,8 +208,20 @@ class _StopDetailInfoScreenState extends State<StopDetailInfoScreen> {
               StopDetailOptionsBottomSheet.show(
                 context,
                 customerName: widget.customerName,
+                onCustomerUnavailable: () {
+                  final storage = GetIt.I.get<StorageService>();
+                  // When a customer says they're not available, publish_version goes up and T25 gets 'Route updated'
+                  storage.isRouteUpdated = true;
+                  Navigator.of(context).maybePop(true);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Customer marked unavailable. Route re-planned on server.'),
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
+                },
                 onSkipStop: () {
-                  // handle skip stop action
+                  Navigator.of(context).maybePop(true);
                 },
                 onMessageOffice: () {
                   // handle message office action

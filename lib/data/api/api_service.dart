@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 
 import 'api_constants.dart';
 import '../storage/storage.dart';
+import '../../presentation/service/navigation.dart';
 
 class ApiService {
   late dio.Dio _dio;
@@ -18,6 +19,32 @@ class ApiService {
      * set auth token if it exists in local
      */
     setAuthToken(GetIt.I.get<StorageService>().authToken);
+
+    _dio.interceptors.add(
+      dio.InterceptorsWrapper(
+        onError: (dio.DioException error, dio.ErrorInterceptorHandler handler) {
+          final statusCode = error.response?.statusCode;
+          final dynamic data = error.response?.data;
+          String errorMsg = '';
+          if (data is Map) {
+            errorMsg = (data['message'] ?? data['error'] ?? '').toString().toUpperCase();
+          }
+
+          if (statusCode == 401 ||
+              errorMsg.contains('UNAUTHORIZED') ||
+              errorMsg.contains('TOKEN_EXPIRED') ||
+              errorMsg.contains('INVALID_TOKEN')) {
+            try {
+              final storage = GetIt.I.get<StorageService>();
+              storage.clear();
+              final nav = GetIt.I.get<NavigationService>();
+              nav.pushNamedAndRemoveUntil(Routes.login);
+            } catch (_) {}
+          }
+          return handler.next(error);
+        },
+      ),
+    );
 
     _dio.interceptors
         .add(LogInterceptor(requestBody: true, responseBody: true));

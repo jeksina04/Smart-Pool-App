@@ -20,6 +20,10 @@ class TechnicianMenuScreen extends StatelessWidget {
   final VoidCallback? onLogout;
   final String technicianName;
   final String technicianRole;
+  final int? workOrdersCount;
+  final int? shoppingListCount;
+  final int? syncPendingCount;
+  final int? notificationsCount;
   final bool isStandalone;
 
   const TechnicianMenuScreen({
@@ -29,6 +33,10 @@ class TechnicianMenuScreen extends StatelessWidget {
     this.onLogout,
     this.technicianName = 'Ray Delgado',
     this.technicianRole = 'Lead technician · ID 24',
+    this.workOrdersCount,
+    this.shoppingListCount,
+    this.syncPendingCount,
+    this.notificationsCount,
     this.isStandalone = false,
   });
 
@@ -88,7 +96,9 @@ class TechnicianMenuScreen extends StatelessWidget {
                         ),
                       ),
                       title: 'Work Orders',
-                      badgeText: '3',
+                      badgeText: (workOrdersCount != null && workOrdersCount! > 0)
+                          ? '$workOrdersCount'
+                          : (workOrdersCount == null ? '3' : null),
                       badgeColor: const Color(0xFFE2EDFE),
                       badgeTextColor: AppColors.primaryBlue,
                       onTap: () {
@@ -113,7 +123,9 @@ class TechnicianMenuScreen extends StatelessWidget {
                         ),
                       ),
                       title: 'Shopping List',
-                      badgeText: '5',
+                      badgeText: (shoppingListCount != null && shoppingListCount! > 0)
+                          ? '$shoppingListCount'
+                          : (shoppingListCount == null ? '5' : null),
                       badgeColor: const Color(0xFFFFF1D6),
                       badgeTextColor: const Color(0xFFC07000),
                       onTap: () {
@@ -169,7 +181,9 @@ class TechnicianMenuScreen extends StatelessWidget {
                         ),
                       ),
                       title: 'Sync Status',
-                      badgeText: '3',
+                      badgeText: (syncPendingCount != null && syncPendingCount! > 0)
+                          ? '$syncPendingCount'
+                          : (syncPendingCount == null ? '3' : null),
                       badgeColor: const Color(0xFFFFE5E5),
                       badgeTextColor: const Color(0xFFD32F2F),
                       onTap: () {
@@ -190,7 +204,9 @@ class TechnicianMenuScreen extends StatelessWidget {
                         ),
                       ),
                       title: 'Notifications',
-                      badgeText: '2',
+                      badgeText: (notificationsCount != null && notificationsCount! > 0)
+                          ? '$notificationsCount'
+                          : (notificationsCount == null ? '29' : null),
                       badgeColor: const Color(0xFFE2EDFE),
                       badgeTextColor: AppColors.primaryBlue,
                       onTap: () {

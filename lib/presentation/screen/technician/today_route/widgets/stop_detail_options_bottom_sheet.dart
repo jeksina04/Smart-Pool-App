@@ -8,6 +8,7 @@ import 'package:flutter_skeleton/util/app_typography.dart';
 class StopDetailOptionsBottomSheet extends StatelessWidget {
   final String customerName;
   final VoidCallback? onSkipStop;
+  final VoidCallback? onCustomerUnavailable;
   final VoidCallback? onMessageOffice;
   final VoidCallback? onReassignStop;
 
@@ -15,6 +16,7 @@ class StopDetailOptionsBottomSheet extends StatelessWidget {
     super.key,
     required this.customerName,
     this.onSkipStop,
+    this.onCustomerUnavailable,
     this.onMessageOffice,
     this.onReassignStop,
   });
@@ -23,6 +25,7 @@ class StopDetailOptionsBottomSheet extends StatelessWidget {
     BuildContext context, {
     required String customerName,
     VoidCallback? onSkipStop,
+    VoidCallback? onCustomerUnavailable,
     VoidCallback? onMessageOffice,
     VoidCallback? onReassignStop,
   }) {
@@ -33,6 +36,7 @@ class StopDetailOptionsBottomSheet extends StatelessWidget {
       builder: (_) => StopDetailOptionsBottomSheet(
         customerName: customerName,
         onSkipStop: onSkipStop,
+        onCustomerUnavailable: onCustomerUnavailable,
         onMessageOffice: onMessageOffice,
         onReassignStop: onReassignStop,
       ),
@@ -85,7 +89,18 @@ class StopDetailOptionsBottomSheet extends StatelessWidget {
               ),
               16.verticalSpace,
 
-              // 3. Option: "Skip this stop"
+              // 3. Option: "Customer not available"
+              _buildOptionButton(
+                context: context,
+                title: 'Customer not available (re-plan route)',
+                onTap: () {
+                  Navigator.pop(context);
+                  onCustomerUnavailable?.call();
+                },
+              ),
+              10.verticalSpace,
+
+              // 4. Option: "Skip this stop"
               _buildOptionButton(
                 context: context,
                 title: 'Skip this stop',
@@ -96,7 +111,7 @@ class StopDetailOptionsBottomSheet extends StatelessWidget {
               ),
               10.verticalSpace,
 
-              // 4. Option: "Message the office"
+              // 5. Option: "Message the office"
               _buildOptionButton(
                 context: context,
                 title: 'Message the office',
@@ -107,7 +122,7 @@ class StopDetailOptionsBottomSheet extends StatelessWidget {
               ),
               10.verticalSpace,
 
-              // 5. Option: "Reassign this stop (lead)"
+              // 6. Option: "Reassign this stop (lead)"
               _buildOptionButton(
                 context: context,
                 title: 'Reassign this stop (lead)',

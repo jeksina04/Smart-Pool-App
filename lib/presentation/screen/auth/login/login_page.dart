@@ -50,24 +50,29 @@ class _LoginPageState extends State<LoginPage> {
     final email = _userIdController.text.trim();
     final password = _passwordController.text.trim();
 
-    // If both email and password are provided and terms are accepted, proceed with API login
-    if (email.isNotEmpty && password.isNotEmpty && state.isTermsAccepted) {
-      context.read<LoginBloc>().add(
-            UserLoginEvent(
-              email,
-              password,
-              role: state.role,
-            ),
-          );
+    if (email.isEmpty) {
+      _toast.errorToast(context, 'Please enter your email / User ID');
+      return;
+    }
+    if (password.isEmpty) {
+      _toast.errorToast(context, 'Please enter your password');
+      return;
+    }
+    if (!state.isTermsAccepted) {
+      _toast.errorToast(
+        context,
+        'Please agree to Terms of Service and Privacy Policy',
+      );
       return;
     }
 
-    // Direct role-based navigation: Customer flow by default, Technician dashboard if technician selected
-    if (state.role == UserRole.technician) {
-      _navigation.pushReplacement(Routes.technicianDashboard);
-    } else {
-      _navigation.pushReplacement(Routes.dashboard);
-    }
+    context.read<LoginBloc>().add(
+          UserLoginEvent(
+            email,
+            password,
+            role: state.role,
+          ),
+        );
   }
 
 

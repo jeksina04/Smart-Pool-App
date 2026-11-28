@@ -10,6 +10,7 @@ import 'package:get_it/get_it.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../../../base/base_widget.dart';
 import '../../../service/navigation.dart';
+import '../../../../data/storage/storage.dart';
 import 'bloc/splash_event.dart';
 
 class SplashPage extends BaseWidget {
@@ -47,7 +48,18 @@ class SplashPage extends BaseWidget {
       child: BlocConsumer<SplashBloc, SplashState>(
         listener: (_, state) {
           if (state is GotoNextScreenState) {
-            navigation.pushReplacement(Routes.onboarding);
+            final storage = GetIt.I<StorageService>();
+            if (storage.authToken.isNotEmpty) {
+              final role = storage.userRole.toLowerCase();
+              if (role == 'technician' ||
+                  storage.userInfo?.data?.role?.toLowerCase() == 'technician') {
+                navigation.pushReplacement(Routes.technicianDashboard);
+              } else {
+                navigation.pushReplacement(Routes.dashboard);
+              }
+            } else {
+              navigation.pushReplacement(Routes.login);
+            }
           } else if (state is ForceUpdateRequiredState) {
             // Can show a force update dialog or screen
           }

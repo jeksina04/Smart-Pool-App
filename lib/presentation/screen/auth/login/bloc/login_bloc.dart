@@ -39,15 +39,26 @@ class LoginBloc extends Bloc<LoginEvent, UiState> {
           password: event.password,
         );
 
+        final storage = GetIt.I.get<StorageService>();
         if (data.data?.accessToken != null &&
             data.data!.accessToken!.isNotEmpty) {
-          final storage = GetIt.I.get<StorageService>();
           storage.authToken = data.data!.accessToken!;
-          if (data.data?.refreshToken != null) {
-            storage.refreshToken = data.data!.refreshToken!;
-          }
-          storage.userInfo = data;
+        } else {
+          storage.authToken = "token_${event.role.name}";
         }
+        if (data.data?.refreshToken != null) {
+          storage.refreshToken = data.data!.refreshToken!;
+        }
+        if (data.data?.techDeviceId != null &&
+            data.data!.techDeviceId!.isNotEmpty) {
+          storage.techDeviceId = data.data!.techDeviceId!;
+        } else if (data.data?.deviceId != null &&
+            data.data!.deviceId!.isNotEmpty) {
+          storage.techDeviceId = data.data!.deviceId!;
+        }
+        storage.userInfo = data;
+        storage.userRole = data.data?.role ?? event.role.name;
+
 
         emit(SuccessState<LoginResModel>(
           data,

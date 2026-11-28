@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_skeleton/domain/interactor/interactor.dart';
+import 'package:flutter_skeleton/domain/model/technician_badges_model.dart';
+import 'package:flutter_skeleton/domain/model/technician_today_routes_model.dart';
+import 'package:flutter_skeleton/presentation/screen/technician/dashboard/bloc/technician_dashboard_bloc.dart';
+import 'package:flutter_skeleton/presentation/screen/technician/dashboard/bloc/technician_dashboard_event.dart';
+import 'package:flutter_skeleton/presentation/screen/technician/dashboard/bloc/technician_dashboard_state.dart';
 import 'package:flutter_skeleton/presentation/screen/technician/menu/technician_menu_screen.dart';
 import 'package:flutter_skeleton/presentation/screen/technician/today_route/today_route_screen.dart';
 import 'package:flutter_skeleton/presentation/screen/technician/today_route/widgets/optimise_route_bottom_sheet.dart';
@@ -43,12 +51,18 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
   // Work Orders tab state (0: Open, 1: Done)
   int _workOrdersTab = 0;
 
+  late final TechnicianDashboardBloc _dashboardBloc;
+  TechnicianTodayRoutesData? _routesData;
+  TechnicianBadgesData? _badgesData;
+  bool _isLoading = false;
+  String? _errorMessage;
+
   // Search filter for Customers tab
   final TextEditingController _customerSearchController = TextEditingController();
   String _customerSearchQuery = '';
 
-  // Today Route stops
-  final List<StopItemModel> _stops = const [
+  // Fallback stops if API returns empty
+  final List<StopItemModel> _fallbackStops = const [
     StopItemModel(
       stopNumber: 1,
       customerName: 'Kaiden Roth',
@@ -105,8 +119,10 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
     ),
   ];
 
-  // Work orders data
-  final List<WorkOrderItemModel> _openWorkOrders = const [
+  List<StopItemModel> get _stops => _mappedStops;
+
+  // Fallback Work orders data
+  final List<WorkOrderItemModel> _fallbackOpenWorkOrders = const [
     WorkOrderItemModel(
       title: 'Filter clean · A. Keys',
       subtitle: 'WO #1042 · due Fri',
@@ -127,7 +143,7 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
     ),
   ];
 
-  final List<WorkOrderItemModel> _doneWorkOrders = const [
+  final List<WorkOrderItemModel> _fallbackDoneWorkOrders = const [
     WorkOrderItemModel(
       title: 'Salt cell service · A. Keys',
       subtitle: 'WO #1031 · completed Fri 1 Aug',
@@ -159,8 +175,88 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
   bool _filterTagsSelected = false;
   bool _filterOnMyRoute = false;
 
-  // Customers data
-  final List<Map<String, dynamic>> _customers = const [
+  // Dynamic customers data from API response with fallback
+  List<Map<String, dynamic>> get _customers {
+    final apiCustomers = _routesData?.customers;
+    if (apiCustomers != null && apiCustomers.isNotEmpty) {
+      final routeStops = _todayRoute?.stops ?? [];
+      final onRouteContractIds = routeStops
+          .map((s) => s.contractId)
+          .where((id) => id != null && id.isNotEmpty)
+          .toSet();
+
+      return apiCustomers.map((c) {
+        final fullAddr = c.address?.fullAddress ?? c.address?.line1 ?? 'Austin, TX';
+        final isOnRoute = (c.contractId != null && onRouteContractIds.contains(c.contractId)) ||
+            routeStops.any((s) => s.customerName != null && s.customerName == c.name);
+
+        return {
+          'name': c.name ?? 'Customer',
+          'address': fullAddr,
+          'frequency': c.serviceType ?? 'weekly',
+          'score': 85,
+          'status': 'Active',
+          'onRoute': isOnRoute,
+          'contractId': c.contractId,
+          'customerId': c.customerId,
+          'rawCustomer': c,
+        };
+      }).toList();
+    }
+
+    return _fallbackCustomers;
+  }
+
+  // Work orders derived from today's route stops with kind == 'work_order'
+  List<WorkOrderItemModel> get _openWorkOrders {
+    final routeStops = _todayRoute?.stops ?? [];
+    final woStops = routeStops.where((s) =>
+        s.kind == 'work_order' || (s.workOrder != null && s.status != 'completed' && s.status != 'done')
+    ).toList();
+
+    if (woStops.isNotEmpty) {
+      return woStops.map((s) {
+        final wo = s.workOrder;
+        final title = wo?.title ?? '${s.jobType?.label ?? 'Work order'} · ${s.customerName ?? 'Customer'}';
+        final woNum = wo?.number != null && wo!.number!.isNotEmpty ? 'WO #${wo.number}' : 'WO';
+        return WorkOrderItemModel(
+          title: title,
+          subtitle: '$woNum · due Today',
+          status: WorkOrderStatus.open,
+          iconType: WorkOrderIconType.repair,
+        );
+      }).toList();
+    }
+
+    return _fallbackOpenWorkOrders;
+  }
+
+  List<WorkOrderItemModel> get _doneWorkOrders {
+    final routeStops = _todayRoute?.stops ?? [];
+    final doneStops = routeStops.where((s) =>
+        (s.kind == 'work_order' || s.workOrder != null) &&
+        (s.status == 'completed' || s.status == 'done')
+    ).toList();
+
+    if (doneStops.isNotEmpty) {
+      return doneStops.map((s) {
+        final wo = s.workOrder;
+        final title = wo?.title ?? '${s.jobType?.label ?? 'Work order'} · ${s.customerName ?? 'Customer'}';
+        final woNum = wo?.number != null && wo!.number!.isNotEmpty ? 'WO #${wo.number}' : 'WO';
+        return WorkOrderItemModel(
+          title: title,
+          subtitle: '$woNum · completed Today',
+          status: WorkOrderStatus.done,
+          iconType: WorkOrderIconType.checkmark,
+        );
+      }).toList();
+    }
+
+    return _fallbackDoneWorkOrders;
+  }
+
+  // Fallback customers data
+  final List<Map<String, dynamic>> _fallbackCustomers = const [
     {
       'name': 'Alicia Keys',
       'address': '26 Marina Way',
@@ -223,12 +319,183 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
   void initState() {
     super.initState();
     _currentIndex = widget.initialIndex;
+    _dashboardBloc = TechnicianDashboardBloc(GetIt.I.get<Interactor>());
+    _dashboardBloc.add(FetchTodayRoutesEvent());
+    _dashboardBloc.add(FetchBadgesEvent());
   }
 
   @override
   void dispose() {
+    _dashboardBloc.close();
     _customerSearchController.dispose();
     super.dispose();
+  }
+
+  RouteModel? get _todayRoute {
+    final routes = _routesData?.routes;
+    if (routes == null || routes.isEmpty) return null;
+    return routes.firstWhere(
+      (r) => r.isToday == true,
+      orElse: () => routes.first,
+    );
+  }
+
+  String get _routeTitle {
+    final route = _todayRoute;
+    if (route?.date != null && route!.date!.isNotEmpty) {
+      try {
+        final parsed = DateTime.parse(route.date!);
+        final formatted = DateFormat('EEE d MMM').format(parsed);
+        return 'Today · $formatted';
+      } catch (_) {
+        return 'Today · ${route.date}';
+      }
+    }
+    return 'Today · Mon 4 Aug';
+  }
+
+  int get _stopsCompleted {
+    final summary = _todayRoute?.summary;
+    if (summary?.stopsDone != null) return summary!.stopsDone!;
+    final stops = _mappedStops;
+    return stops.where((s) => s.status == StopStatus.done).length;
+  }
+
+  int get _stopsTotal {
+    final summary = _todayRoute?.summary;
+    if (summary?.stopsTotal != null && summary!.stopsTotal! > 0) {
+      return summary.stopsTotal!;
+    }
+    return _mappedStops.length;
+  }
+
+  String get _totalDistance {
+    final summary = _todayRoute?.summary;
+    if (summary?.totalMiles != null) {
+      return '${summary!.totalMiles} mi';
+    }
+    return '70.9 mi';
+  }
+
+  String get _etaLabel {
+    final summary = _todayRoute?.summary;
+    if (summary?.endsAtLabel != null && summary!.endsAtLabel!.isNotEmpty) {
+      return summary.endsAtLabel!;
+    }
+    if (summary?.endsAt != null && summary!.endsAt!.isNotEmpty) {
+      try {
+        final parsed = DateTime.parse(summary.endsAt!).toLocal();
+        return DateFormat('h:mm a').format(parsed).toLowerCase();
+      } catch (_) {}
+    }
+    return '4:10 pm';
+  }
+
+  List<StopItemModel> get _mappedStops {
+    final route = _todayRoute;
+    if (route == null || route.stops == null || route.stops!.isEmpty) {
+      return _fallbackStops;
+    }
+
+    final customers = _routesData?.customers ?? [];
+    final nextStopId = route.nextStopId;
+
+    final mappedList = route.stops!.asMap().entries.map((entry) {
+      final index = entry.key;
+      final stop = entry.value;
+
+      // Match customer
+      CustomerModel? customer;
+      try {
+        customer = customers.firstWhere(
+          (c) =>
+              (stop.contractId != null && c.contractId == stop.contractId) ||
+              (stop.customerName != null && c.name == stop.customerName),
+        );
+      } catch (_) {
+        customer = null;
+      }
+
+      final addressText = customer?.address?.fullAddress ??
+          customer?.address?.line1 ??
+          '14 Oak Lane';
+
+      // Map StopType
+      StopType stopType = StopType.routine;
+      final jobKey = stop.jobType?.key?.toLowerCase() ?? '';
+      if (jobKey.contains('repair')) {
+        stopType = StopType.repair;
+      } else if (jobKey.contains('service') || jobKey.contains('call')) {
+        stopType = StopType.serviceCall;
+      }
+
+      // Map StopStatus
+      StopStatus status = StopStatus.pending;
+      final statusStr = stop.status?.toLowerCase() ?? '';
+      final isSkipped = statusStr == 'skipped' ||
+          (stop.skipReason != null && stop.skipReason!.isNotEmpty) ||
+          stop.customerUnavailable == true;
+
+      if (statusStr == 'done' || statusStr == 'completed') {
+        status = StopStatus.done;
+      } else if (isSkipped) {
+        status = StopStatus.skipped;
+      } else if (stop.id == nextStopId || statusStr == 'next') {
+        status = StopStatus.next;
+      }
+
+      // Format time: null -> leave it out
+      String timeDisplay = '';
+      if (stop.estimatedArrival != null && stop.estimatedArrival!.isNotEmpty) {
+        try {
+          final arrival = DateTime.parse(stop.estimatedArrival!).toLocal();
+          timeDisplay = DateFormat('h:mm').format(arrival);
+        } catch (_) {
+          timeDisplay = stop.estimatedArrival!;
+        }
+      }
+
+      // Format distance: null -> leave it out
+      String distDisplay = '';
+      if (stop.legMiles != null) {
+        distDisplay = '${stop.legMiles} mi';
+      }
+
+      final effectiveSkipReason = stop.skipReason ??
+          (stop.customerUnavailable == true ? 'Customer unavailable' : null);
+
+      return StopItemModel(
+        stopNumber: stop.sequence ?? (index + 1),
+        customerName: stop.customerName ?? customer?.name ?? 'Customer',
+        address: addressText,
+        type: stopType,
+        typeLabel: stop.jobType?.label ?? 'Routine',
+        jobTypeKey: stop.jobType?.key,
+        time: timeDisplay,
+        distance: distDisplay,
+        status: status,
+        skipReason: effectiveSkipReason,
+        rawStop: stop,
+        customer: customer,
+      );
+    }).toList();
+
+    // Keep skipped stops at the bottom as required:
+    // "a skipped stop has skip_reason, skipped_by and customer_unavailable — show 'Not available: <reason>' and keep it at the bottom"
+    final activeList = <StopItemModel>[];
+    final skippedList = <StopItemModel>[];
+
+    for (final item in mappedList) {
+      if (item.status == StopStatus.skipped ||
+          (item.skipReason != null && item.skipReason!.isNotEmpty) ||
+          item.rawStop?.customerUnavailable == true) {
+        skippedList.add(item);
+      } else {
+        activeList.add(item);
+      }
+    }
+
+    return [...activeList, ...skippedList];
   }
 
   void _openDrawer() {
@@ -249,13 +516,49 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
+    return BlocProvider<TechnicianDashboardBloc>.value(
+      value: _dashboardBloc,
+      child: BlocConsumer<TechnicianDashboardBloc, TechnicianDashboardState>(
+        listener: (context, state) {
+          if (state is TechnicianDashboardLoadedState) {
+            setState(() {
+              _routesData = state.routesData;
+              _isLoading = false;
+              _errorMessage = null;
+            });
+          } else if (state is TechnicianBadgesLoadedState) {
+            setState(() {
+              _badgesData = state.badgesData;
+            });
+          } else if (state is TechnicianDashboardLoadingState) {
+            setState(() {
+              _isLoading = true;
+              _errorMessage = null;
+            });
+          } else if (state is TechnicianDashboardErrorState) {
+            setState(() {
+              _isLoading = false;
+              _errorMessage = state.message;
+            });
+          }
+        },
+        builder: (context, state) {
+          final notificationsCount = _badgesData?.notifications ?? 29;
+          final workOrdersCount = _badgesData?.workOrders;
+          final shoppingListCount = _badgesData?.shoppingList;
+          final syncPendingCount = _badgesData?.syncPending;
+
+          return Scaffold(
+            key: _scaffoldKey,
       backgroundColor: const Color(0xFFF7FAFC),
       drawerEnableOpenDragGesture: true,
       drawer: Drawer(
         width: 290.w,
         child: TechnicianMenuScreen(
+          workOrdersCount: workOrdersCount,
+          shoppingListCount: shoppingListCount,
+          syncPendingCount: syncPendingCount,
+          notificationsCount: notificationsCount,
           onClose: _closeDrawer,
           onNavigateToTab: (index) {
             _closeDrawer();
@@ -289,125 +592,199 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
         ),
       ),
     );
+        },
+      ),
+    );
   }
 
   // ─────────────────────────────────────────────────────────────────────────
+
   // TAB 0: TODAY ROUTE
   // ─────────────────────────────────────────────────────────────────────────
   Widget _buildTodayRouteTab() {
+    final stops = _mappedStops;
+    final notificationsCount = _badgesData?.notifications ?? 29;
+
     return Column(
       children: [
         RouteHeaderBar(
+          title: _routeTitle,
+          hasNotification: notificationsCount > 0,
           onMenuTap: _openDrawer,
           onNotificationTap: () {
             Navigator.of(context).pushNamed(Routes.technicianNotifications);
           },
         ),
         Expanded(
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.fromLTRB(20.w, 6.h, 20.w, 20.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const RouteProgressCard(
-                  completedStops: 1,
-                  totalStops: 6,
-                  distance: '70.9 mi',
-                  eta: '4:10 pm',
-                ),
-                20.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Stops',
-                      style: TextStyle(
-                        fontFamily: AppTypography.poppinsFont,
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.darkNavy,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        OptimiseRouteBottomSheet.show(context);
-                      },
-                      borderRadius: BorderRadius.circular(8.r),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 6.w,
-                          vertical: 4.h,
-                        ),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              AppAssets.icRoute,
-                              width: 16.w,
-                              height: 16.w,
-                              colorFilter: const ColorFilter.mode(
-                                AppColors.primaryBlue,
-                                BlendMode.srcIn,
-                              ),
-                            ),
-                            6.horizontalSpace,
-                            Text(
-                              'Optimise',
-                              style: TextStyle(
-                                fontFamily: AppTypography.poppinsFont,
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.primaryBlue,
-                              ),
-                            ),
-                          ],
+          child: RefreshIndicator(
+            onRefresh: () async {
+              _dashboardBloc.add(FetchTodayRoutesEvent());
+              _dashboardBloc.add(FetchBadgesEvent());
+            },
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(
+                parent: BouncingScrollPhysics(),
+              ),
+              padding: EdgeInsets.fromLTRB(20.w, 6.h, 20.w, 20.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RouteProgressCard(
+                    completedStops: _stopsCompleted,
+                    totalStops: _stopsTotal,
+                    distance: _totalDistance,
+                    eta: _etaLabel,
+                  ),
+                  20.verticalSpace,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Stops',
+                        style: TextStyle(
+                          fontFamily: AppTypography.poppinsFont,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.darkNavy,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                12.verticalSpace,
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(20.r),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x08102A50),
-                        blurRadius: 10,
-                        offset: Offset(0, 2),
+                      InkWell(
+                        onTap: () {
+                          OptimiseRouteBottomSheet.show(context);
+                        },
+                        borderRadius: BorderRadius.circular(8.r),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 6.w,
+                            vertical: 4.h,
+                          ),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                AppAssets.icRoute,
+                                width: 16.w,
+                                height: 16.w,
+                                colorFilter: const ColorFilter.mode(
+                                  AppColors.primaryBlue,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                              6.horizontalSpace,
+                              Text(
+                                'Optimise',
+                                style: TextStyle(
+                                  fontFamily: AppTypography.poppinsFont,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.primaryBlue,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                  child: Column(
-                    children: List.generate(_stops.length, (index) {
-                      final stop = _stops[index];
-                      return Column(
-                        children: [
-                          RouteStopItem(
-                            stop: stop,
-                            onTap: () {
-                              Navigator.of(context).pushNamed(
-                                Routes.stopDetail,
-                                arguments: {
-                                  'customerName': stop.customerName,
-                                  'address': stop.address,
-                                },
-                              );
-                            },
+                  12.verticalSpace,
+                  if (_isLoading && _routesData == null) ...[
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 40.h),
+                        child: const CircularProgressIndicator(
+                          color: AppColors.primaryBlue,
+                        ),
+                      ),
+                    ),
+                  ] else ...[
+                    Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.circular(20.r),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x08102A50),
+                            blurRadius: 10,
+                            offset: Offset(0, 2),
                           ),
-                          if (index != _stops.length - 1)
-                            const Divider(
-                              height: 1,
-                              thickness: 1,
-                              color: Color(0xFFF0F3F6),
-                            ),
                         ],
-                      );
-                    }),
-                  ),
-                ),
-              ],
+                      ),
+                      child: Column(
+                        children: List.generate(stops.length, (index) {
+                          final stop = stops[index];
+                          return Column(
+                            children: [
+                              RouteStopItem(
+                                stop: stop,
+                                onTap: () async {
+                                  final rawStop = stop.rawStop;
+                                  final CustomerModel? customer =
+                                      stop.customer is CustomerModel
+                                          ? stop.customer as CustomerModel
+                                          : null;
+
+                                  // If kind: work_order, open in T17 (TechWorkOrderDetailScreen)
+                                  if (rawStop?.kind == 'work_order' ||
+                                      rawStop?.workOrder != null) {
+                                    final wo = rawStop?.workOrder;
+                                    final woNum = wo?.number != null && wo!.number!.isNotEmpty
+                                        ? (wo.number!.startsWith('WO') ? wo.number! : 'WO #${wo.number}')
+                                        : 'WO #1042';
+                                    await Navigator.of(context).pushNamed(
+                                      Routes.techWorkOrderDetail,
+                                      arguments: {
+                                        'workOrderId': wo?.id,
+                                        'orderNumber': woNum,
+                                        'customer': stop.customerName,
+                                        'type': stop.typeLabel,
+                                        'scopeOfWork': wo?.title ??
+                                            'Strip and deep-clean the cartridge filter, replace both O-rings, pressure test, and log the pressure reading before and after.',
+                                        'status': 'Approved',
+                                        'dueDate': 'Today',
+                                      },
+                                    );
+                                    // Pull route again after finishing/returning from work order
+                                    _dashboardBloc.add(FetchTodayRoutesEvent());
+                                    return;
+                                  }
+
+                                  // Otherwise standard stop detail
+                                  await Navigator.of(context).pushNamed(
+                                    Routes.stopDetail,
+                                    arguments: {
+                                      'customerName': stop.customerName,
+                                      'address': stop.address,
+                                      'cityStateZip': customer?.address != null
+                                          ? '${customer!.address!.city ?? ''}, ${customer.address!.state ?? ''} ${customer.address!.zip ?? ''}'.trim()
+                                          : 'Austin, TX 78704',
+                                      'gateCode': customer?.address?.gateCode != null &&
+                                              customer!.address!.gateCode!.isNotEmpty
+                                          ? 'Gate ${customer.address!.gateCode}'
+                                          : 'Gate #1324',
+                                      'dogStatus': customer?.address?.dogsOnSite == true
+                                          ? 'Dog on site'
+                                          : 'No dog on site',
+                                      'accessNote': customer?.address?.accessNotes ??
+                                          'Access: Enter through the left gate.',
+                                    },
+                                  );
+                                  // Pull route again after any route changes
+                                  _dashboardBloc.add(FetchTodayRoutesEvent());
+                                },
+                              ),
+                              if (index != stops.length - 1)
+                                const Divider(
+                                  height: 1,
+                                  thickness: 1,
+                                  color: Color(0xFFF0F3F6),
+                                ),
+                            ],
+                          );
+                        }),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
             ),
           ),
         ),
@@ -422,7 +799,7 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
             children: [
               _buildRunningLateButton(),
               12.verticalSpace,
-              _buildStartRouteButton(),
+              _buildStartRouteButton(stops),
             ],
           ),
         ),
@@ -475,22 +852,36 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
     );
   }
 
-  Widget _buildStartRouteButton() {
+  Widget _buildStartRouteButton(List<StopItemModel> stops) {
     return SizedBox(
       width: double.infinity,
       height: 54.h,
       child: ElevatedButton(
         onPressed: () {
-          // Open the first/next stop (Alicia Keys Info & Pool screen)
-          final nextStop = _stops.firstWhere(
+          if (stops.isEmpty) return;
+          final nextStop = stops.firstWhere(
             (s) => s.status == StopStatus.next,
-            orElse: () => _stops[1], // Alicia Keys
+            orElse: () => stops.first,
           );
+          final CustomerModel? customer =
+              nextStop.customer is CustomerModel ? nextStop.customer as CustomerModel : null;
           Navigator.of(context).pushNamed(
             Routes.stopDetail,
             arguments: {
               'customerName': nextStop.customerName,
               'address': nextStop.address,
+              'cityStateZip': customer?.address != null
+                  ? '${customer!.address!.city ?? ''}, ${customer.address!.state ?? ''} ${customer.address!.zip ?? ''}'.trim()
+                  : 'Austin, TX 78704',
+              'gateCode': customer?.address?.gateCode != null &&
+                      customer!.address!.gateCode!.isNotEmpty
+                  ? 'Gate ${customer.address!.gateCode}'
+                  : 'Gate #1324',
+              'dogStatus': customer?.address?.dogsOnSite == true
+                  ? 'Dog on site'
+                  : 'No dog on site',
+              'accessNote': customer?.address?.accessNotes ??
+                  'Access: Enter through the left gate.',
               'initialTab': 0, // Info & Pool screen
             },
           );
@@ -858,9 +1249,9 @@ class _TechnicianDashboardScreenState extends State<TechnicianDashboardScreen> {
 
   Widget _buildCustomersHeaderBar() {
     final int count = _customerStatusFilter == 1
-        ? 4
+        ? _customers.where((c) => c['status'] == 'Active').length
         : _customerStatusFilter == 2
-            ? 1
+            ? _customers.where((c) => c['status'] == 'Inactive').length
             : _customers.length;
 
     return Padding(

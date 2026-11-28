@@ -13,6 +13,7 @@ enum StopStatus {
   done,
   next,
   pending,
+  skipped,
 }
 
 class StopItemModel {
@@ -20,18 +21,28 @@ class StopItemModel {
   final String customerName;
   final String address;
   final StopType type;
+  final String? typeLabel;
+  final String? jobTypeKey;
   final String time;
   final String distance;
   final StopStatus status;
+  final String? skipReason;
+  final dynamic rawStop;
+  final dynamic customer;
 
   const StopItemModel({
     required this.stopNumber,
     required this.customerName,
     this.address = '26 Marina Way',
     required this.type,
+    this.typeLabel,
+    this.jobTypeKey,
     required this.time,
     required this.distance,
     this.status = StopStatus.pending,
+    this.skipReason,
+    this.rawStop,
+    this.customer,
   });
 }
 
@@ -80,12 +91,14 @@ class RouteStopItem extends StatelessWidget {
                       8.horizontalSpace,
                       Flexible(
                         child: Text(
-                          '${stop.time} · ${stop.distance}',
+                          _buildSubtitleText(),
                           style: TextStyle(
                             fontFamily: AppTypography.poppinsFont,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
-                            color: AppColors.textGrey,
+                            color: stop.skipReason != null && stop.skipReason!.isNotEmpty
+                                ? const Color(0xFFE53935)
+                                : AppColors.textGrey,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -110,6 +123,13 @@ class RouteStopItem extends StatelessWidget {
                 text: 'Next',
                 bgColor: const Color(0xFFE8F1FE),
                 textColor: AppColors.primaryBlue,
+              ),
+              8.horizontalSpace,
+            ] else if (stop.status == StopStatus.skipped) ...[
+              _buildStatusPill(
+                text: 'Skipped',
+                bgColor: const Color(0xFFFEECEB),
+                textColor: const Color(0xFFE53935),
               ),
               8.horizontalSpace,
             ],
@@ -166,27 +186,47 @@ class RouteStopItem extends StatelessWidget {
     );
   }
 
-  Widget _buildTypeTag() {
-    String label;
-    Color bgColor;
-    Color textColor;
+  String _buildSubtitleText() {
+    if (stop.skipReason != null && stop.skipReason!.isNotEmpty) {
+      return 'Not available: ${stop.skipReason}';
+    }
+    final parts = <String>[];
+    if (stop.time.isNotEmpty) parts.add(stop.time);
+    if (stop.distance.isNotEmpty) parts.add(stop.distance);
 
-    switch (stop.type) {
-      case StopType.routine:
-        label = 'Routine';
-        bgColor = const Color(0xFFEDF2F7);
-        textColor = const Color(0xFF4A5568);
-        break;
-      case StopType.repair:
-        label = 'Repair';
-        bgColor = const Color(0xFFEBF3FE);
-        textColor = const Color(0xFF1E64D4);
-        break;
-      case StopType.serviceCall:
-        label = 'Service call';
-        bgColor = const Color(0xFFFEF3E2);
-        textColor = const Color(0xFFB57008);
-        break;
+    return parts.join(' · ');
+  }
+
+  Widget _buildTypeTag() {
+    String label = stop.typeLabel ?? 'Routine';
+    Color bgColor = const Color(0xFFEDF2F7);
+    Color textColor = const Color(0xFF4A5568);
+
+    final key = (stop.jobTypeKey ?? '').toLowerCase();
+    if (key.contains('repair')) {
+      bgColor = const Color(0xFFEBF3FE);
+      textColor = const Color(0xFF1E64D4);
+    } else if (key.contains('service') || key.contains('call')) {
+      bgColor = const Color(0xFFFEF3E2);
+      textColor = const Color(0xFFB57008);
+    } else if (key.contains('routine')) {
+      bgColor = const Color(0xFFEDF2F7);
+      textColor = const Color(0xFF4A5568);
+    } else {
+      switch (stop.type) {
+        case StopType.routine:
+          bgColor = const Color(0xFFEDF2F7);
+          textColor = const Color(0xFF4A5568);
+          break;
+        case StopType.repair:
+          bgColor = const Color(0xFFEBF3FE);
+          textColor = const Color(0xFF1E64D4);
+          break;
+        case StopType.serviceCall:
+          bgColor = const Color(0xFFFEF3E2);
+          textColor = const Color(0xFFB57008);
+          break;
+      }
     }
 
     return Container(
